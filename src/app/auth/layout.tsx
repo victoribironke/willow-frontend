@@ -19,12 +19,14 @@ const RootLayout = ({
       <body className="antialiased">
         <Suspense>
           <Toaster
-            toastOptions={{
-              style: {
-                backgroundColor: "hsl(var(--muted) / 0.5)",
-                color: "#fff",
-              },
-            }}
+            toastOptions={
+              {
+                // style: {
+                //   // backgroundColor: "hsl(var(--muted) / 0.5)",
+                //   color: "#fff",
+                // },
+              }
+            }
           />
 
           <div className="grid min-h-svh lg:grid-cols-2">
@@ -38,7 +40,7 @@ const RootLayout = ({
                 </a>
               </div>
               <div className="flex flex-1 items-center justify-center">
-                <div className="w-full max-w-xs">{children}</div>
+                <div className="w-full max-w-sm">{children}</div>
               </div>
             </div>
 

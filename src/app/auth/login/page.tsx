@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // export const metadata: Metadata = {
 //   title: "Login ~ Willow",
@@ -15,24 +16,22 @@ import { FormEvent, useRef } from "react";
 // USE THE GENERATE METADATA FUNCTION TO GET THE METADATA
 
 const LoginPage = () => {
-  const emailRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const login = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const email = emailRef.current?.value;
-    const password = passwordRef.current?.value;
 
     alert(`${email} ${password}`);
   };
 
   return (
-    <form className="flex flex-col gap-6" onSubmit={login}>
+    <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-semibold">Login to your account</h1>
         <p className="text-balance text-sm text-muted-foreground">
-          Enter your email below to login to your account
+          Enter your details below to login to your account
         </p>
       </div>
 
@@ -44,7 +43,8 @@ const LoginPage = () => {
             type="email"
             placeholder="m@example.com"
             required
-            ref={emailRef}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -58,7 +58,23 @@ const LoginPage = () => {
               Forgot your password?
             </Link>
           </div>
-          <Input id="password" type="password" required ref={passwordRef} />
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+          />
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="show-password"
+            checked={showPassword}
+            onClick={() => setShowPassword((k) => !k)}
+          />
+          <Label htmlFor="show-password">Show password</Label>
         </div>
 
         <Button className="w-full bg-main hover:bg-main/90" type="submit">
@@ -75,7 +91,7 @@ const LoginPage = () => {
           Sign up
         </Link>
       </div>
-    </form>
+    </div>
   );
 };
 
