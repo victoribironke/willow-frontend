@@ -19,11 +19,11 @@ const SiteHeader = () => {
   const { toggleSidebar } = useSidebar();
   const pathname = usePathname();
 
-  const mapping = {
-    [PAGES.top_artists]: "Top artists",
-    [PAGES.top_tracks]: "Top tracks",
-    [PAGES.stats]: "Statistics",
-  };
+  // const mapping = {
+  //   [PAGES.top_artists]: "Top artists",
+  //   [PAGES.top_tracks]: "Top tracks",
+  //   [PAGES.stats]: "Statistics",
+  // };
 
   return (
     <header className="fle sticky top-0 z-50 w-full items-center border-b bg-background">
@@ -43,7 +43,7 @@ const SiteHeader = () => {
               {pathname === "/dashboard" ? (
                 <BreadcrumbPage>Dashboard</BreadcrumbPage>
               ) : (
-                <BreadcrumbLink href={PAGES.dashboard}>
+                <BreadcrumbLink href={PAGES.dashboard.home}>
                   Dashboard
                 </BreadcrumbLink>
               )}
@@ -52,7 +52,7 @@ const SiteHeader = () => {
               <>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{mapping[pathname]}</BreadcrumbPage>
+                  {/* <BreadcrumbPage>{mapping[pathname]}</BreadcrumbPage> */}
                 </BreadcrumbItem>
               </>
             )}

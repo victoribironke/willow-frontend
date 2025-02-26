@@ -1,11 +1,11 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { cn, validateInputs, validatePassword } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft } from "lucide-react";
@@ -27,11 +27,11 @@ const RegisterPage = () => {
   const [fullName, setFullName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const register = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const register = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
 
-    alert(`${email} ${password} ${fullName}`);
-  };
+  //   alert(`${email} ${password} ${fullName}`);
+  // };
 
   const validateAndUpdateStage = (next: number) => {
     const isEmail = validateInputs("email", email);

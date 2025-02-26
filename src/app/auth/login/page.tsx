@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
-import { FormEvent, useRef, useState } from "react";
+import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 
 // export const metadata: Metadata = {
@@ -20,11 +20,11 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const login = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // const login = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
 
-    alert(`${email} ${password}`);
-  };
+  //   alert(`${email} ${password}`);
+  // };
 
   return (
     <div className="flex flex-col gap-6">
