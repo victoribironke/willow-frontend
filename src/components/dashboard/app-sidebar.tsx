@@ -9,8 +9,8 @@ import {
   LogOut,
   Send,
 } from "lucide-react";
-import { MainNav } from "@/components/main-nav";
-import { BottomNav } from "@/components/botton-nav";
+import { MainNav } from "@/components/dashboard/main-nav";
+import { BottomNav } from "@/components/dashboard/botton-nav";
 import {
   Sidebar,
   SidebarContent,

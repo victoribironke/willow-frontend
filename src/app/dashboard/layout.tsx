@@ -3,11 +3,11 @@
 // import type { Metadata } from "next";
 import "../globals.css";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { SiteHeader } from "@/components/site-header";
-import { AppSidebar } from "@/components/app-sidebar";
+import { SiteHeader } from "@/components/dashboard/site-header";
+import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import PageLoader from "@/components/page-loader";
+import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // export const metadata: Metadata = {
