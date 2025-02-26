@@ -3,15 +3,11 @@
 import * as React from "react";
 import {
   BadgeCheck,
-  ChartNoAxesColumn,
   Command,
   House,
   LifeBuoy,
   LogOut,
-  Music2,
   Send,
-  TrendingUp,
-  User,
 } from "lucide-react";
 import { MainNav } from "@/components/main-nav";
 import { BottomNav } from "@/components/botton-nav";

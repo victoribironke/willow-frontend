@@ -5,7 +5,6 @@ import { SiteHeader } from "@/components/site-header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { PAGES } from "@/constants/constants";
 import PageLoader from "@/components/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 

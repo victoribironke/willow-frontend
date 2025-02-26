@@ -48,6 +48,7 @@ const RootLayout = ({
                 alt="Image"
                 className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               />
+              {/* CHANGE TO IMAGE TAG FROM NEXT */}
             </div>
           </div>
         </Suspense>
