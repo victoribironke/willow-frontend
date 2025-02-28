@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { validateEmail } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { sendPasswordResetLink } from "@/lib/requests";
@@ -16,7 +15,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const login = async () => {
+  const sendLink = async () => {
     if (!validateEmail(email)) {
       toast.error("Please enter a valid email.");
       return;
@@ -59,7 +58,11 @@ const ForgotPassword = () => {
           />
         </div>
 
-        <Button className="w-full bg-main hover:bg-main/90" disabled={loading}>
+        <Button
+          className="w-full bg-main hover:bg-main/90"
+          disabled={loading}
+          onClick={sendLink}
+        >
           Send password reset link{" "}
           {loading && <LoaderCircle className="animate-spin" />}
         </Button>
