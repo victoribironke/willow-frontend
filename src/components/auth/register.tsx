@@ -22,6 +22,7 @@ import {
 import { AccountType } from "@/types/general";
 import Image from "next/image";
 import { registerUser, verifyOtp } from "@/lib/requests";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
   const [stage, setStage] = useState(1);
@@ -34,6 +35,7 @@ const Register = () => {
   const [businessName, setBusinessName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const register = async () => {
     setLoading(true);
@@ -71,7 +73,7 @@ const Register = () => {
     }
 
     toast.success(data);
-    // push to dashboard
+    router.push(PAGES.dashboard.home);
   };
 
   const validate = () => {

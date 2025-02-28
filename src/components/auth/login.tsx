@@ -11,12 +11,14 @@ import { loginUser } from "@/lib/requests";
 import toast from "react-hot-toast";
 import { LoaderCircle } from "lucide-react";
 import { validateEmail } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const login = async () => {
     if (!validateEmail(email) || !password) {
@@ -36,7 +38,7 @@ const Login = () => {
     }
 
     toast.success(data);
-    // push to dashboard
+    router.push(PAGES.dashboard.home);
   };
 
   return (

@@ -33,7 +33,6 @@ const ForgotPassword = () => {
     }
 
     toast.success(data);
-    // push to dashboard
   };
 
   return (

@@ -23,5 +23,6 @@ export const IMAGES = {
 export const ENDPOINTS = {
   register_user: BACKEND_URL + "/users/register",
   login_user: BACKEND_URL + "/auth/login",
+  forgot_password: BACKEND_URL + "/auth/forgot-password",
   verify_otp: BACKEND_URL + "/auth/verify-account",
 };

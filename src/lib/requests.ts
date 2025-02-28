@@ -6,10 +6,9 @@ export const registerUser = async (data: NewUser) => {
     const req = await fetch(ENDPOINTS.register_user, {
       method: "POST",
       body: JSON.stringify(data),
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
-        // Accept: "application/json",
+        accept: "application/json",
       },
     });
     const res = await req.json();
@@ -32,9 +31,9 @@ export const verifyOtp = async (email: string, otp: string) => {
         email,
         otp,
       }),
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
+        accept: "application/json",
       },
     });
     const res = await req.json();
@@ -57,9 +56,9 @@ export const loginUser = async (email: string, password: string) => {
         email,
         password,
       }),
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
+        accept: "application/json",
       },
     });
     const res = await req.json();
@@ -76,14 +75,14 @@ export const loginUser = async (email: string, password: string) => {
 
 export const sendPasswordResetLink = async (email: string) => {
   try {
-    const req = await fetch(ENDPOINTS.login_user, {
+    const req = await fetch(ENDPOINTS.forgot_password, {
       method: "POST",
       body: JSON.stringify({
         email,
       }),
-      mode: "no-cors",
       headers: {
         "Content-Type": "application/json",
+        accept: "application/json",
       },
     });
     const res = await req.json();
