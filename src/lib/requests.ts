@@ -10,11 +10,20 @@ export const registerUser = async (data: NewUser) => {
         "Content-Type": "application/json",
         accept: "application/json",
       },
+      credentials: "include",
     });
     const res = await req.json();
 
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
+
+    const date_ms = new Date().getTime();
+    const authData = {
+      access_token: res.data.accessToken,
+      expires_at: date_ms + 604800000,
+    };
+
+    localStorage.setItem("willow_auth_data", JSON.stringify(authData));
 
     return { data: res.message + ".", error: null };
   } catch (e) {
@@ -35,6 +44,7 @@ export const verifyOtp = async (email: string, otp: string) => {
         "Content-Type": "application/json",
         accept: "application/json",
       },
+      credentials: "include",
     });
     const res = await req.json();
 
@@ -60,11 +70,20 @@ export const loginUser = async (email: string, password: string) => {
         "Content-Type": "application/json",
         accept: "application/json",
       },
+      credentials: "include",
     });
     const res = await req.json();
 
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
+
+    const date_ms = new Date().getTime();
+    const authData = {
+      access_token: res.data.accessToken,
+      expires_at: date_ms + 604800000,
+    };
+
+    localStorage.setItem("willow_auth_data", JSON.stringify(authData));
 
     return { data: res.message + ".", error: null };
   } catch (e) {
