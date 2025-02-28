@@ -40,11 +40,5 @@ export const validatePassword = (password: string) => {
   };
 };
 
-export const validateInputs = (type: "email" | "name", value: string) => {
-  if (type === "email")
-    return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value);
-
-  if (type === "name") return value.length > 0;
-
-  return false;
-};
+export const validateEmail = (value: string) =>
+  /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value);

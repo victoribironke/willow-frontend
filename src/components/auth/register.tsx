@@ -4,20 +4,33 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { PAGES } from "@/constants/constants";
+import { IMAGES, PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
-import { cn, validateInputs, validatePassword } from "@/lib/utils";
+import { cn, validateEmail, validatePassword } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft } from "lucide-react";
 import toast from "react-hot-toast";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { AccountType } from "@/types/general";
+import Image from "next/image";
 
 const Register = () => {
   const [stage, setStage] = useState(1);
   const [description, setDescription] = useState("");
+  const [accountType, setAccountType] = useState<AccountType>("CUSTOMER");
   const [email, setEmail] = useState("");
+  const [otp, setOTP] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
+  const [businessName, setBusinessName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   // const register = (e: FormEvent<HTMLFormElement>) => {
@@ -26,27 +39,28 @@ const Register = () => {
   //   alert(`${email} ${password} ${fullName}`);
   // };
 
-  const validateAndUpdateStage = (next: number) => {
-    const isEmail = validateInputs("email", email);
-    const isFullName = validateInputs("name", fullName);
+  const validateAndUpdateStage = () => {
+    const isEmail = validateEmail(email);
     const isPassword = validatePassword(password);
 
-    if (next === 2) {
-      if (isEmail && isFullName) setStage(next);
-      else toast.error("Please enter a valid email and name.");
-    } else if (next === 3) {
-      if (isPassword.valid) setStage(next);
-      else toast.error(isPassword.reason);
+    if (isEmail && (fullName || businessName) && isPassword.valid) setStage(3);
+    else {
+      if (
+        (accountType === "CUSTOMER" && !fullName) ||
+        (accountType === "SELLER" && !businessName)
+      )
+        toast.error("Please enter a valid name.");
+      else if (!isEmail) toast.error("Please enter a valid email.");
+      else if (!isPassword.valid) toast.error(isPassword.reason);
     }
   };
 
   useEffect(() => {
-    if (stage === 1)
-      setDescription("Enter your email and full name to get started");
+    if (stage === 1) setDescription("What are you registering as?");
     else if (stage === 2)
-      setDescription("Enter your password to continue the registration");
+      setDescription("Enter your details to continue the registration");
     else if (stage === 3)
-      setDescription("Add a profile picture to personalize your experience");
+      setDescription("We sent you an OTP to verify your email address");
   }, [stage]);
 
   return (
@@ -71,6 +85,58 @@ const Register = () => {
       </p>
 
       <div className={cn("gap-6", stage === 1 ? "grid" : "hidden")}>
+        <Select
+          value={accountType}
+          onValueChange={(e) => setAccountType(e as AccountType)}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Select an account type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Account types</SelectLabel>
+              <SelectItem value="CUSTOMER">Customer</SelectItem>
+              <SelectItem value="SELLER">Seller</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        <Button
+          className="w-full bg-main hover:bg-main/90 cursor-pointer"
+          onClick={() => setStage(2)}
+          disabled={!accountType}
+        >
+          Continue
+        </Button>
+      </div>
+
+      <div className={cn("gap-6", stage === 2 ? "grid" : "hidden")}>
+        {accountType === "CUSTOMER" ? (
+          <div className="grid gap-2">
+            <Label htmlFor="full-name">Full name</Label>
+            <Input
+              id="full-name"
+              type="text"
+              placeholder="John Doe"
+              required
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+            />
+          </div>
+        ) : (
+          <div className="grid gap-2">
+            <Label htmlFor="business-name">Business name</Label>
+            <Input
+              id="business-name"
+              type="text"
+              placeholder="Orion & Sons"
+              required
+              value={businessName}
+              onChange={(e) => setBusinessName(e.target.value)}
+            />
+          </div>
+        )}
+
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
           <Input
@@ -83,27 +149,6 @@ const Register = () => {
           />
         </div>
 
-        <div className="grid gap-2">
-          <Label htmlFor="full-name">Full name</Label>
-          <Input
-            id="full-name"
-            type="text"
-            placeholder="John Doe"
-            required
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-        </div>
-
-        <Button
-          className="w-full bg-main hover:bg-main/90 cursor-pointer"
-          onClick={() => validateAndUpdateStage(2)}
-        >
-          Continue
-        </Button>
-      </div>
-
-      <div className={cn("gap-6", stage === 2 ? "grid" : "hidden")}>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
           <Input
@@ -127,41 +172,34 @@ const Register = () => {
 
         <Button
           className="w-full bg-main hover:bg-main/90 cursor-pointer"
-          onClick={() => validateAndUpdateStage(3)}
+          onClick={() => validateAndUpdateStage()}
         >
           Continue
         </Button>
       </div>
 
       <div className={cn("gap-6", stage === 3 ? "grid" : "hidden")}>
-        <Avatar className="w-24 h-24 self-center justify-self-center">
-          <AvatarImage
-            src={`https://api.dicebear.com/9.x/notionists-neutral/svg?seed=${email}`}
-            className="border-2 border-main rounded-full"
-          />
-          <AvatarFallback>WLOW</AvatarFallback>
-        </Avatar>
+        <Image
+          src={IMAGES.mail.src}
+          width={IMAGES.mail.w}
+          height={IMAGES.mail.h}
+          alt="Image"
+          className="w-20 self-center justify-self-center"
+        />
 
-        <div className="relative inline-block w-full">
-          <Button
-            className="w-full text-main bg-main/10 cursor-pointer"
-            variant="ghost"
-            onClick={() => validateAndUpdateStage(3)}
-          >
-            Upload profile picture
-          </Button>
-
+        <div className="grid gap-2">
+          <Label htmlFor="otp">OTP</Label>
           <Input
-            type="file"
-            id="file-upload"
-            accept="image/*"
-            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            id="otp"
+            type="text"
+            placeholder="123456"
+            required
+            value={otp}
+            onChange={(e) => setOTP(e.target.value)}
           />
         </div>
 
-        <Button className="w-full bg-main hover:bg-main/90" type="submit">
-          Finish with default
-        </Button>
+        <Button className="w-full bg-main hover:bg-main/90">Finish</Button>
       </div>
 
       <div className="text-center text-sm">

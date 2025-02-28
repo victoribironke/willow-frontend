@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 import { Suspense } from "react";
 import { GalleryVerticalEnd } from "lucide-react";
 import { IMAGES } from "@/constants/constants";
+import Image from "next/image";
 
 const RootLayout = ({
   children,
@@ -35,17 +36,18 @@ const RootLayout = ({
                 </a>
               </div>
               <div className="flex flex-1 items-center justify-center">
-                <div className="w-full max-w-sm">{children}</div>
+                <div className="w-full max-w-xs">{children}</div>
               </div>
             </div>
 
             <div className="relative hidden bg-muted lg:block">
-              <img
-                src={IMAGES.auth_image}
+              <Image
+                src={IMAGES.auth_image.src}
+                width={IMAGES.auth_image.w}
+                height={IMAGES.auth_image.h}
                 alt="Image"
                 className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               />
-              {/* CHANGE TO IMAGE TAG FROM NEXT */}
             </div>
           </div>
         </Suspense>
