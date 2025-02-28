@@ -116,6 +116,31 @@ export const sendPasswordResetLink = async (email: string) => {
   }
 };
 
+export const resetPassword = async (password: string, token: string) => {
+  try {
+    const req = await fetch(ENDPOINTS.reset_password + `?resetToken=${token}`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        newPassword: password,
+        confirmNewPassword: password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.message + ".", error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
 // import { useQuery } from "@tanstack/react-query";
 
 // const { access_token: token, expires_at } = JSON.parse(

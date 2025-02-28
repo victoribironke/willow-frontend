@@ -12,6 +12,7 @@ export const PAGES = {
     login: "/auth/login",
     register: "/auth/register",
     forgot_password: "/auth/forgot-password",
+    reset_password: "/auth/reset-password",
   },
 };
 
@@ -24,5 +25,6 @@ export const ENDPOINTS = {
   register_user: BACKEND_URL + "/users/register",
   login_user: BACKEND_URL + "/auth/login",
   forgot_password: BACKEND_URL + "/auth/forgot-password",
+  reset_password: BACKEND_URL + "/auth/password-reset",
   verify_otp: BACKEND_URL + "/auth/verify-account",
 };
