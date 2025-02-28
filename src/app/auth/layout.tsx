@@ -1,15 +1,26 @@
+"use client";
+
 import "../globals.css";
 import { Toaster } from "react-hot-toast";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { GalleryVerticalEnd } from "lucide-react";
-import { IMAGES } from "@/constants/constants";
+import { IMAGES, PAGES } from "@/constants/constants";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const data = localStorage.getItem("willow_auth_data");
+
+    if (data) router.push(PAGES.dashboard.home);
+  }, []);
+
   return (
     <html lang="en">
       <body className="antialiased">

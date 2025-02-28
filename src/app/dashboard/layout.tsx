@@ -5,10 +5,13 @@ import "../globals.css";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { SiteHeader } from "@/components/dashboard/site-header";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { cookies } from "next/headers";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { PAGES } from "@/constants/constants";
 
 // export const metadata: Metadata = {
 //   title: "Home ~ Willow",
@@ -30,29 +33,27 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   const [loading, setLoading] = useState(true);
-  const { push } = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
-    // const data = localStorage.getItem("spotify_auth_data");
+    const data = localStorage.getItem("willow_auth_data");
 
-    // if (!data) {
-    //   push(PAGES.auth);
-    //   return;
-    // }
+    if (!data) {
+      router.push(PAGES.auth.login);
+      return;
+    }
 
-    // const { access_token, expires_at } = JSON.parse(data);
-    // const date_ms = new Date().getTime();
+    const { expires_at } = JSON.parse(data);
+    const date_ms = new Date().getTime();
 
-    // if (date_ms >= expires_at) {
-    //   localStorage.removeItem("spotify_auth_data");
-    //   push(PAGES.auth);
-    //   return;
-    // }
-
-    // saveNewUser(access_token);
+    if (date_ms >= expires_at) {
+      localStorage.removeItem("willow_auth_data");
+      router.push(PAGES.auth.login);
+      return;
+    }
 
     setLoading(false);
-  }, [push]);
+  }, [router]);
 
   return (
     <html lang="en">
