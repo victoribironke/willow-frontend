@@ -68,7 +68,7 @@ const ForgotPassword = () => {
       </div>
 
       <div className="text-center text-sm">
-        Already have an account?{" "}
+        I have a Willow account.{" "}
         <Link
           href={PAGES.auth.login}
           className="underline underline-offset-4 text-main"

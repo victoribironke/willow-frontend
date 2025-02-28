@@ -102,13 +102,15 @@ const Register = () => {
 
   return (
     <div className="flex flex-col gap-6">
-      <Button
-        className="w-fit cursor-pointer"
-        variant="ghost"
-        onClick={() => stage !== 1 && setStage((k) => k - 1)}
-      >
-        <ArrowLeft /> Back
-      </Button>
+      {stage !== 1 && (
+        <Button
+          className="w-fit cursor-pointer"
+          variant="ghost"
+          onClick={() => setStage((k) => k - 1)}
+        >
+          <ArrowLeft /> Back
+        </Button>
+      )}
 
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-semibold">Welcome to Willow</h1>
@@ -116,10 +118,6 @@ const Register = () => {
           {description}
         </p>
       </div>
-
-      <p className="w-full text-center text-muted-foreground text-sm font-medium">
-        STEP {stage} OF 3
-      </p>
 
       <div className={cn("gap-6", stage === 1 ? "grid" : "hidden")}>
         <Select
@@ -246,8 +244,12 @@ const Register = () => {
         </Button>
       </div>
 
+      <p className="w-full text-center text-muted-foreground text-sm font-medium">
+        STEP {stage} OF 3
+      </p>
+
       <div className="text-center text-sm">
-        Already have an account?{" "}
+        I have a Willow account.{" "}
         <Link
           href={PAGES.auth.login}
           className="underline underline-offset-4 text-main"
