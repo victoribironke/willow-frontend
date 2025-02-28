@@ -12,3 +12,7 @@ export const PAGES = {
     forgot_password: "/auth/forgot-password",
   },
 };
+
+export const IMAGES = {
+  auth_image: "/auth-image.png",
+};
