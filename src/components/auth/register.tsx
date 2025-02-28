@@ -8,7 +8,7 @@ import { IMAGES, PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import { cn, validateEmail, validatePassword } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import {
   Select,
@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { AccountType } from "@/types/general";
 import Image from "next/image";
+import { registerUser, verifyOtp } from "@/lib/requests";
 
 const Register = () => {
   const [stage, setStage] = useState(1);
@@ -32,18 +33,52 @@ const Register = () => {
   const [fullName, setFullName] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // const register = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
+  const register = async () => {
+    setLoading(true);
 
-  //   alert(`${email} ${password} ${fullName}`);
-  // };
+    const { data, error } = await registerUser({
+      businessName,
+      email,
+      firstname: fullName.split(" ")[0],
+      lastname: fullName.split(" ")[1],
+      password,
+      role: accountType,
+    });
 
-  const validateAndUpdateStage = () => {
+    setLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success(data);
+    setStage(3);
+  };
+
+  const vOtp = async () => {
+    setLoading(true);
+
+    const { data, error } = await verifyOtp(email, otp);
+
+    setLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success(data);
+    // push to dashboard
+  };
+
+  const validate = () => {
     const isEmail = validateEmail(email);
     const isPassword = validatePassword(password);
 
-    if (isEmail && (fullName || businessName) && isPassword.valid) setStage(3);
+    if (isEmail && (fullName || businessName) && isPassword.valid) register();
     else {
       if (
         (accountType === "CUSTOMER" && !fullName) ||
@@ -172,9 +207,10 @@ const Register = () => {
 
         <Button
           className="w-full bg-main hover:bg-main/90 cursor-pointer"
-          onClick={() => validateAndUpdateStage()}
+          onClick={() => validate()}
+          disabled={loading}
         >
-          Continue
+          Continue {loading && <LoaderCircle className="animate-spin" />}
         </Button>
       </div>
 
@@ -199,7 +235,13 @@ const Register = () => {
           />
         </div>
 
-        <Button className="w-full bg-main hover:bg-main/90">Finish</Button>
+        <Button
+          className="w-full bg-main hover:bg-main/90"
+          onClick={vOtp}
+          disabled={!otp || loading}
+        >
+          Finish {loading && <LoaderCircle className="animate-spin" />}
+        </Button>
       </div>
 
       <div className="text-center text-sm">

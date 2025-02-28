@@ -7,17 +7,35 @@ import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { validateEmail } from "@/lib/utils";
+import toast from "react-hot-toast";
+import { sendPasswordResetLink } from "@/lib/requests";
+import { LoaderCircle } from "lucide-react";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // const login = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
+  const login = async () => {
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
 
-  //   alert(`${email} ${password}`);
-  // };
+    setLoading(true);
+
+    const { data, error } = await sendPasswordResetLink(email);
+
+    setLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success(data);
+    // push to dashboard
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -41,8 +59,9 @@ const ForgotPassword = () => {
           />
         </div>
 
-        <Button className="w-full bg-main hover:bg-main/90" type="submit">
-          Send password reset link
+        <Button className="w-full bg-main hover:bg-main/90" disabled={loading}>
+          Send password reset link{" "}
+          {loading && <LoaderCircle className="animate-spin" />}
         </Button>
       </div>
 
