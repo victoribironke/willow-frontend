@@ -14,7 +14,10 @@ import { LoaderCircle } from "lucide-react";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [timer, setTimer] = useState(0);
+  const [reloadTimer, setReloadTimer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   const sendLink = async () => {
     if (!validateEmail(email)) {
@@ -33,8 +36,20 @@ const ForgotPassword = () => {
       return;
     }
 
+    setTimer(60);
+    setReloadTimer(`code sent @ ${Date.now()}`);
     toast.success(data);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((t) => t - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [reloadTimer]);
+
+  useEffect(() => setDisabled(timer > 0), [timer]);
 
   useEffect(() => setError(""), [email]);
 
@@ -66,11 +81,12 @@ const ForgotPassword = () => {
 
         <Button
           className="w-full bg-main hover:bg-main/90"
-          disabled={loading}
+          disabled={loading || disabled}
           onClick={sendLink}
         >
           Send password reset link{" "}
           {loading && <LoaderCircle className="animate-spin" />}
+          {timer > 0 && <p>{timer}s</p>}
         </Button>
       </div>
 
