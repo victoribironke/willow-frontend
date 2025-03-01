@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { validateEmail } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { sendPasswordResetLink } from "@/lib/requests";
@@ -13,11 +13,12 @@ import { LoaderCircle } from "lucide-react";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const sendLink = async () => {
     if (!validateEmail(email)) {
-      toast.error("Please enter a valid email.");
+      setError("Please enter a valid email.");
       return;
     }
 
@@ -28,12 +29,14 @@ const ForgotPassword = () => {
     setLoading(false);
 
     if (error) {
-      toast.error(error);
+      setError(error);
       return;
     }
 
     toast.success(data);
   };
+
+  useEffect(() => setError(""), [email]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -56,6 +59,10 @@ const ForgotPassword = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+
+        {error && (
+          <p className="text-red text-sm w-full text-center">{error}</p>
+        )}
 
         <Button
           className="w-full bg-main hover:bg-main/90"

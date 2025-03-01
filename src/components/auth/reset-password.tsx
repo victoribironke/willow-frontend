@@ -13,7 +13,6 @@ import { Checkbox } from "../ui/checkbox";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { getJwtExpiration, validatePassword } from "@/lib/utils";
-import { getJsPageSizeInKb } from "next/dist/build/utils";
 
 const ResetPassword = () => {
   const searchParams = useSearchParams();
@@ -24,18 +23,19 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [reqError, setReqError] = useState("");
   const router = useRouter();
 
   const sendLink = async () => {
     if (password !== passwordConfirm) {
-      toast.error("Passwords do not match.");
+      setReqError("Passwords do not match.");
       return;
     }
 
     const isPassword = validatePassword(password);
 
     if (!isPassword.valid) {
-      toast.error(isPassword.reason);
+      setReqError(isPassword.reason);
       return;
     }
 
@@ -46,7 +46,7 @@ const ResetPassword = () => {
     setLoading(false);
 
     if (error) {
-      toast.error(error);
+      setReqError(error);
       return;
     }
 
@@ -62,6 +62,8 @@ const ResetPassword = () => {
 
     if (!expires_at || date_ms >= expires_at) setError(true);
   }, []);
+
+  useEffect(() => setReqError(""), [password, passwordConfirm]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -97,6 +99,10 @@ const ResetPassword = () => {
               onChange={(e) => setPasswordConfirm(e.target.value)}
             />
           </div>
+
+          {reqError && (
+            <p className="text-red text-sm w-full text-center">{reqError}</p>
+          )}
 
           <div className="flex items-center space-x-2">
             <Checkbox

@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { loginUser } from "@/lib/requests";
 import toast from "react-hot-toast";
@@ -16,13 +16,14 @@ import { useRouter } from "next/navigation";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const login = async () => {
     if (!validateEmail(email) || !password) {
-      toast.error("Please enter a valid email and password.");
+      setError("Please enter a valid email and password.");
       return;
     }
 
@@ -33,13 +34,15 @@ const Login = () => {
     setLoading(false);
 
     if (error) {
-      toast.error(error);
+      setError(error);
       return;
     }
 
-    toast.success(data);
+    // toast.success(data);
     router.push(PAGES.dashboard.home);
   };
+
+  useEffect(() => setError(""), [email, password]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -82,6 +85,10 @@ const Login = () => {
             placeholder="••••••••"
           />
         </div>
+
+        {error && (
+          <p className="text-red text-sm w-full text-center">{error}</p>
+        )}
 
         <div className="flex items-center space-x-2">
           <Checkbox

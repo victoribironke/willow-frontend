@@ -33,6 +33,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [businessName, setBusinessName] = useState("");
+  const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -52,7 +53,7 @@ const Register = () => {
     setLoading(false);
 
     if (error) {
-      toast.error(error);
+      setError(error);
       return;
     }
 
@@ -68,7 +69,7 @@ const Register = () => {
     setLoading(false);
 
     if (error) {
-      toast.error(error);
+      setError(error);
       return;
     }
 
@@ -86,9 +87,9 @@ const Register = () => {
         (accountType === "CUSTOMER" && !fullName) ||
         (accountType === "SELLER" && !businessName)
       )
-        toast.error("Please enter a valid name.");
-      else if (!isEmail) toast.error("Please enter a valid email.");
-      else if (!isPassword.valid) toast.error(isPassword.reason);
+        setError("Please enter a valid name.");
+      else if (!isEmail) setError("Please enter a valid email.");
+      else if (!isPassword.valid) setError(isPassword.reason);
     }
   };
 
@@ -99,6 +100,8 @@ const Register = () => {
     else if (stage === 3)
       setDescription("We sent you an OTP to verify your email address");
   }, [stage]);
+
+  useEffect(() => setError(""), [email, password, fullName, businessName]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -196,6 +199,10 @@ const Register = () => {
           />
         </div>
 
+        {error && (
+          <p className="text-red text-sm w-full text-center">{error}</p>
+        )}
+
         <div className="flex items-center space-x-2">
           <Checkbox
             id="show-password"
@@ -234,6 +241,10 @@ const Register = () => {
             onChange={(e) => setOTP(e.target.value)}
           />
         </div>
+
+        {error && (
+          <p className="text-red text-sm w-full text-center">{error}</p>
+        )}
 
         <Button
           className="w-full bg-main hover:bg-main/90"
