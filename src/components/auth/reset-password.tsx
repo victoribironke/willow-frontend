@@ -103,16 +103,6 @@ const ResetPassword = () => {
           Reset password {loading && <LoaderCircle className="animate-spin" />}
         </Button>
       </div>
-
-      <div className="text-center text-sm">
-        I have a Willow account.{" "}
-        <Link
-          href={PAGES.auth.login}
-          className="underline underline-offset-4 text-main"
-        >
-          Login
-        </Link>
-      </div>
     </div>
   );
 };
