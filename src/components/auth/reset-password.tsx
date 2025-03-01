@@ -70,7 +70,7 @@ const ResetPassword = () => {
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-semibold">Reset password</h1>
         <p className="text-balance text-sm text-muted-foreground">
-          {error ? "Invalid reset token" : "Enter your new password below"}
+          {error ? "Invalid link" : "Enter your new password below"}
         </p>
       </div>
 
@@ -125,7 +125,7 @@ const ResetPassword = () => {
       ) : (
         <div className="grid gap-6">
           <p className="w-full text-center">
-            Your reset token is either invalid or expired.
+            Your password reset link has expired.
           </p>
 
           <Link href={PAGES.auth.login}>
