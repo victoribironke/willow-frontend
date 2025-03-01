@@ -1,3 +1,4 @@
+import { jwtDecode } from "jwt-decode";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -42,3 +43,18 @@ export const validatePassword = (password: string) => {
 
 export const validateEmail = (value: string) =>
   /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value);
+
+export const getJwtExpiration = (token: string) => {
+  try {
+    const decoded = jwtDecode(token);
+
+    if (!decoded.exp) {
+      return null;
+    }
+
+    return new Date(decoded.exp * 1000).getTime();
+  } catch (error) {
+    console.error("Error decoding JWT:", error);
+    return null;
+  }
+};
