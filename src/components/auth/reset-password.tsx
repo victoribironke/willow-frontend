@@ -26,7 +26,7 @@ const ResetPassword = () => {
   const [reqError, setReqError] = useState("");
   const router = useRouter();
 
-  const sendLink = async () => {
+  const changePassword = async () => {
     if (password !== passwordConfirm) {
       setReqError("Passwords do not match.");
       return;
@@ -116,7 +116,7 @@ const ResetPassword = () => {
           <Button
             className="w-full bg-main hover:bg-main/90"
             disabled={loading}
-            onClick={sendLink}
+            onClick={changePassword}
           >
             Reset password{" "}
             {loading && <LoaderCircle className="animate-spin" />}

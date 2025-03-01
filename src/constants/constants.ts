@@ -27,4 +27,5 @@ export const ENDPOINTS = {
   forgot_password: BACKEND_URL + "/auth/forgot-password",
   reset_password: BACKEND_URL + "/auth/password-reset",
   verify_otp: BACKEND_URL + "/auth/verify-account",
+  resend_otp: BACKEND_URL + "/auth/resend-otp",
 };

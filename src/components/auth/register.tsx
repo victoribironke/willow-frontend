@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { AccountType } from "@/types/general";
 import Image from "next/image";
-import { registerUser, verifyOtp } from "@/lib/requests";
+import { registerUser, resendOtp, verifyOtp } from "@/lib/requests";
 import { useRouter } from "next/navigation";
 
 const Register = () => {
@@ -36,6 +36,9 @@ const Register = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [disabled, setDisabled] = useState(true);
+  const [timer, setTimer] = useState(60);
+  const [reloadTimer, setReloadTimer] = useState("");
   const router = useRouter();
 
   const register = async () => {
@@ -93,6 +96,29 @@ const Register = () => {
     }
   };
 
+  const resend = async () => {
+    const { data, error } = await resendOtp(email);
+
+    if (error) {
+      setError(error);
+      return;
+    }
+
+    toast.success(data);
+    setTimer(60);
+    setReloadTimer(`code resent @ ${Date.now()}`);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((t) => t - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [reloadTimer]);
+
+  useEffect(() => setDisabled(timer > 0), [timer]);
+
   useEffect(() => {
     if (stage === 1) setDescription("What are you registering as?");
     else if (stage === 2)
@@ -101,7 +127,7 @@ const Register = () => {
       setDescription("We sent you an OTP to verify your email address");
   }, [stage]);
 
-  useEffect(() => setError(""), [email, password, fullName, businessName]);
+  useEffect(() => setError(""), [email, password, fullName, businessName, otp]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -247,11 +273,20 @@ const Register = () => {
         )}
 
         <Button
+          onClick={resend}
+          disabled={disabled}
+          variant="ghost"
+          className="text-main text-sm hover:text-main w-fit"
+        >
+          Resend code {timer > 0 && <p className="text-gray-400">{timer}s</p>}
+        </Button>
+
+        <Button
           className="w-full bg-main hover:bg-main/90"
           onClick={vOtp}
           disabled={!otp || loading}
         >
-          Finish {loading && <LoaderCircle className="animate-spin" />}
+          Verify & finish {loading && <LoaderCircle className="animate-spin" />}
         </Button>
       </div>
 

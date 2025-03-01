@@ -137,6 +137,31 @@ export const resetPassword = async (password: string, token: string) => {
   }
 };
 
+export const resendOtp = async (email: string) => {
+  try {
+    const req = await fetch(ENDPOINTS.resend_otp, {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.message + ".", error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
 // import { useQuery } from "@tanstack/react-query";
 
 // const { access_token: token, expires_at } = JSON.parse(
