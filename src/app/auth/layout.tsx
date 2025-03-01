@@ -6,7 +6,7 @@ import { Suspense, useEffect } from "react";
 import { GalleryVerticalEnd } from "lucide-react";
 import { IMAGES, PAGES } from "@/constants/constants";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const RootLayout = ({
   children,
@@ -14,11 +14,13 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const data = localStorage.getItem("willow_auth_data");
 
-    if (data) router.push(PAGES.dashboard.home);
+    if (data && pathname === PAGES.auth.login)
+      router.push(PAGES.dashboard.home);
   }, []);
 
   return (
