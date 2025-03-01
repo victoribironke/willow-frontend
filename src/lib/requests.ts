@@ -17,14 +17,6 @@ export const registerUser = async (data: NewUser) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    const date_ms = new Date().getTime();
-    const authData = {
-      access_token: res.data.accessToken,
-      expires_at: date_ms + 604800000,
-    };
-
-    localStorage.setItem("willow_auth_data", JSON.stringify(authData));
-
     return { data: res.message + ".", error: null };
   } catch (e) {
     console.log(e);
@@ -50,6 +42,12 @@ export const verifyOtp = async (email: string, otp: string) => {
 
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
+
+    const authData = {
+      access_token: res.data.accessToken,
+    };
+
+    localStorage.setItem("willow_auth_data", JSON.stringify(authData));
 
     return { data: res.message + ".", error: null };
   } catch (e) {
@@ -77,10 +75,8 @@ export const loginUser = async (email: string, password: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    const date_ms = new Date().getTime();
     const authData = {
       access_token: res.data.accessToken,
-      expires_at: date_ms + 604800000,
     };
 
     localStorage.setItem("willow_auth_data", JSON.stringify(authData));

@@ -58,11 +58,9 @@ const ResetPassword = () => {
     if (!resetToken) setError(true);
 
     const expires_at = getJwtExpiration(resetToken as string);
-
-    if (!expires_at) setError(true);
-
     const date_ms = new Date().getTime();
-    if (date_ms >= expires_at!) setError(true);
+
+    if (!expires_at || date_ms >= expires_at) setError(true);
   }, []);
 
   return (

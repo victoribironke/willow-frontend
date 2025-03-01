@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PAGES } from "@/constants/constants";
+import { getJwtExpiration } from "@/lib/utils";
 
 // export const metadata: Metadata = {
 //   title: "Home ~ Willow",
@@ -41,10 +42,12 @@ const RootLayout = ({
       return;
     }
 
-    const { expires_at } = JSON.parse(data);
-    const date_ms = new Date().getTime();
+    const { access_token } = JSON.parse(data);
 
-    if (date_ms >= expires_at) {
+    const date_ms = new Date().getTime();
+    const expires_at = getJwtExpiration(access_token);
+
+    if (!expires_at || date_ms >= expires_at) {
       localStorage.removeItem("willow_auth_data");
       router.push(PAGES.auth.login);
       return;
