@@ -8,7 +8,6 @@ import { PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { loginUser } from "@/lib/requests";
-import toast from "react-hot-toast";
 import { LoaderCircle } from "lucide-react";
 import { validateEmail } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -29,7 +28,7 @@ const Login = () => {
 
     setLoading(true);
 
-    const { data, error } = await loginUser(email, password);
+    const { error } = await loginUser(email, password);
 
     setLoading(false);
 
