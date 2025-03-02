@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { loginUser } from "@/lib/requests";
 import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { validateEmail } from "@/lib/utils";

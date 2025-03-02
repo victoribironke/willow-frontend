@@ -7,7 +7,6 @@ import Link from "next/link";
 import { IMAGES, PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import { cn, validateEmail, validatePassword } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowLeft, Eye, EyeOff, LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import {
