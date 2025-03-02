@@ -8,7 +8,7 @@ import { PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { loginUser } from "@/lib/requests";
-import { LoaderCircle } from "lucide-react";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { validateEmail } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
@@ -75,28 +75,36 @@ const Login = () => {
               Forgot your password?
             </Link>
           </div>
-          <Input
-            id="password"
-            type={showPassword ? "text" : "password"}
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-          />
+
+          <div className="w-full relative flex items-center justify-center">
+            <Input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+            />
+
+            {showPassword ? (
+              <EyeOff
+                className="absolute right-3 cursor-pointer"
+                size={18}
+                onClick={() => setShowPassword((k) => !k)}
+              />
+            ) : (
+              <Eye
+                className="absolute right-3 cursor-pointer"
+                size={18}
+                onClick={() => setShowPassword((k) => !k)}
+              />
+            )}
+          </div>
         </div>
 
         {error && (
           <p className="text-red text-sm w-full text-center">{error}</p>
         )}
-
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="show-password"
-            checked={showPassword}
-            onClick={() => setShowPassword((k) => !k)}
-          />
-          <Label htmlFor="show-password">Show password</Label>
-        </div>
 
         <Button
           className="w-full bg-main hover:bg-main/90"
