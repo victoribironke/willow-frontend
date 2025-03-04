@@ -19,6 +19,7 @@ export const PAGES = {
 export const IMAGES = {
   auth_image: { src: "/auth-image.png", w: 1024, h: 512 },
   mail: { src: "/mail.png", w: 122, h: 144 },
+  logo: { src: "/icon.png", w: 24, h: 26 },
 };
 
 export const ENDPOINTS = {
