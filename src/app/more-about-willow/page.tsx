@@ -158,7 +158,7 @@ const Page = () => {
           </p>
         </div>
 
-        <div className="w-full lg:w-5/12 grid grid-cols-2 lg:grid-cols-1 gap-6 self-start">
+        <div className="w-full lg:w-5/12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6 self-start">
           <div className="bg-white shadow border rounded-lg p-4 flex flex-col items-center justify-center gap-6">
             <p className="text-center lg:text-lg">
               “If it can&apos;t be reduced, reused, repaired, rebuilt,
