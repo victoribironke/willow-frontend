@@ -15,7 +15,7 @@ const Logo = () => {
             className="w-4 h-auto"
           />
         </div>
-        <span className="hidden sm:inline-block">Willow</span>
+        <span className="hidden sm:inline-block text-main">Willow</span>
       </Link>
     </div>
   );
