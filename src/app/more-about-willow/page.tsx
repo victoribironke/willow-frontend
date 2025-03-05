@@ -179,6 +179,29 @@ const Page = () => {
 
             <p className="text-sm text-gray-400">Jamie Margolin</p>
           </div>
+
+          <div className="bg-white shadow border rounded-lg p-4 flex flex-col items-center justify-center gap-6">
+            <p className="text-center lg:text-lg">
+              “Climate change is the single greatest threat to a sustainable
+              future but, at the same time, addressing the climate challenge
+              presents a golden opportunity to promote prosperity, security and
+              a brighter future for all.”
+            </p>
+
+            <p className="text-sm text-gray-400">Ban Ki-moon</p>
+          </div>
+
+          <div className="bg-white shadow border rounded-lg p-4 flex flex-col items-center justify-center gap-6">
+            <p className="text-center lg:text-lg">
+              “You cannot protect the environment unless you empower people, you
+              inform them, and you help them understand that these resources are
+              their own, that they must protect them.”
+            </p>
+
+            <p className="text-sm text-gray-400">
+              Wangari Maathai, political activist
+            </p>
+          </div>
         </div>
       </div>
 
