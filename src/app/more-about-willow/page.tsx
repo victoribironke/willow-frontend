@@ -1,4 +1,5 @@
 import Header from "@/components/landing/header";
+import ImageCarousel from "@/components/landing/image-carousel";
 import { BASE_URL, IMAGES, PAGES } from "@/constants/constants";
 import { Metadata } from "next";
 import Image from "next/image";
@@ -181,91 +182,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="w-full overflow-hidden relative">
-        <div className="flex animate-marquee space-x-4">
-          {/* First set of images */}
-          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
-            <Image
-              src={IMAGES.more_about_willow.two.src}
-              width={IMAGES.more_about_willow.two.w}
-              height={IMAGES.more_about_willow.two.h}
-              alt="Image two"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
-            <Image
-              src={IMAGES.more_about_willow.three.src}
-              width={IMAGES.more_about_willow.three.w}
-              height={IMAGES.more_about_willow.three.h}
-              alt="Image three"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
-            <Image
-              src={IMAGES.more_about_willow.four.src}
-              width={IMAGES.more_about_willow.four.w}
-              height={IMAGES.more_about_willow.four.h}
-              alt="Image four"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
-            <Image
-              src={IMAGES.more_about_willow.five.src}
-              width={IMAGES.more_about_willow.five.w}
-              height={IMAGES.more_about_willow.five.h}
-              alt="Image five"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          {/* Duplicate images for seamless loop */}
-          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
-            <Image
-              src={IMAGES.more_about_willow.two.src}
-              width={IMAGES.more_about_willow.two.w}
-              height={IMAGES.more_about_willow.two.h}
-              alt="Image two"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
-            <Image
-              src={IMAGES.more_about_willow.three.src}
-              width={IMAGES.more_about_willow.three.w}
-              height={IMAGES.more_about_willow.three.h}
-              alt="Image three"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
-            <Image
-              src={IMAGES.more_about_willow.four.src}
-              width={IMAGES.more_about_willow.four.w}
-              height={IMAGES.more_about_willow.four.h}
-              alt="Image four"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
-            <Image
-              src={IMAGES.more_about_willow.five.src}
-              width={IMAGES.more_about_willow.five.w}
-              height={IMAGES.more_about_willow.five.h}
-              alt="Image five"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </div>
+      <ImageCarousel />
 
       <p className="w-full">
         At Willow, we&apos;re not just curating eco-friendly products—we&apos;re

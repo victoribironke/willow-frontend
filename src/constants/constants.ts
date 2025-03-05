@@ -30,6 +30,10 @@ export const IMAGES = {
     three: { src: "/more-about-willow/three.jpeg", w: 736, h: 1075 },
     four: { src: "/more-about-willow/four.jpeg", w: 736, h: 920 },
     five: { src: "/more-about-willow/five.jpeg", w: 736, h: 732 },
+    six: { src: "/more-about-willow/six.jpeg", w: 736, h: 1104 },
+    seven: { src: "/more-about-willow/seven.jpeg", w: 736, h: 1104 },
+    eight: { src: "/more-about-willow/eight.jpeg", w: 600, h: 400 },
+    nine: { src: "/more-about-willow/nine.jpeg", w: 736, h: 736 },
   },
 };
 
