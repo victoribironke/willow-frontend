@@ -1,11 +1,13 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: "Geist", Arial, Helvetica, sans-serif;
+  font-family: "Onest", Arial, Helvetica, sans-serif;
+  /* font-family: "Geist", Arial, Helvetica, sans-serif; */
 }
 
 @layer base {
@@ -88,8 +90,6 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
-
 
 @layer base {
   * {

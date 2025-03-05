@@ -7,6 +7,7 @@ export const BACKEND_URL = "https://willow-backend.onrender.com/api/v1";
 
 export const PAGES = {
   home: "/",
+  more_about_willow: "/more-about-willow",
 
   dashboard: { home: "/dashboard" },
 
@@ -19,16 +20,25 @@ export const PAGES = {
 };
 
 export const IMAGES = {
-  auth_image: { src: "/auth-image.png", w: 1024, h: 512 },
+  auth_image: { src: "/auth-image.jpeg", w: 736, h: 1490 },
   mail: { src: "/mail.png", w: 122, h: 144 },
   logo: { src: "/logo.png", w: 24, h: 26 },
+
+  more_about_willow: {
+    one: { src: "/more-about-willow/one.jpeg", w: 735, h: 490 },
+    two: { src: "/more-about-willow/two.jpeg", w: 2730, h: 4096 },
+    three: { src: "/more-about-willow/three.jpeg", w: 736, h: 1075 },
+    four: { src: "/more-about-willow/four.jpeg", w: 736, h: 920 },
+    five: { src: "/more-about-willow/five.jpeg", w: 736, h: 732 },
+  },
 };
 
 export const ENDPOINTS = {
   register_user: BACKEND_URL + "/users/register",
   login_user: BACKEND_URL + "/auth/login",
   forgot_password: BACKEND_URL + "/auth/forgot-password",
-  reset_password: BACKEND_URL + "/auth/password-reset",
+  reset_password: (token: string) =>
+    BACKEND_URL + `/auth/password-reset?resetToken=${token}`,
   verify_otp: BACKEND_URL + "/auth/verify-account",
   resend_otp: BACKEND_URL + "/auth/resend-otp",
 };

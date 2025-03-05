@@ -3,7 +3,6 @@
 import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import { Suspense, useEffect } from "react";
-import { GalleryVerticalEnd } from "lucide-react";
 import { IMAGES, PAGES } from "@/constants/constants";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -39,7 +38,7 @@ const RootLayout = ({
             }
           />
 
-          <div className="grid min-h-svh lg:grid-cols-2">
+          <div className="w-full grid min-h-svh lg:grid-cols-2">
             <div className="flex flex-col gap-4 p-6 md:p-10">
               <div className="flex justify-center gap-2 md:justify-start">
                 <Link

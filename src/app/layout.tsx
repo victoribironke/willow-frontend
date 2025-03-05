@@ -13,7 +13,9 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased flex items-center justify-center">
+        {children}
+      </body>
     </html>
   );
 };

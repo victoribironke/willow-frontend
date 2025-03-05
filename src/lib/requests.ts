@@ -114,7 +114,7 @@ export const sendPasswordResetLink = async (email: string) => {
 
 export const resetPassword = async (password: string, token: string) => {
   try {
-    const req = await fetch(ENDPOINTS.reset_password + `?resetToken=${token}`, {
+    const req = await fetch(ENDPOINTS.reset_password(token), {
       method: "PATCH",
       body: JSON.stringify({
         newPassword: password,
