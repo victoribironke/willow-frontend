@@ -35,7 +35,7 @@ const Page = () => {
     <main className="max-w-5xl w-full flex flex-col gap-10 p-6 xl:px-0">
       <Header />
 
-      <h1 className="text-xl md:text-2xl font-medium md:font-semibold">
+      <h1 className="text-xl md:text-2xl font-semibold">
         Our Sustainability Approach
       </h1>
 
