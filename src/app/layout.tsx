@@ -13,7 +13,7 @@ const RootLayout = ({
 }>) => {
   return (
     <html lang="en">
-      <body className="antialiased flex items-center justify-center">
+      <body className="antialiased flex items-center justify-center bg-[#f5f5f5]">
         {children}
       </body>
     </html>

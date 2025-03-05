@@ -24,57 +24,53 @@ const RootLayout = ({
   }, []);
 
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <Suspense>
-          <Toaster
-            toastOptions={
-              {
-                // style: {
-                //   // backgroundColor: "hsl(var(--muted) / 0.5)",
-                //   color: "#fff",
-                // },
-              }
-            }
-          />
+    <Suspense>
+      <Toaster
+        toastOptions={
+          {
+            // style: {
+            //   // backgroundColor: "hsl(var(--muted) / 0.5)",
+            //   color: "#fff",
+            // },
+          }
+        }
+      />
 
-          <div className="w-full grid min-h-svh lg:grid-cols-2">
-            <div className="flex flex-col gap-4 p-6 md:p-10">
-              <div className="flex justify-center gap-2 md:justify-start">
-                <Link
-                  href={PAGES.home}
-                  className="flex items-center gap-2 font-medium"
-                >
-                  <div className="flex border p-1.5 shadow bg-white items-center justify-center rounded-md">
-                    <Image
-                      src={IMAGES.logo.src}
-                      width={IMAGES.logo.w}
-                      height={IMAGES.logo.h}
-                      alt="Logo"
-                      className="w-4 h-auto"
-                    />
-                  </div>
-                  Willow
-                </Link>
+      <div className="w-full grid min-h-svh lg:grid-cols-2">
+        <div className="flex flex-col gap-4 p-6 md:p-10">
+          <div className="flex justify-center gap-2 md:justify-start">
+            <Link
+              href={PAGES.home}
+              className="flex items-center gap-2 font-medium"
+            >
+              <div className="flex border p-1.5 shadow bg-white items-center justify-center rounded-md">
+                <Image
+                  src={IMAGES.logo.src}
+                  width={IMAGES.logo.w}
+                  height={IMAGES.logo.h}
+                  alt="Logo"
+                  className="w-4 h-auto"
+                />
               </div>
-              <div className="flex flex-1 items-center justify-center">
-                <div className="w-full max-w-sm">{children}</div>
-              </div>
-            </div>
-
-            <div className="relative hidden bg-muted lg:block">
-              <Image
-                src={IMAGES.auth_image.src}
-                width={IMAGES.auth_image.w}
-                height={IMAGES.auth_image.h}
-                alt="Image"
-                className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-              />
-            </div>
+              Willow
+            </Link>
           </div>
-        </Suspense>
-      </body>
-    </html>
+          <div className="flex flex-1 items-center justify-center">
+            <div className="w-full max-w-sm">{children}</div>
+          </div>
+        </div>
+
+        <div className="relative hidden bg-muted lg:block">
+          <Image
+            src={IMAGES.auth_image.src}
+            width={IMAGES.auth_image.w}
+            height={IMAGES.auth_image.h}
+            alt="Image"
+            className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          />
+        </div>
+      </div>
+    </Suspense>
   );
 };
 

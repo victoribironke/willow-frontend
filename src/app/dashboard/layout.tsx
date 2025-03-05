@@ -57,25 +57,21 @@ const RootLayout = ({
   }, [router]);
 
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <QueryClientProvider client={queryClient}>
-          <div className="[--header-height:calc(theme(spacing.14))]">
-            {loading ? (
-              <PageLoader fullScreen />
-            ) : (
-              <SidebarProvider className="flex flex-col">
-                <SiteHeader />
-                <div className="flex flex-1 max-w-[1600px]">
-                  <AppSidebar />
-                  <SidebarInset>{children}</SidebarInset>
-                </div>
-              </SidebarProvider>
-            )}
-          </div>
-        </QueryClientProvider>
-      </body>
-    </html>
+    <QueryClientProvider client={queryClient}>
+      <div className="[--header-height:calc(theme(spacing.14))]">
+        {loading ? (
+          <PageLoader fullScreen />
+        ) : (
+          <SidebarProvider className="flex flex-col">
+            <SiteHeader />
+            <div className="flex flex-1 max-w-[1600px]">
+              <AppSidebar />
+              <SidebarInset>{children}</SidebarInset>
+            </div>
+          </SidebarProvider>
+        )}
+      </div>
+    </QueryClientProvider>
   );
 };
 
