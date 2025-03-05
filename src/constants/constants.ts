@@ -6,6 +6,8 @@ export const BASE_URL =
 export const BACKEND_URL = "https://willow-backend.onrender.com/api/v1";
 
 export const PAGES = {
+  home: "/",
+
   dashboard: { home: "/dashboard" },
 
   auth: {
@@ -19,7 +21,7 @@ export const PAGES = {
 export const IMAGES = {
   auth_image: { src: "/auth-image.png", w: 1024, h: 512 },
   mail: { src: "/mail.png", w: 122, h: 144 },
-  logo: { src: "/icon.png", w: 24, h: 26 },
+  logo: { src: "/logo.png", w: 24, h: 26 },
 };
 
 export const ENDPOINTS = {
