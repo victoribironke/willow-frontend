@@ -22,7 +22,7 @@ export const PAGES = {
 export const IMAGES = {
   auth_image: { src: "/auth-image.jpeg", w: 736, h: 1490 },
   mail: { src: "/mail.png", w: 122, h: 144 },
-  logo: { src: "/logo.png", w: 24, h: 26 },
+  logo: { src: "/logo.svg", w: 24, h: 26 },
 
   more_about_willow: {
     one: { src: "/more-about-willow/one.jpeg", w: 735, h: 490 },
