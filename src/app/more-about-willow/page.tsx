@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 
 const Page = () => {
   return (
-    <main className="max-w-5xl w-full flex flex-col gap-10 p-6 xl:px-0">
+    <main className="max-w-7xl w-full flex flex-col gap-10 p-6 xl:px-0">
       <Header />
 
       <h1 className="text-xl md:text-2xl font-semibold">
@@ -181,9 +181,10 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="w-full relative mb-10 flex">
-        <div className="w-1/4 flex">
-          <div className="w-full rounded-xl overflow-hidden aspect-[9/16]">
+      <div className="w-full overflow-hidden relative">
+        <div className="flex animate-marquee space-x-4">
+          {/* First set of images */}
+          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
             <Image
               src={IMAGES.more_about_willow.two.src}
               width={IMAGES.more_about_willow.two.w}
@@ -192,10 +193,8 @@ const Page = () => {
               className="w-full h-full object-cover"
             />
           </div>
-        </div>
 
-        <div className="w-1/2 flex justify-end absolute h-full top-10 -left-5">
-          <div className="w-1/2 rounded-xl overflow-hidden aspect-[9/16]">
+          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
             <Image
               src={IMAGES.more_about_willow.three.src}
               width={IMAGES.more_about_willow.three.w}
@@ -204,10 +203,8 @@ const Page = () => {
               className="w-full h-full object-cover"
             />
           </div>
-        </div>
 
-        <div className="w-3/4 flex justify-end absolute h-full -left-10">
-          <div className="w-1/3 rounded-xl overflow-hidden aspect-[9/16]">
+          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
             <Image
               src={IMAGES.more_about_willow.four.src}
               width={IMAGES.more_about_willow.four.w}
@@ -216,10 +213,49 @@ const Page = () => {
               className="w-full h-full object-cover"
             />
           </div>
-        </div>
 
-        <div className="w-full flex justify-end absolute h-full -left-16 top-10">
-          <div className="w-1/4 rounded-xl overflow-hidden aspect-[9/16]">
+          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
+            <Image
+              src={IMAGES.more_about_willow.five.src}
+              width={IMAGES.more_about_willow.five.w}
+              height={IMAGES.more_about_willow.five.h}
+              alt="Image five"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Duplicate images for seamless loop */}
+          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
+            <Image
+              src={IMAGES.more_about_willow.two.src}
+              width={IMAGES.more_about_willow.two.w}
+              height={IMAGES.more_about_willow.two.h}
+              alt="Image two"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
+            <Image
+              src={IMAGES.more_about_willow.three.src}
+              width={IMAGES.more_about_willow.three.w}
+              height={IMAGES.more_about_willow.three.h}
+              alt="Image three"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
+            <Image
+              src={IMAGES.more_about_willow.four.src}
+              width={IMAGES.more_about_willow.four.w}
+              height={IMAGES.more_about_willow.four.h}
+              alt="Image four"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          <div className="w-1/4 flex-shrink-0 rounded-xl overflow-hidden aspect-[9/16]">
             <Image
               src={IMAGES.more_about_willow.five.src}
               width={IMAGES.more_about_willow.five.w}

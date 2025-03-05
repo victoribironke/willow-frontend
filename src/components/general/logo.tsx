@@ -5,7 +5,10 @@ import Link from "next/link";
 const Logo = () => {
   return (
     <div className="flex items-center gap-2">
-      <Link href={PAGES.home} className="flex items-center gap-2 font-medium">
+      <Link
+        href={PAGES.home}
+        className="flex items-center justify-center gap-2 font-medium"
+      >
         <div className="flex border p-1.5 shadow bg-white items-center justify-center rounded-md">
           <Image
             src={IMAGES.logo.src}
