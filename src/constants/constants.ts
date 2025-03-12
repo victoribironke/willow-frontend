@@ -9,7 +9,15 @@ export const PAGES = {
   home: "/",
   more_about_willow: "/more-about-willow",
 
-  dashboard: { home: "/dashboard" },
+  dashboard: {
+    home: "/dashboard",
+    chat: "/dashboard/chat",
+    analytics: "/dashboard/analytics",
+    list_product: "/dashboard/list-product",
+    products: "/dashboard/products",
+    orders: "/dashboard/orders",
+    settings: "/dashboard/settings",
+  },
 
   auth: {
     login: "/auth/login",

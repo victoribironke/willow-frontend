@@ -31,42 +31,44 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const data = localStorage.getItem("willow_auth_data");
+  // useEffect(() => {
+  //   const data = localStorage.getItem("willow_auth_data");
 
-    if (!data) {
-      router.push(PAGES.auth.login);
-      return;
-    }
+  //   if (!data) {
+  //     router.push(PAGES.auth.login);
+  //     return;
+  //   }
 
-    const { access_token } = JSON.parse(data);
+  //   const { access_token } = JSON.parse(data);
 
-    const date_ms = new Date().getTime();
-    const expires_at = getJwtExpiration(access_token);
+  //   const date_ms = new Date().getTime();
+  //   const expires_at = getJwtExpiration(access_token);
 
-    if (!expires_at || date_ms >= expires_at) {
-      localStorage.removeItem("willow_auth_data");
-      router.push(PAGES.auth.login);
-      return;
-    }
+  //   if (!expires_at || date_ms >= expires_at) {
+  //     localStorage.removeItem("willow_auth_data");
+  //     router.push(PAGES.auth.login);
+  //     return;
+  //   }
 
-    setLoading(false);
-  }, [router]);
+  //   setLoading(false);
+  // }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="[--header-height:calc(theme(spacing.14))]">
+      <div className="w-full [--header-height:calc(theme(spacing.14))] bg-[#f5f5f5]">
         {loading ? (
           <PageLoader fullScreen />
         ) : (
           <SidebarProvider className="flex flex-col">
             <SiteHeader />
-            <div className="flex flex-1 max-w-[1600px]">
+            <div className="flex flex-1 max-w-[1600px] p-4 bg-[#f5f5f5]">
               <AppSidebar />
-              <SidebarInset>{children}</SidebarInset>
+              <SidebarInset className="flex flex-col gap-4 bg-[#f5f5f5]">
+                {children}
+              </SidebarInset>
             </div>
           </SidebarProvider>
         )}

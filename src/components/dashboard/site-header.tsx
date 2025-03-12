@@ -1,6 +1,8 @@
 "use client";
 
-import { SidebarIcon } from "lucide-react";
+import { Menu, SidebarIcon } from "lucide-react";
+
+import { SearchForm } from "@/components/dashboard/search-form";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,18 +14,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSidebar } from "@/components/ui/sidebar";
-import { PAGES } from "@/constants/constants";
-import { usePathname } from "next/navigation";
+import Logo from "../general/logo";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 const SiteHeader = () => {
   const { toggleSidebar } = useSidebar();
-  const pathname = usePathname();
-
-  // const mapping = {
-  //   [PAGES.top_artists]: "Top artists",
-  //   [PAGES.top_tracks]: "Top tracks",
-  //   [PAGES.stats]: "Statistics",
-  // };
 
   return (
     <header className="fle sticky top-0 z-50 w-full items-center border-b bg-background">
@@ -34,31 +29,22 @@ const SiteHeader = () => {
           size="icon"
           onClick={toggleSidebar}
         >
-          <SidebarIcon />
+          <Menu />
         </Button>
+
         <Separator orientation="vertical" className="mr-2 h-4" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              {pathname === "/dashboard" ? (
-                <BreadcrumbPage>Dashboard</BreadcrumbPage>
-              ) : (
-                <BreadcrumbLink href={PAGES.dashboard.home}>
-                  Dashboard
-                </BreadcrumbLink>
-              )}
-            </BreadcrumbItem>
-            {pathname !== "/dashboard" && (
-              <>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  {/* <BreadcrumbPage>{mapping[pathname]}</BreadcrumbPage> */}
-                </BreadcrumbItem>
-              </>
-            )}
-          </BreadcrumbList>
-        </Breadcrumb>
-        {/* <SearchForm className="w-full sm:ml-auto sm:w-auto" /> */}
+
+        <Logo />
+
+        <SearchForm className="w-full max-w-sm ml-4 mr-auto rounded-full" />
+
+        <Avatar className="h-8 w-8 rounded-full">
+          <AvatarImage
+            src="https://github.com/victoribironke.png"
+            alt={"user.name"}
+          />
+          <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+        </Avatar>
       </div>
     </header>
   );

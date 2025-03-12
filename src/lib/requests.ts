@@ -1,5 +1,7 @@
+import { user_details } from "@/app/atoms/atoms";
 import { ENDPOINTS } from "@/constants/constants";
 import { NewUser } from "@/types/auth";
+import { useSetRecoilState } from "recoil";
 
 export const registerUser = async (data: NewUser) => {
   try {
@@ -25,6 +27,8 @@ export const registerUser = async (data: NewUser) => {
 };
 
 export const verifyOtp = async (email: string, otp: string) => {
+  const setUserDetails = useSetRecoilState(user_details);
+
   try {
     const req = await fetch(ENDPOINTS.verify_otp, {
       method: "PATCH",
@@ -49,6 +53,8 @@ export const verifyOtp = async (email: string, otp: string) => {
 
     localStorage.setItem("willow_auth_data", JSON.stringify(authData));
 
+    setUserDetails(res.data);
+
     return { data: res.message + ".", error: null };
   } catch (e) {
     console.log(e);
@@ -57,6 +63,8 @@ export const verifyOtp = async (email: string, otp: string) => {
 };
 
 export const loginUser = async (email: string, password: string) => {
+  const setUserDetails = useSetRecoilState(user_details);
+
   try {
     const req = await fetch(ENDPOINTS.login_user, {
       method: "POST",
@@ -80,6 +88,8 @@ export const loginUser = async (email: string, password: string) => {
     };
 
     localStorage.setItem("willow_auth_data", JSON.stringify(authData));
+
+    setUserDetails(res.data);
 
     return { data: res.message + ".", error: null };
   } catch (e) {
