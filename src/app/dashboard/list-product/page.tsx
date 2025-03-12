@@ -1,3 +1,4 @@
+import ListProduct from "@/components/dashboard/list-product";
 import { BASE_URL, PAGES } from "@/constants/constants";
 import { Metadata } from "next";
 
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 const Page = () => {
-  return <div></div>;
+  return <ListProduct />;
 };
 
 export default Page;

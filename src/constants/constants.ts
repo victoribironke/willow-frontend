@@ -55,49 +55,13 @@ export const ENDPOINTS = {
   resend_otp: BACKEND_URL + "/auth/resend-otp",
 };
 
-export const sustainabilityPrompt = (d: {
-  cloudVisionRes: string;
-  location: string;
-  name: string;
-  description: string;
-  category: string;
-  sf: string[];
-  packaging: string;
-  price: string;
-  onDemand: boolean;
-  eol?: string;
-  options?: string;
-  inStock?: number;
-}) => `
-You are a sustainability expert tasked with evaluating a product's environmental performance. Below, you will be provided with detailed product data from our system. This data includes various fields such as:
-Basic Information: Product name, description, category, price, in-stock status, on-demand boolean flag, and options (e.g., size, color).
-Production & Packaging: Production location, packaging type (enum: PLASTIC_FREE, BIODEGRADABLE, RECYCLED_PAPER, REUSABLE, COMPOSTABLE, MINIMAL, GLASS, METAL).
-Sustainability Data: sustainability features (selected from a predefined enum which contains: BIODEGRADABLE, COMPOSTABLE, REUSABLE, RECYCLED_MATERIALS, LOCALLY_SOURCED, WATER_EFFICIENT, SOLAR_POWERED, MINIMAL_CARBON_FOOTPRINT, ENERGY_EFFICIENT, ZERO_WASTE, PLASTIC_FREE, REPAIRABLE_DESIGN, UPCYCLED, CARBON_OFFSET, ORGANIC_MATERIALS, FAIR_TRADE, VEGAN, NON_TOXIC, REGENERATIVE_AGRICULTURE, SLOW_PRODUCTION, WASTE_REDUCING_DESIGN, CIRCULAR_DESIGN, WILDLIFE_FRIENDLY), certifications (document references or URLs and certificate issuer) which is optional.
-Additional Environmental Insights: End-of-life information i.e Disposal/recycling instructions.
-Image Analysis Data: Results from Google Cloud Vision’s object and label detection (including any identified objects, labels, and image properties).
-Your task is to analyze these inputs and determine:
-Overall Sustainability Judgment: Provide a sustainability score between 0 (poor sustainability) and 100 (excellent sustainability). Consider trade-offs such as reduced emissions versus long-term impact, packaging sustainability, and production practices.
-Sustainability Tag Suggestion: Recommend a concise sustainability tag (choose from the sustainability features enum) that best represents the product's most prominent eco-friendly feature.
-Rationale: Offer a brief explanation (2–3 sentences) summarizing the factors influencing your judgment, such as eco-friendly production methods, packaging choices, and any potential environmental trade-offs.
-Ensure that your evaluation considers that no product is 100% sustainable and that trade-offs exist. If the automated analysis is inconclusive or if key data is missing,output “null”.
-Input Data:
-Google cloud vision response (LABEL AND TEXT DETECTION, IMAGE PROPERTIES): ${d.cloudVisionRes}
-Production Location: ${d.location}
-Sustainability features: ${d.sf}
-Product Name: ${d.name}
-Product description: ${d.description}
-Product category: ${d.category}
-Product price: ${d.price}
-Product options: ${d.options}
-Product packaging: ${d.packaging}
-Product end of life information: ${d.eol}
-
-Production basis (either quantity-in-stock or on-demand):
-Product in-stock status: ${d.inStock}
-Product on-demand status: ${d.onDemand}
-
-Output Format:
-Sustainability Score: [0-100]
-Sustainability Tag: [Your recommended tag]
-Explanation: [Your rationale]
-`;
+export const IMAGE_TIPS = [
+  "Center the product in the frame.",
+  "Use high-resolution images.",
+  "Shoot in natural lighting.",
+  "Use a simple, uncluttered background.",
+  "Include eco labels or certifications if visible.",
+  "Show the ingredients/material section, if applicable.",
+  "Ensure the image is properly oriented.",
+  "Avoid heavy editing or filters.",
+];
