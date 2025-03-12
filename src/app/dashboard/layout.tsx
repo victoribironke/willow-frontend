@@ -7,10 +7,8 @@ import { SiteHeader } from "@/components/dashboard/site-header";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { PAGES } from "@/constants/constants";
-import { getJwtExpiration } from "@/lib/utils";
+import { useState } from "react";
+// import { useRouter } from "next/navigation";
 
 // export const metadata: Metadata = {
 //   title: "Home ~ Willow",
@@ -31,8 +29,8 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading] = useState(false);
+  // const router = useRouter();
 
   // useEffect(() => {
   //   const data = localStorage.getItem("willow_auth_data");

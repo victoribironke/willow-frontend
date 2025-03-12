@@ -4,7 +4,6 @@ import {
   ChartNoAxesColumn,
   MessageCircleMore,
   MonitorUp,
-  MoreHorizontal,
   Package,
   Settings,
   ShoppingBag,

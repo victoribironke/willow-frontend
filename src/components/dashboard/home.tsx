@@ -4,7 +4,6 @@ import {
   CircleX,
   MessagesSquare,
   Send,
-  ShoppingBag,
   ShoppingCart,
   Undo2,
 } from "lucide-react";

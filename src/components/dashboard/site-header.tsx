@@ -1,16 +1,8 @@
 "use client";
 
-import { Menu, SidebarIcon } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import { SearchForm } from "@/components/dashboard/search-form";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useSidebar } from "@/components/ui/sidebar";
