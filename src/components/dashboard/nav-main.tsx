@@ -76,10 +76,13 @@ const NavMain = () => {
           <SidebarMenuItem key={i}>
             <Link href={s.link}>
               <SidebarMenuButton
-                className={cn(s.isActive ? "bg-main/10 hover:bg-main/10" : "")}
+                className={cn(
+                  "h-10",
+                  s.isActive ? "bg-main/10 hover:bg-main/10" : ""
+                )}
               >
-                <s.icon />
-                <span className="font-medium">{s.title}</span>
+                <s.icon size={20} />
+                <span className="font-medium text-base">{s.title}</span>
               </SidebarMenuButton>
             </Link>
           </SidebarMenuItem>

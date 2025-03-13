@@ -10,7 +10,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
       className="top-[--header-height] !h-[calc(100svh-var(--header-height))]"
       {...props}
     >
-      <SidebarContent>
+      <SidebarContent className="p-2">
         <NavMain />
       </SidebarContent>
     </Sidebar>
