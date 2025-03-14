@@ -40,7 +40,7 @@ const Home = () => {
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:w-2/3 lg:pr-4">
         {overview.map((o, i) => (
           <div
-            className="flex flex-col gap-4 border shadow rounded-lg p-2 bg-white"
+            className="flex flex-col gap-6 border shadow rounded-lg p-2 bg-white"
             key={i}
           >
             <div className="flex gap-4 items-center justify-start">
@@ -50,7 +50,7 @@ const Home = () => {
 
               <p className="text-xl font-medium">{o.value}</p>
             </div>
-            <p className="text-sm">{o.title}</p>
+            <p>{o.title}</p>
           </div>
         ))}
       </div>

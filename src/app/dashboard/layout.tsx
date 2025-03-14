@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/general/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Input } from "@/components/ui/input";
 // import { useRouter } from "next/navigation";
 
 // export const metadata: Metadata = {
@@ -69,6 +70,13 @@ const RootLayout = ({
             <div className="w-full bg-white border-b p-4 flex items-center justify-center">
               <div className="w-full max-w-[1600px] flex gap-4 items-center justify-between">
                 <Logo />
+
+                <div className="w-full max-w-md">
+                  <Input
+                    className="w-full rounded-full"
+                    placeholder="Search products"
+                  />
+                </div>
 
                 <Avatar className="h-8 w-8 rounded-full">
                   <AvatarImage
