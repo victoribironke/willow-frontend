@@ -2,12 +2,16 @@
 
 // import type { Metadata } from "next";
 import "../globals.css";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { SiteHeader } from "@/components/dashboard/site-header";
-import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
+import Link from "next/link";
+import { PAGES, SIDEBAR_ITEMS } from "@/constants/constants";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import Logo from "@/components/general/logo";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 // import { useRouter } from "next/navigation";
 
 // export const metadata: Metadata = {
@@ -31,6 +35,7 @@ const RootLayout = ({
 }>) => {
   const [loading] = useState(false);
   // const router = useRouter();
+  const pathname = usePathname();
 
   // useEffect(() => {
   //   const data = localStorage.getItem("willow_auth_data");
@@ -60,15 +65,44 @@ const RootLayout = ({
         {loading ? (
           <PageLoader fullScreen />
         ) : (
-          <SidebarProvider className="flex flex-col">
-            <SiteHeader />
-            <div className="flex flex-1 max-w-[1600px] p-4 bg-[#f5f5f5]">
-              <AppSidebar />
-              <SidebarInset className="flex flex-col gap-4 bg-[#f5f5f5]">
-                {children}
-              </SidebarInset>
+          <section className="w-full min-h-screen flex items-center flex-col">
+            <div className="w-full bg-white border-b p-4 flex items-center justify-center">
+              <div className="w-full max-w-[1600px] flex gap-4 items-center justify-between">
+                <Logo />
+
+                <Avatar className="h-8 w-8 rounded-full">
+                  <AvatarImage
+                    src="https://github.com/victoribironke.png"
+                    alt={"user.name"}
+                  />
+                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                </Avatar>
+              </div>
             </div>
-          </SidebarProvider>
+
+            <div className="w-full bg-gray-100 min-h-[calc(100vh-4rem)] p-4 overflow-scroll flex items-center flex-col">
+              <div className="w-full flex gap-8 max-w-[1600px] h-auto">
+                <div className="w-80 flex flex-col gap-2">
+                  {SIDEBAR_ITEMS(pathname).map((s, i) => (
+                    <Link href={s.link} key={i}>
+                      <Button
+                        className={cn(
+                          "w-full justify-start hover:bg-gray-200 gap-4 text-base",
+                          s.isActive ? "bg-main/10 hover:bg-main/10" : ""
+                        )}
+                        variant="ghost"
+                      >
+                        <s.icon />
+                        {s.title}
+                      </Button>
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="w-full flex flex-col gap-6">{children}</div>
+              </div>
+            </div>
+          </section>
         )}
       </div>
     </QueryClientProvider>

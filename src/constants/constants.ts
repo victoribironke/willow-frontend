@@ -1,3 +1,13 @@
+import {
+  ChartNoAxesColumn,
+  MessageCircleMore,
+  MonitorUp,
+  Package,
+  Settings,
+  ShoppingBag,
+  Table2,
+} from "lucide-react";
+
 export const BASE_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
@@ -64,4 +74,49 @@ export const IMAGE_TIPS = [
   "Show the ingredients/material section, if applicable.",
   "Ensure the image is properly oriented.",
   "Avoid heavy editing or filters.",
+];
+
+export const SIDEBAR_ITEMS = (pathname: string) => [
+  {
+    title: "Dashboard",
+    icon: Table2,
+    isActive: pathname === PAGES.dashboard.home,
+    link: PAGES.dashboard.home,
+  },
+  {
+    title: "Chat",
+    icon: MessageCircleMore,
+    isActive: pathname === PAGES.dashboard.chat,
+    link: PAGES.dashboard.chat,
+  },
+  {
+    title: "Analytics",
+    icon: ChartNoAxesColumn,
+    isActive: pathname === PAGES.dashboard.analytics,
+    link: PAGES.dashboard.analytics,
+  },
+  {
+    title: "List product",
+    icon: MonitorUp,
+    isActive: pathname === PAGES.dashboard.list_product,
+    link: PAGES.dashboard.list_product,
+  },
+  {
+    title: "Products",
+    icon: Package,
+    isActive: pathname === PAGES.dashboard.products,
+    link: PAGES.dashboard.products,
+  },
+  {
+    title: "Orders",
+    icon: ShoppingBag,
+    isActive: pathname === PAGES.dashboard.orders,
+    link: PAGES.dashboard.orders,
+  },
+  {
+    title: "Settings",
+    icon: Settings,
+    isActive: pathname === PAGES.dashboard.settings,
+    link: PAGES.dashboard.settings,
+  },
 ];
