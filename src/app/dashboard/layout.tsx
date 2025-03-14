@@ -6,7 +6,7 @@ import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import Link from "next/link";
-import { PAGES, SIDEBAR_ITEMS } from "@/constants/constants";
+import { SIDEBAR_ITEMS } from "@/constants/constants";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
