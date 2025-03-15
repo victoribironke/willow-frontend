@@ -24,7 +24,10 @@ export const PAGES = {
     chat: "/dashboard/chat",
     analytics: "/dashboard/analytics",
     list_product: "/dashboard/list-product",
-    products: "/dashboard/products",
+    products: {
+      home: "/dashboard/products",
+      product: (id: string) => `/dashboard/products/${id}`,
+    },
     orders: "/dashboard/orders",
     settings: "/dashboard/settings",
   },
@@ -104,8 +107,8 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
   {
     title: "Products",
     icon: Package,
-    isActive: pathname === PAGES.dashboard.products,
-    link: PAGES.dashboard.products,
+    isActive: pathname === PAGES.dashboard.products.home,
+    link: PAGES.dashboard.products.home,
   },
   {
     title: "Orders",

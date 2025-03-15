@@ -13,6 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import Link from "next/link";
+import { PAGES } from "@/constants/constants";
 
 const Products = () => {
   const [tab, setTab] = useState("Listed");
@@ -66,7 +68,12 @@ const Products = () => {
                   </Avatar>
 
                   <div>
-                    <p className="font-medium">Mixed tote bag (Red bottoms)</p>
+                    <Link
+                      href={PAGES.dashboard.products.product("fklaj")}
+                      className="font-medium hover:underline"
+                    >
+                      Mixed tote bag (Red bottoms)
+                    </Link>
 
                     <p className="text-sm text-muted-foreground">Accessory</p>
                   </div>
