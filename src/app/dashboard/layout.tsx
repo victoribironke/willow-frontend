@@ -23,6 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { logOut } from "@/lib/auth";
+import { RecoilRoot } from "recoil";
 
 // export const metadata: Metadata = {
 //   title: "Home ~ Willow",
@@ -70,70 +71,74 @@ const RootLayout = ({
   }, [push]);
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className="w-full [--header-height:calc(theme(spacing.14))] bg-[#f5f5f5]">
-        {loading ? (
-          <PageLoader fullScreen />
-        ) : (
-          <section className="w-full min-h-screen flex items-center flex-col">
-            <div className="w-full bg-white border-b p-4 flex items-center justify-center">
-              <div className="w-full max-w-[1600px] flex gap-4 items-center justify-between">
-                <Logo />
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
+        <div className="w-full [--header-height:calc(theme(spacing.14))] bg-[#f5f5f5]">
+          {loading ? (
+            <PageLoader fullScreen />
+          ) : (
+            <section className="w-full min-h-screen flex items-center flex-col">
+              <div className="w-full bg-white border-b p-4 flex items-center justify-center">
+                <div className="w-full max-w-[1600px] flex gap-4 items-center justify-between">
+                  <Logo />
 
-                <div className="w-full max-w-md">
-                  <Input
-                    className="w-full rounded-full"
-                    placeholder="Search products"
-                  />
+                  <div className="w-full max-w-md">
+                    <Input
+                      className="w-full rounded-full"
+                      placeholder="Search products"
+                    />
+                  </div>
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <Avatar className="h-8 w-8 rounded-full">
+                        <AvatarImage
+                          src="https://github.com/victoribironke.png"
+                          alt={"user.name"}
+                        />
+                        <AvatarFallback className="rounded-lg">
+                          CN
+                        </AvatarFallback>
+                      </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={logOut}>
+                        Log out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Avatar className="h-8 w-8 rounded-full">
-                      <AvatarImage
-                        src="https://github.com/victoribironke.png"
-                        alt={"user.name"}
-                      />
-                      <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={logOut}>
-                      Log out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </div>
-            </div>
 
-            <div className="w-full bg-gray-100 min-h-[calc(100vh-4rem)] p-4 overflow-scroll flex items-center flex-col">
-              <div className="w-full flex gap-8 max-w-[1600px] h-auto">
-                <div className="w-80 flex flex-col gap-2">
-                  {SIDEBAR_ITEMS(pathname).map((s, i) => (
-                    <Link href={s.link} key={i}>
-                      <Button
-                        className={cn(
-                          "w-full justify-start hover:bg-gray-200 gap-4 text-base",
-                          s.isActive ? "bg-main/10 hover:bg-main/10" : ""
-                        )}
-                        variant="ghost"
-                      >
-                        <s.icon />
-                        {s.title}
-                      </Button>
-                    </Link>
-                  ))}
+              <div className="w-full bg-gray-100 min-h-[calc(100vh-4rem)] p-4 pb-10 overflow-scroll flex items-center flex-col">
+                <div className="w-full flex gap-8 max-w-[1600px] h-auto">
+                  <div className="w-80 flex flex-col gap-2 sticky top-4">
+                    {SIDEBAR_ITEMS(pathname).map((s, i) => (
+                      <Link href={s.link} key={i}>
+                        <Button
+                          className={cn(
+                            "w-full justify-start hover:bg-gray-200 gap-4 text-base",
+                            s.isActive ? "bg-main/10 hover:bg-main/10" : ""
+                          )}
+                          variant="ghost"
+                        >
+                          <s.icon />
+                          {s.title}
+                        </Button>
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className="w-full flex flex-col gap-6">{children}</div>
                 </div>
-
-                <div className="w-full flex flex-col gap-6">{children}</div>
               </div>
-            </div>
-          </section>
-        )}
-      </div>
-    </QueryClientProvider>
+            </section>
+          )}
+        </div>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 };
 

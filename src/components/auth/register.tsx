@@ -160,7 +160,7 @@ const Register = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Account types</SelectLabel>
+              {/* <SelectLabel>Account types</SelectLabel> */}
               <SelectItem value="CUSTOMER">Customer</SelectItem>
               <SelectItem value="SELLER">Seller</SelectItem>
             </SelectGroup>

@@ -8,7 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { IMAGE_TIPS } from "@/constants/constants";
+import { IMAGE_TIPS, SUSTAINABILITY_FEATURES } from "@/constants/constants";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import {
@@ -20,8 +20,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
+import MultiSelect from "../general/multi-select";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "../ui/button";
 
 const ListProduct = () => {
+  const [selected, setSelected] = useState<string[]>([]);
+
   return (
     <>
       <h1 className="text-xl lg:text-2xl font-medium">
@@ -73,7 +79,9 @@ const ListProduct = () => {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="name">Name</Label>
+          <Label htmlFor="name">
+            Name <span className="text-red">*</span>
+          </Label>
           <Input
             id="name"
             type="text"
@@ -86,7 +94,9 @@ const ListProduct = () => {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="category">Category</Label>
+          <Label htmlFor="category">
+            Category <span className="text-red">*</span>
+          </Label>
           <Input
             id="category"
             type="text"
@@ -99,7 +109,9 @@ const ListProduct = () => {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="production">Production</Label>
+          <Label htmlFor="production">
+            Production <span className="text-red">*</span>
+          </Label>
           <Input
             id="production"
             type="number"
@@ -111,11 +123,14 @@ const ListProduct = () => {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="price">Price</Label>
+          <Label htmlFor="price">
+            Price <span className="text-red">*</span>
+          </Label>
           <Input
             id="price"
             type="number"
             required
+            placeholder="5000"
             // value={fullName}
             // onChange={(e) => setFullName(e.target.value)}
             className="bg-white"
@@ -123,7 +138,9 @@ const ListProduct = () => {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="sourcing">Sourcing</Label>
+          <Label htmlFor="sourcing">
+            Sourcing <span className="text-red">*</span>
+          </Label>
           <Select
 
           // value={accountType}
@@ -134,7 +151,6 @@ const ListProduct = () => {
             </SelectTrigger>
             <SelectContent id="sourcing" className="bg-white">
               <SelectGroup>
-                <SelectLabel>Sourcing</SelectLabel>
                 <SelectItem value="locally-sourced">Locally sourced</SelectItem>
               </SelectGroup>
             </SelectContent>
@@ -142,7 +158,9 @@ const ListProduct = () => {
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="packaging">Packaging</Label>
+          <Label htmlFor="packaging">
+            Packaging <span className="text-red">*</span>
+          </Label>
           <Select
 
           // value={accountType}
@@ -153,12 +171,53 @@ const ListProduct = () => {
             </SelectTrigger>
             <SelectContent id="packaging" className="bg-white">
               <SelectGroup>
-                <SelectLabel>Packaging</SelectLabel>
                 <SelectItem value="biodegradable">Biodegradable</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
         </div>
+
+        <div className="grid gap-2 col-span-3">
+          <Label htmlFor="features">
+            Sustainability features <span className="text-red">*</span>
+          </Label>
+          <MultiSelect
+            fullList={SUSTAINABILITY_FEATURES}
+            selected={selected}
+            setSelected={setSelected}
+          />
+        </div>
+
+        <div className="grid gap-2 col-span-3">
+          <Label htmlFor="desc">
+            Description <span className="text-red">*</span>
+          </Label>
+          <Textarea
+            id="desc"
+            placeholder="Enter your product's description"
+            className="bg-white"
+          />
+        </div>
+
+        <div className="grid gap-2 col-span-3">
+          <Label htmlFor="eol-info">End of life information</Label>
+          <Textarea
+            id="eol-info"
+            placeholder="Recycle/dispose information"
+            className="bg-white"
+          />
+        </div>
+
+        <div></div>
+        <Button
+          className="w-full bg-main hover:bg-main/90 cursor-pointer mx-auto self-center"
+          // onClick={() => validate()}
+          // disabled={loading}
+        >
+          Upload
+          {/* {loading && <LoaderCircle className="animate-spin" />} */}
+        </Button>
+        <div></div>
       </section>
     </>
   );

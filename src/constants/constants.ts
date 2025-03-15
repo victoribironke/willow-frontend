@@ -120,3 +120,5 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
     link: PAGES.dashboard.settings,
   },
 ];
+
+export const SUSTAINABILITY_FEATURES = ["Reusable", "Energy efficient"].sort();
