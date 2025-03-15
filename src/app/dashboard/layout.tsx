@@ -12,7 +12,7 @@ import { cn, getJwtExpiration } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/general/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import {
   DropdownMenu,

@@ -19,4 +19,4 @@ export type Seller = {
   status: string;
 };
 
-export type Customer = {};
+export type Customer = { userId: string };
