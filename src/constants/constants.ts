@@ -83,18 +83,18 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
     isActive: pathname === PAGES.dashboard.home,
     link: PAGES.dashboard.home,
   },
-  {
-    title: "Chat",
-    icon: MessageCircleMore,
-    isActive: pathname === PAGES.dashboard.chat,
-    link: PAGES.dashboard.chat,
-  },
-  {
-    title: "Analytics",
-    icon: ChartNoAxesColumn,
-    isActive: pathname === PAGES.dashboard.analytics,
-    link: PAGES.dashboard.analytics,
-  },
+  // {
+  //   title: "Chat",
+  //   icon: MessageCircleMore,
+  //   isActive: pathname === PAGES.dashboard.chat,
+  //   link: PAGES.dashboard.chat,
+  // },
+  // {
+  //   title: "Analytics",
+  //   icon: ChartNoAxesColumn,
+  //   isActive: pathname === PAGES.dashboard.analytics,
+  //   link: PAGES.dashboard.analytics,
+  // },
   {
     title: "List product",
     icon: MonitorUp,

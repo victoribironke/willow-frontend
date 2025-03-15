@@ -4,16 +4,16 @@
 import "../globals.css";
 import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { SIDEBAR_ITEMS } from "@/constants/constants";
+import { PAGES, SIDEBAR_ITEMS } from "@/constants/constants";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, getJwtExpiration } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/general/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 // export const metadata: Metadata = {
 //   title: "Home ~ Willow",
@@ -34,31 +34,31 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const [loading] = useState(false);
-  // const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const { push } = useRouter();
   const pathname = usePathname();
 
-  // useEffect(() => {
-  //   const data = localStorage.getItem("willow_auth_data");
+  useEffect(() => {
+    const data = localStorage.getItem("willow_auth_data");
 
-  //   if (!data) {
-  //     router.push(PAGES.auth.login);
-  //     return;
-  //   }
+    if (!data) {
+      push(PAGES.auth.login);
+      return;
+    }
 
-  //   const { access_token } = JSON.parse(data);
+    const { access_token } = JSON.parse(data);
 
-  //   const date_ms = new Date().getTime();
-  //   const expires_at = getJwtExpiration(access_token);
+    const date_ms = new Date().getTime();
+    const expires_at = getJwtExpiration(access_token);
 
-  //   if (!expires_at || date_ms >= expires_at) {
-  //     localStorage.removeItem("willow_auth_data");
-  //     router.push(PAGES.auth.login);
-  //     return;
-  //   }
+    if (!expires_at || date_ms >= expires_at) {
+      localStorage.removeItem("willow_auth_data");
+      push(PAGES.auth.login);
+      return;
+    }
 
-  //   setLoading(false);
-  // }, [router]);
+    setLoading(false);
+  }, [push]);
 
   return (
     <QueryClientProvider client={queryClient}>

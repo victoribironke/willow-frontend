@@ -47,6 +47,7 @@ export const verifyOtp = async (email: string, otp: string) => {
 
     const authData = {
       access_token: res.data.accessToken,
+      user_id: res.data.user.id,
     };
 
     localStorage.setItem("willow_auth_data", JSON.stringify(authData));
@@ -81,8 +82,11 @@ export const loginUser = async (email: string, password: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
+    console.log(res);
+
     const authData = {
       access_token: res.data.accessToken,
+      user_id: res.data.user.id,
     };
 
     localStorage.setItem("willow_auth_data", JSON.stringify(authData));
