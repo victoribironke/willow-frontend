@@ -7,17 +7,17 @@ const Logo = () => {
     <div className="flex items-center gap-2">
       <Link
         href={PAGES.home}
-        className="flex items-center justify-center gap-2 font-medium"
+        className="flex items-center justify-center gap-3 font-medium"
       >
-        <div className="flex border p-1.5 shadow bg-white items-center justify-center rounded-md">
-          <Image
-            src={IMAGES.logo.src}
-            width={IMAGES.logo.w}
-            height={IMAGES.logo.h}
-            alt="Logo"
-            className="w-4 h-auto"
-          />
-        </div>
+        {/* <div className="flex p-1.5 bg-white items-center justify-center rounded-md"> */}
+        <Image
+          src={IMAGES.logo.src}
+          width={IMAGES.logo.w}
+          height={IMAGES.logo.h}
+          alt="Logo"
+          className="w-4 h-auto"
+        />
+        {/* </div> */}
         <span className="hidden sm:inline-block">Willow</span>
       </Link>
     </div>

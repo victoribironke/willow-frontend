@@ -1,3 +1,4 @@
+import Products from "@/components/dashboard/products";
 import { BASE_URL, PAGES } from "@/constants/constants";
 import { Metadata } from "next";
 
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 const Page = () => {
-  return <div></div>;
+  return <Products />;
 };
 
 export default Page;

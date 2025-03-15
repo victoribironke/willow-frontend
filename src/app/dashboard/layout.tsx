@@ -77,17 +77,17 @@ const RootLayout = ({
           {loading ? (
             <PageLoader fullScreen />
           ) : (
-            <section className="w-full min-h-screen flex items-center flex-col">
-              <div className="w-full bg-white border-b p-4 flex items-center justify-center">
+            <section className="w-full min-h-screen flex items-center flex-col relative pt-16">
+              <div className="w-full bg-white border-b p-4 flex items-center justify-center fixed z-50 top-0">
                 <div className="w-full max-w-[1600px] flex gap-4 items-center justify-between">
                   <Logo />
 
-                  <div className="w-full max-w-md">
+                  {/* <div className="w-full max-w-md">
                     <Input
                       className="w-full rounded-full"
                       placeholder="Search products"
                     />
-                  </div>
+                  </div> */}
 
                   <DropdownMenu>
                     <DropdownMenuTrigger>
@@ -112,9 +112,9 @@ const RootLayout = ({
                 </div>
               </div>
 
-              <div className="w-full bg-gray-100 min-h-[calc(100vh-4rem)] p-4 pb-10 overflow-scroll flex items-center flex-col">
-                <div className="w-full flex gap-8 max-w-[1600px] h-auto">
-                  <div className="w-80 flex flex-col gap-2 sticky top-4">
+              <div className="w-full bg-gray-100 min-h-[calc(100vh-4rem)] p-4 pb-10 flex items-center flex-col">
+                <div className="w-full flex gap-8 max-w-[1600px] h-auto relative">
+                  <div className="w-80 flex flex-col gap-2 sticky top-20 h-full">
                     {SIDEBAR_ITEMS(pathname).map((s, i) => (
                       <Link href={s.link} key={i}>
                         <Button
