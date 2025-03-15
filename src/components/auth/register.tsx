@@ -22,6 +22,8 @@ import { AccountType } from "@/types/general";
 import Image from "next/image";
 import { registerUser, resendOtp, verifyOtp } from "@/lib/requests";
 import { useRouter } from "next/navigation";
+import { useSetRecoilState } from "recoil";
+import { user_details } from "@/app/atoms/atoms";
 
 const Register = () => {
   const [stage, setStage] = useState(1);
@@ -37,6 +39,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [timer, setTimer] = useState(60);
+  const setUserDetails = useSetRecoilState(user_details);
   const [reloadTimer, setReloadTimer] = useState("");
   const router = useRouter();
 
@@ -75,7 +78,7 @@ const Register = () => {
       return;
     }
 
-    toast.success(data);
+    setUserDetails(data);
     router.push(PAGES.dashboard.home);
   };
 

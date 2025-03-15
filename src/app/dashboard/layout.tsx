@@ -14,6 +14,15 @@ import Logo from "@/components/general/logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { logOut } from "@/lib/auth";
 
 // export const metadata: Metadata = {
 //   title: "Home ~ Willow",
@@ -78,13 +87,24 @@ const RootLayout = ({
                   />
                 </div>
 
-                <Avatar className="h-8 w-8 rounded-full">
-                  <AvatarImage
-                    src="https://github.com/victoribironke.png"
-                    alt={"user.name"}
-                  />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <Avatar className="h-8 w-8 rounded-full">
+                      <AvatarImage
+                        src="https://github.com/victoribironke.png"
+                        alt={"user.name"}
+                      />
+                      <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                    </Avatar>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={logOut}>
+                      Log out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
 

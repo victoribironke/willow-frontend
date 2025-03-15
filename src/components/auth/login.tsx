@@ -10,6 +10,8 @@ import { loginUser } from "@/lib/requests";
 import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { validateEmail } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { user_details } from "@/app/atoms/atoms";
+import { useSetRecoilState } from "recoil";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,6 +19,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const setUserDetails = useSetRecoilState(user_details);
   const router = useRouter();
 
   const login = async () => {
@@ -27,7 +30,7 @@ const Login = () => {
 
     setLoading(true);
 
-    const { error } = await loginUser(email, password);
+    const { data, error } = await loginUser(email, password);
 
     setLoading(false);
 
@@ -36,7 +39,7 @@ const Login = () => {
       return;
     }
 
-    // toast.success(data);
+    setUserDetails(data);
     router.push(PAGES.dashboard.home);
   };
 
