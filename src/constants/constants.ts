@@ -109,7 +109,7 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
     icon: Package,
     isActive:
       pathname === PAGES.dashboard.products.home ||
-      pathname.includes("product"),
+      pathname.includes("/dashboard/product"),
     link: PAGES.dashboard.products.home,
   },
   {
