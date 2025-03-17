@@ -2,11 +2,11 @@ import Product from "@/components/dashboard/product";
 import { BASE_URL, PAGES } from "@/constants/constants";
 import { Metadata } from "next";
 
-export const generateMetadata = ({
-  params,
-}: {
-  params: { id: string };
-}): Metadata => {
+export const generateMetadata = async (props: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> => {
+  const params = await props.params;
+
   return {
     // work on this
     title: "Pblafdkljroducts ~ Willow",
@@ -35,7 +35,8 @@ export const generateMetadata = ({
   };
 };
 
-const Page = ({ params }: { params: { id: string } }) => {
+const Page = async (props: { params: Promise<{ id: string }> }) => {
+  const params = await props.params;
   console.log(params);
 
   return <Product />;
