@@ -41,8 +41,9 @@ const ListProduct = () => {
 
       <Separator />
 
-      <section className="w-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-        <div className="flex flex-col gap-2 col-span-3">
+      <section className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Image upload - full width */}
+        <div className="flex flex-col gap-2 col-span-1 md:col-span-2">
           <p>
             Add up to 5 photos.{" "}
             <TooltipProvider>
@@ -77,6 +78,7 @@ const ListProduct = () => {
           </div>
         </div>
 
+        {/* Single column elements */}
         <div className="grid gap-2">
           <Label htmlFor="name">
             Name <span className="text-red">*</span>
@@ -141,7 +143,6 @@ const ListProduct = () => {
             Sourcing <span className="text-red">*</span>
           </Label>
           <Select
-
           // value={accountType}
           // onValueChange={(e) => setAccountType(e as AccountType)}
           >
@@ -161,7 +162,6 @@ const ListProduct = () => {
             Packaging <span className="text-red">*</span>
           </Label>
           <Select
-
           // value={accountType}
           // onValueChange={(e) => setAccountType(e as AccountType)}
           >
@@ -176,7 +176,8 @@ const ListProduct = () => {
           </Select>
         </div>
 
-        <div className="grid gap-2 col-span-3">
+        {/* Last three elements that span full width */}
+        <div className="grid gap-2 col-span-1 md:col-span-2">
           <Label htmlFor="features">
             Sustainability features <span className="text-red">*</span>
           </Label>
@@ -187,7 +188,7 @@ const ListProduct = () => {
           />
         </div>
 
-        <div className="grid gap-2 col-span-3">
+        <div className="grid gap-2 col-span-1 md:col-span-2">
           <Label htmlFor="desc">
             Description <span className="text-red">*</span>
           </Label>
@@ -198,7 +199,7 @@ const ListProduct = () => {
           />
         </div>
 
-        <div className="grid gap-2 col-span-3">
+        <div className="grid gap-2 col-span-1 md:col-span-2">
           <Label htmlFor="eol-info">End of life information</Label>
           <Textarea
             id="eol-info"
@@ -207,16 +208,15 @@ const ListProduct = () => {
           />
         </div>
 
-        <div></div>
+        {/* Button that spans full width */}
         <Button
-          className="w-full bg-main hover:bg-main/90 cursor-pointer mx-auto self-center"
+          className="w-full bg-main hover:bg-main/90 cursor-pointer mx-auto self-center col-span-1 md:col-span-2"
           // onClick={() => validate()}
           // disabled={loading}
         >
           Upload
           {/* {loading && <LoaderCircle className="animate-spin" />} */}
         </Button>
-        <div></div>
       </section>
     </>
   );
