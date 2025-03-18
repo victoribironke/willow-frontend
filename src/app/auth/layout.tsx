@@ -8,6 +8,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/general/logo";
 import { RecoilRoot } from "recoil";
+import VerticalImageCarousel from "@/components/auth/vertical-image-carousel";
 
 const RootLayout = ({
   children,
@@ -27,16 +28,7 @@ const RootLayout = ({
   return (
     <RecoilRoot>
       <Suspense>
-        <Toaster
-          toastOptions={
-            {
-              // style: {
-              //   // backgroundColor: "hsl(var(--muted) / 0.5)",
-              //   color: "#fff",
-              // },
-            }
-          }
-        />
+        <Toaster />
 
         <div className="w-full grid min-h-svh lg:grid-cols-2">
           <div className="flex flex-col gap-4 p-6 md:p-10">
@@ -47,7 +39,7 @@ const RootLayout = ({
             </div>
           </div>
 
-          <div className="relative hidden bg-muted lg:block">
+          {/* <div className="relative hidden bg-muted lg:block">
             <Image
               src={IMAGES.auth_image.src}
               width={IMAGES.auth_image.w}
@@ -55,7 +47,9 @@ const RootLayout = ({
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
-          </div>
+          </div> */}
+
+          <VerticalImageCarousel />
         </div>
       </Suspense>
     </RecoilRoot>
