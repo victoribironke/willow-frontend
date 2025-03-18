@@ -1,25 +1,24 @@
-import { IMAGES, PAGES } from "@/constants/constants";
+import { IMAGES } from "@/constants/constants";
 import Image from "next/image";
-import Link from "next/link";
 
 const Logo = () => {
   return (
-    <div className="flex items-center gap-2">
-      <Link
+    <div className="flex items-center justify-center gap-3 font-medium">
+      {/* <Link
         href={PAGES.home}
         className="flex items-center justify-center gap-3 font-medium"
-      >
-        {/* <div className="flex p-1.5 bg-white items-center justify-center rounded-md"> */}
-        <Image
-          src={IMAGES.logo.src}
-          width={IMAGES.logo.w}
-          height={IMAGES.logo.h}
-          alt="Logo"
-          className="w-4 h-auto"
-        />
-        {/* </div> */}
-        <span className="hidden sm:inline-block">Willow</span>
-      </Link>
+      > */}
+      {/* <div className="flex p-1.5 bg-white items-center justify-center rounded-md"> */}
+      <Image
+        src={IMAGES.logo.src}
+        width={IMAGES.logo.w}
+        height={IMAGES.logo.h}
+        alt="Logo"
+        className="w-4 h-auto"
+      />
+      {/* </div> */}
+      <span className="hidden sm:inline-block">Willow</span>
+      {/* </Link> */}
     </div>
   );
 };

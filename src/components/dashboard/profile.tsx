@@ -14,7 +14,7 @@ const Profile = () => {
 
       <Separator />
 
-      <p className="text-[#696969]">Profile picture</p>
+      <p>Profile picture</p>
 
       <div className="flex items-center justify-start gap-6">
         <Avatar className="size-20 rounded-full">

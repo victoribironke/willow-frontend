@@ -1,6 +1,5 @@
 "use client";
 
-import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import { Suspense, useEffect } from "react";
 import { PAGES } from "@/constants/constants";

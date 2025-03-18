@@ -1,7 +1,6 @@
 "use client";
 
 // import type { Metadata } from "next";
-import "../globals.css";
 import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
