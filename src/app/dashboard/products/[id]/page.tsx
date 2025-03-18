@@ -1,4 +1,4 @@
-import Product from "@/components/dashboard/product";
+import Product from "@/components/general/product";
 import { BASE_URL, PAGES } from "@/constants/constants";
 import { Metadata } from "next";
 
