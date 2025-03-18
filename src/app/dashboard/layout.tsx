@@ -80,7 +80,7 @@ const RootLayout = ({
           ) : (
             <section className="w-full min-h-screen flex items-center flex-col relative pt-16">
               <div className="w-full bg-white border-b p-4 flex items-center justify-center fixed z-50 top-0">
-                <div className="w-full max-w-[1600px] flex gap-4 items-center justify-between">
+                <div className="w-full max-w-[1280px] flex gap-4 items-center justify-between">
                   <DropdownMenu>
                     <DropdownMenuTrigger className="md:hidden">
                       <Menu />
@@ -138,7 +138,7 @@ const RootLayout = ({
               </div>
 
               <div className="w-full bg-gray-100 min-h-[calc(100vh-4rem)] p-4 pb-10 flex items-center flex-col">
-                <div className="w-full flex gap-8 max-w-[1600px] h-auto relative">
+                <div className="w-full flex gap-8 max-w-[1280px] h-auto relative">
                   <div className="w-80 hidden md:flex flex-col gap-2 sticky top-20 h-full">
                     {SIDEBAR_ITEMS(pathname).map((s, i) => (
                       <Link href={s.link} key={i}>

@@ -6,6 +6,7 @@ import {
   Settings,
   ShoppingBag,
   Table2,
+  User,
 } from "lucide-react";
 
 export const BASE_URL =
@@ -32,7 +33,7 @@ export const PAGES = {
       home: "/dashboard/orders",
       order: (id: string) => `/dashboard/orders/${id}`,
     },
-    settings: "/dashboard/settings",
+    profile: "/dashboard/profile",
   },
 
   auth: {
@@ -121,13 +122,13 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
     isActive:
       pathname === PAGES.dashboard.orders.home ||
       pathname.includes("/dashboard/orders"),
-    link: PAGES.dashboard.orders,
+    link: PAGES.dashboard.orders.home,
   },
   {
-    title: "Settings",
-    icon: Settings,
-    isActive: pathname === PAGES.dashboard.settings,
-    link: PAGES.dashboard.settings,
+    title: "Profile",
+    icon: User,
+    isActive: pathname === PAGES.dashboard.profile,
+    link: PAGES.dashboard.profile,
   },
 ];
 

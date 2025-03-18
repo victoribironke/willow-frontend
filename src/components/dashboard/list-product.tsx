@@ -41,7 +41,7 @@ const ListProduct = () => {
 
       <Separator />
 
-      <section className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Image upload - full width */}
         <div className="flex flex-col gap-2 col-span-1 md:col-span-2">
           <p>
@@ -196,6 +196,7 @@ const ListProduct = () => {
             id="desc"
             placeholder="Enter your product's description"
             className="bg-white"
+            rows={5}
           />
         </div>
 
@@ -205,6 +206,7 @@ const ListProduct = () => {
             id="eol-info"
             placeholder="Recycle/dispose information"
             className="bg-white"
+            rows={5}
           />
         </div>
 
