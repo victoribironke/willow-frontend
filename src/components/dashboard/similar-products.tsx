@@ -8,7 +8,7 @@ const SimilarProducts = () => {
 
       <Separator />
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <div className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2">
           <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit">
             <Leaf size={14} /> Biodegradable
