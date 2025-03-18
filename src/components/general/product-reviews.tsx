@@ -49,8 +49,8 @@ const ProductReviews = () => {
           <h4 className="lg:text-lg font-medium">I hate it</h4>
 
           <p>
-            It's too sensitive for me, this should be banned from all stores , I
-            doubt its sustainability tah is actually truthful.
+            It&apos;s too sensitive for me, this should be banned from all
+            stores , I doubt its sustainability tah is actually truthful.
           </p>
 
           <div className="flex items-center justify-between">

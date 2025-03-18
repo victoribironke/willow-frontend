@@ -1,5 +1,4 @@
 import { Leaf } from "lucide-react";
-import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
 const SimilarProducts = () => {

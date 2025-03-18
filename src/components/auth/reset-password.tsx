@@ -61,7 +61,7 @@ const ResetPassword = () => {
     const date_ms = new Date().getTime();
 
     if (!expires_at || date_ms >= expires_at) setError(true);
-  }, []);
+  }, [resetToken]);
 
   useEffect(() => setReqError(""), [password, passwordConfirm]);
 

@@ -26,9 +26,12 @@ const MultiSelect = ({
 
   const [inputValue, setInputValue] = useState("");
 
-  const handleUnselect = useCallback((val: string) => {
-    setSelected((prev) => prev.filter((s) => s !== val));
-  }, []);
+  const handleUnselect = useCallback(
+    (val: string) => {
+      setSelected((prev) => prev.filter((s) => s !== val));
+    },
+    [setSelected]
+  );
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -49,7 +52,7 @@ const MultiSelect = ({
         }
       }
     },
-    []
+    [setSelected]
   );
 
   const selectables = fullList.filter((f) => !selected.includes(f));

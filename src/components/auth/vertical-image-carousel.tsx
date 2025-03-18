@@ -1,13 +1,6 @@
-import React, { JSX, RefObject, useEffect, useRef } from "react";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
+import React, { RefObject, useEffect, useRef } from "react";
 import { IMAGES } from "@/constants/constants";
-
-// Types for the component
-interface ImagePlaceholder {
-  id: number;
-  color: string;
-}
+import Image from "next/image";
 
 const VerticalImageCarousel = () => {
   // Refs for animation
@@ -17,17 +10,20 @@ const VerticalImageCarousel = () => {
 
   const speed = 20000;
 
+  const { eight, five, four, nine, one, seven, six, three, two } =
+    IMAGES.more_about_willow;
+
   // Sample placeholder images - replace with your actual images later
   const placeholderImages = [
-    IMAGES.more_about_willow.one.src,
-    IMAGES.more_about_willow.two.src,
-    IMAGES.more_about_willow.three.src,
-    IMAGES.more_about_willow.four.src,
-    IMAGES.more_about_willow.five.src,
-    IMAGES.more_about_willow.six.src,
-    IMAGES.more_about_willow.seven.src,
-    IMAGES.more_about_willow.eight.src,
-    IMAGES.more_about_willow.nine.src,
+    { src: one.src, w: one.w, h: one.h },
+    { src: two.src, w: two.w, h: two.h },
+    { src: three.src, w: three.w, h: three.h },
+    { src: four.src, w: four.w, h: four.h },
+    { src: five.src, w: five.w, h: five.h },
+    { src: six.src, w: six.w, h: six.h },
+    { src: seven.src, w: seven.w, h: seven.h },
+    { src: eight.src, w: eight.w, h: eight.h },
+    { src: nine.src, w: nine.w, h: nine.h },
   ];
 
   useEffect(() => {
@@ -72,7 +68,7 @@ const VerticalImageCarousel = () => {
   }, [speed]);
 
   const renderImageColumn = (
-    images: string[],
+    images: { src: string; w: number; h: number }[],
     ref: React.RefObject<HTMLDivElement>
   ) => {
     // Double the images to create a seamless loop
@@ -80,12 +76,18 @@ const VerticalImageCarousel = () => {
 
     return (
       <div ref={ref} className="absolute h-[200%] w-full">
-        {doubledImages.map((src, i) => (
+        {doubledImages.map((m, i) => (
           <div
             className="overflow-hidden aspect-[9/16] rounded-xl mb-4"
             key={i}
           >
-            <img src={src} alt="Image" className="w-full h-full object-cover" />
+            <Image
+              src={m.src}
+              width={m.w}
+              height={m.h}
+              alt="Image"
+              className="w-full h-full object-cover"
+            />
           </div>
         ))}
       </div>

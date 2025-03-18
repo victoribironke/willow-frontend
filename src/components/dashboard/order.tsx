@@ -1,35 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { Separator } from "../ui/separator";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import { Button } from "../ui/button";
-import { Leaf, Mail, ShoppingBag, User } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { Badge } from "../ui/badge";
-import { usePathname } from "next/navigation";
-import SimilarProducts from "../dashboard/similar-products";
+import { Mail, ShoppingBag, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 const Order = () => {
-  const [tab, setTab] = useState("details");
-  const pathname = usePathname();
-
   const shipping = [
     { title: "Country:", value: "Nigeria" },
     { title: "State:", value: "Ogun" },

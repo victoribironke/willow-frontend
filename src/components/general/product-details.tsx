@@ -7,15 +7,16 @@ const ProductDetails = () => {
         Transform your space into a peaceful woodland retreat with A Scent of
         Pine Forest. Inspired by the crisp, invigorating aroma of pine trees,
         this small-batch candle is crafted from an original recipe, blending
-        nature's purest scents. Each candle is housed in a sleek, reusable glass
-        jar with a secure plastic lid — a thoughtful combination of elegance and
-        sustainability. Light it to create a calming ambiance reminiscent of a
-        quiet walk through the forest, perfect for unwinding after a long day or
-        setting a serene mood for meditation. The minimalist design complements
-        any décor, while the subtle yet distinct fragrance brings a refreshing
-        touch of the outdoors into your home. Whether as a gift for nature
-        lovers or a personal indulgence, this candle offers a simple,
-        eco-conscious way to reconnect with nature, one breath at a time.
+        nature&apos;s purest scents. Each candle is housed in a sleek, reusable
+        glass jar with a secure plastic lid — a thoughtful combination of
+        elegance and sustainability. Light it to create a calming ambiance
+        reminiscent of a quiet walk through the forest, perfect for unwinding
+        after a long day or setting a serene mood for meditation. The minimalist
+        design complements any décor, while the subtle yet distinct fragrance
+        brings a refreshing touch of the outdoors into your home. Whether as a
+        gift for nature lovers or a personal indulgence, this candle offers a
+        simple, eco-conscious way to reconnect with nature, one breath at a
+        time.
       </p>
 
       <h4 className="text-lg lg:text-xl font-medium">

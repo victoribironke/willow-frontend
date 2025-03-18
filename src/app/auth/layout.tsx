@@ -3,8 +3,7 @@
 import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import { Suspense, useEffect } from "react";
-import { IMAGES, PAGES } from "@/constants/constants";
-import Image from "next/image";
+import { PAGES } from "@/constants/constants";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/general/logo";
 import { RecoilRoot } from "recoil";
@@ -23,7 +22,7 @@ const RootLayout = ({
 
     if (data && pathname === PAGES.auth.login)
       router.push(PAGES.dashboard.home);
-  }, []);
+  }, [router, pathname]);
 
   return (
     <RecoilRoot>

@@ -3,7 +3,6 @@ import {
   MessageCircleMore,
   MonitorUp,
   Package,
-  Settings,
   ShoppingBag,
   Table2,
   User,
