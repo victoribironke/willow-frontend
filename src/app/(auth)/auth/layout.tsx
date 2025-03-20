@@ -13,15 +13,20 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const router = useRouter();
+  const { push } = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
     const data = localStorage.getItem("willow_auth_data");
 
-    if (data && pathname === PAGES.auth.login)
-      router.push(PAGES.dashboard.home);
-  }, [router, pathname]);
+    if (data && pathname === PAGES.auth.login) {
+      push(
+        JSON.parse(data).role === "SELLER"
+          ? PAGES.dashboard.home
+          : PAGES.main.profile
+      );
+    }
+  }, [pathname]);
 
   return (
     <RecoilRoot>

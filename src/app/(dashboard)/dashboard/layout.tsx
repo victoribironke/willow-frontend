@@ -56,6 +56,11 @@ const RootLayout = ({
       return;
     }
 
+    if (JSON.parse(data).role !== "SELLER") {
+      push(PAGES.main.profile);
+      return;
+    }
+
     const { access_token } = JSON.parse(data);
 
     const date_ms = new Date().getTime();

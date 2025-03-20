@@ -20,7 +20,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const setUserDetails = useSetRecoilState(user_details);
-  const router = useRouter();
+  const { push } = useRouter();
 
   const login = async () => {
     if (!validateEmail(email) || !password) {
@@ -40,7 +40,7 @@ const Login = () => {
     }
 
     setUserDetails(data);
-    router.push(PAGES.dashboard.home);
+    push(data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.profile);
   };
 
   useEffect(() => setError(""), [email, password]);

@@ -40,7 +40,7 @@ const Register = () => {
   const [timer, setTimer] = useState(60);
   const setUserDetails = useSetRecoilState(user_details);
   const [reloadTimer, setReloadTimer] = useState("");
-  const router = useRouter();
+  const { push } = useRouter();
 
   const register = async () => {
     setLoading(true);
@@ -78,7 +78,7 @@ const Register = () => {
     }
 
     setUserDetails(data);
-    router.push(PAGES.dashboard.home);
+    push(data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.profile);
   };
 
   const validate = () => {

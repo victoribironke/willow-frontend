@@ -22,6 +22,7 @@ export const PAGES = {
     chats: "/chats",
     wishlist: "/wishlist",
     orders: "/orders",
+    profile: "/profile",
     more_about_willow: "/more-about-willow",
   },
 
