@@ -16,8 +16,14 @@ export const BASE_URL =
 export const BACKEND_URL = "https://willow-backend.onrender.com/api/v1";
 
 export const PAGES = {
-  home: "/",
-  more_about_willow: "/more-about-willow",
+  main: {
+    home: "/",
+    shop: "/shop",
+    chats: "/chats",
+    wishlist: "/wishlist",
+    orders: "/orders",
+    more_about_willow: "/more-about-willow",
+  },
 
   dashboard: {
     home: "/dashboard",
@@ -128,6 +134,29 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
     icon: User,
     isActive: pathname === PAGES.dashboard.profile,
     link: PAGES.dashboard.profile,
+  },
+];
+
+export const HEADER_LINKS = (pathname: string) => [
+  {
+    title: "Shop",
+    isActive: pathname === PAGES.main.shop,
+    link: PAGES.main.shop,
+  },
+  {
+    title: "More about Willow",
+    isActive: pathname === PAGES.main.more_about_willow,
+    link: PAGES.main.more_about_willow,
+  },
+  {
+    title: "Wishlist",
+    isActive: pathname === PAGES.main.wishlist,
+    link: PAGES.main.wishlist,
+  },
+  {
+    title: "Orders",
+    isActive: pathname === PAGES.main.orders,
+    link: PAGES.main.orders,
   },
 ];
 

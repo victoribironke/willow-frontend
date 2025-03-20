@@ -15,19 +15,21 @@ const Header = () => {
 
       <div className="sm:fixed sm:left-1/2 sm:transform sm:-translate-x-1/2 self-center w-fit bg-white border shadow py-2 text-sm px-6 rounded-full flex items-center justify-center gap-6">
         <Link
-          href={PAGES.home}
+          href={PAGES.main.home}
           className={cn(
             "hover:text-main font-medium",
-            pathname === PAGES.home ? "text-black" : "text-muted-foreground"
+            pathname === PAGES.main.home
+              ? "text-black"
+              : "text-muted-foreground"
           )}
         >
-          Home
+          Hom
         </Link>
         <Link
-          href={PAGES.more_about_willow}
+          href={PAGES.main.more_about_willow}
           className={cn(
             "hover:text-main whitespace-nowrap font-medium",
-            pathname === PAGES.more_about_willow
+            pathname === PAGES.main.more_about_willow
               ? "text-black"
               : "text-muted-foreground"
           )}
