@@ -143,7 +143,7 @@ const Product = () => {
               </div>
 
               <Link
-                href={PAGES.main.seller("jf")}
+                href={PAGES.main.shop.seller("jf")}
                 className="text-muted-foreground underline"
               >
                 PureBody Ltd.

@@ -6,7 +6,7 @@ import { HEADER_LINKS, PAGES } from "@/constants/constants";
 import { cn } from "@/lib/utils";
 import { Search, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const RootLayout = ({
   children,
@@ -14,6 +14,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   const pathname = usePathname();
+  const { push } = useRouter();
 
   return (
     <main className="w-full min-h-screen flex items-center flex-col relative pt-20">
@@ -39,11 +40,25 @@ const RootLayout = ({
 
           <div className="flex items-center justify-center gap-4">
             <div className="w-full relative flex items-center justify-center">
-              <Input className="shadow-none" placeholder="Type to search..." />
+              <Input
+                className="shadow-none"
+                placeholder="Type to search..."
+                onKeyUp={(e) => {
+                  e.currentTarget.value &&
+                    e.key === "Enter" &&
+                    push(PAGES.main.shop.search(e.currentTarget.value));
+                }}
+              />
 
               <Search
                 className="absolute right-3 cursor-pointer text-muted-foreground"
                 size={16}
+                onClick={(e) => {
+                  const input = e.currentTarget
+                    .previousElementSibling as HTMLInputElement;
+
+                  input.value && push(PAGES.main.shop.search(input.value));
+                }}
               />
             </div>
 

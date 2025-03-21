@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 const Home = () => {
-  redirect(PAGES.main.shop);
+  redirect(PAGES.main.shop.home);
 };
 
 export default Home;

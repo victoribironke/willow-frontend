@@ -18,14 +18,17 @@ export const BACKEND_URL = "https://willow-backend.onrender.com/api/v1";
 export const PAGES = {
   main: {
     home: "/",
-    shop: "/shop",
-    chats: "/chats",
-    wishlist: "/wishlist",
-    orders: "/orders",
-    profile: "/profile",
     more_about_willow: "/more-about-willow",
-    seller: (id: string) => `/seller/${id}`,
-    product: (id: string) => `/product/${id}`,
+    shop: {
+      home: "/shop",
+      chats: "/shop/chats",
+      orders: "/shop/orders",
+      profile: "/shop/profile",
+      wishlist: "/shop/wishlist",
+      seller: (id: string) => `/shop/seller/${id}`,
+      product: (id: string) => `/shop/product/${id}`,
+      search: (term: string) => `/shop/search/${term}`,
+    },
   },
 
   dashboard: {
@@ -143,23 +146,23 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
 export const HEADER_LINKS = (pathname: string) => [
   {
     title: "Shop",
-    isActive: pathname === PAGES.main.shop,
-    link: PAGES.main.shop,
+    isActive: pathname === PAGES.main.shop.home,
+    link: PAGES.main.shop.home,
   },
   {
     title: "Chats",
-    isActive: pathname === PAGES.main.chats,
-    link: PAGES.main.chats,
+    isActive: pathname === PAGES.main.shop.chats,
+    link: PAGES.main.shop.chats,
   },
   {
     title: "Wishlist",
-    isActive: pathname === PAGES.main.wishlist,
-    link: PAGES.main.wishlist,
+    isActive: pathname === PAGES.main.shop.wishlist,
+    link: PAGES.main.shop.wishlist,
   },
   {
     title: "Orders",
-    isActive: pathname === PAGES.main.orders,
-    link: PAGES.main.orders,
+    isActive: pathname === PAGES.main.shop.orders,
+    link: PAGES.main.shop.orders,
   },
 ];
 
