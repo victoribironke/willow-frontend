@@ -1,5 +1,9 @@
-import { BASE_URL, PAGES } from "@/constants/constants";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { BASE_URL, IMAGES, PAGES } from "@/constants/constants";
+import { Heart, Leaf, ShoppingBasket } from "lucide-react";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Shop ~ Willow",
@@ -28,7 +32,76 @@ export const metadata: Metadata = {
 };
 
 const Page = () => {
-  return <div>Page</div>;
+  return (
+    <>
+      <div className="flex items-center justify-center rounded-xl relative overflow-hidden aspect-[2/0.6]">
+        <Image
+          src={IMAGES.shop_image.src}
+          width={IMAGES.shop_image.w}
+          height={IMAGES.shop_image.h}
+          alt="Image"
+          className="w-full h-full object-cover"
+        />
+
+        <p className="absolute text-white font-semibold text-3xl sm:text-4xl md:text-5xl w-full max-w-3xl text-center">
+          Revitalize your lifestyle with our sustainable collections.
+        </p>
+      </div>
+
+      <section className="w-full flex items-start justify-start flex-col gap-4">
+        <h5 className="text-lg md:text-xl font-medium">Top Best Selling</h5>
+
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          <div className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative">
+            <div className="w-full flex items-center justify-between">
+              <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit">
+                <Leaf size={14} /> Biodegradable
+              </div>
+
+              <Heart size={18} />
+            </div>
+
+            <div className="overflow-hidden aspect-square rounded-md">
+              <img
+                src="https://github.com/victoribironke.png"
+                alt="Image"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <p className="font-medium">Pine Scent Body Rub</p>
+
+            <p className="text-sm text-[#696969]">Cosmetics</p>
+
+            <p className="text-sm font-medium">₦ 23,500</p>
+
+            <Button className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2">
+              <ShoppingBasket size={20} />
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="w-full flex items-center justify-center flex-col gap-4 my-10">
+        <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl w-full max-w-2xl text-center">
+          Subscribe to our newsletter to get updates to our latest collections
+          and features
+        </h3>
+
+        <p>Get tips and beta access to new features</p>
+
+        <Input
+          placeholder="Email address"
+          type="email"
+          className="max-w-xs bg-white"
+        />
+
+        <Button className="w-full bg-main hover:bg-main/90 max-w-xs">
+          Subscribe
+        </Button>
+      </section>
+    </>
+  );
 };
 
 export default Page;

@@ -51,7 +51,7 @@ export const PAGES = {
 };
 
 export const IMAGES = {
-  auth_image: { src: "/auth-image.jpeg", w: 736, h: 1490 },
+  shop_image: { src: "/shop.jpeg", w: 1080, h: 721 },
   mail: { src: "/mail.png", w: 122, h: 144 },
   logo: { src: "/logo.svg", w: 24, h: 26 },
 

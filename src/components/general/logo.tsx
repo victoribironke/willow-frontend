@@ -14,10 +14,12 @@ const Logo = () => {
         width={IMAGES.logo.w}
         height={IMAGES.logo.h}
         alt="Logo"
-        className="w-4 h-auto"
+        className="w-5 h-auto"
       />
       {/* </div> */}
-      <span className="hidden sm:inline-block">Willow</span>
+      <span className="hidden sm:inline-block text-lg font-semibold">
+        WILLOW
+      </span>
       {/* </Link> */}
     </div>
   );
