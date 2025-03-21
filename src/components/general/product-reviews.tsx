@@ -21,7 +21,7 @@ const ProductReviews = () => {
         //   value={accountType}
         //   onValueChange={(e) => setAccountType(e as AccountType)}
         >
-          <SelectTrigger className="w-full max-w-40">
+          <SelectTrigger className="w-full max-w-40 bg-white">
             <SelectValue placeholder="Select an order" />
           </SelectTrigger>
           <SelectContent>
@@ -33,7 +33,7 @@ const ProductReviews = () => {
       </div>
 
       <div className="w-full border rounded-xl overflow-hidden">
-        <div className="flex flex-col w-full gap-2 p-4 border-b">
+        <div className="flex flex-col w-full gap-2 p-4 border-b bg-white">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Star filled size="size-4" />

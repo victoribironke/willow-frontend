@@ -24,6 +24,8 @@ export const PAGES = {
     orders: "/orders",
     profile: "/profile",
     more_about_willow: "/more-about-willow",
+    seller: (id: string) => `/seller/${id}`,
+    product: (id: string) => `/product/${id}`,
   },
 
   dashboard: {

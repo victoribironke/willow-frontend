@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
-import { Leaf } from "lucide-react";
+import { Leaf, Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Badge } from "../ui/badge";
@@ -18,6 +18,9 @@ import ProductReviews from "./product-reviews";
 import ProductDetails from "./product-details";
 import { usePathname } from "next/navigation";
 import SimilarProducts from "../dashboard/similar-products";
+import CuratedPicks from "../main/curated-picks";
+import Link from "next/link";
+import { PAGES } from "@/constants/constants";
 
 const Product = () => {
   const [tab, setTab] = useState("details");
@@ -25,11 +28,13 @@ const Product = () => {
 
   return (
     <>
-      <h1 className="text-xl lg:text-2xl font-medium">Products</h1>
-
-      <p className="text-[#696969]">View product</p>
-
-      <Separator />
+      {pathname.includes("/dashboard/") && (
+        <>
+          <h1 className="text-xl lg:text-2xl font-medium">Products</h1>
+          <p className="text-[#696969]">View product</p>
+          <Separator />
+        </>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="w-full flex items-center justify-center gap-4 flex-col">
@@ -117,7 +122,34 @@ const Product = () => {
 
           <p className="text-[#696969]">120 left</p>
 
-          <Button variant="destructive">Delist</Button>
+          {pathname.includes("/dashboard/") ? (
+            <Button variant="destructive">Delist</Button>
+          ) : (
+            <>
+              <div className="w-full flex gap-4">
+                <div className="border border-black bg-white flex items-center justify-center gap-4 py-1 px-2 rounded-md">
+                  <button>
+                    <Minus size={18} />
+                  </button>
+                  <p className="font-medium">0</p>
+                  <button>
+                    <Plus size={18} />
+                  </button>
+                </div>
+
+                <Button className="w-fit bg-main hover:bg-main/90">
+                  Add to cart
+                </Button>
+              </div>
+
+              <Link
+                href={PAGES.main.seller("jf")}
+                className="text-muted-foreground underline"
+              >
+                PureBody Ltd.
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
@@ -164,6 +196,8 @@ const Product = () => {
         </>
       )}
       {tab === "ratings" && <ProductReviews />}
+
+      {pathname.includes("/product/") && <CuratedPicks />}
     </>
   );
 };

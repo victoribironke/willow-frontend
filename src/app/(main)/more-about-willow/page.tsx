@@ -1,5 +1,5 @@
-import Header from "@/components/landing/header";
-import ImageCarousel from "@/components/landing/image-carousel";
+import Header from "@/components/main/header";
+import ImageCarousel from "@/components/main/image-carousel";
 import { BASE_URL, IMAGES, PAGES } from "@/constants/constants";
 import { Metadata } from "next";
 import Image from "next/image";
