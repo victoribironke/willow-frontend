@@ -147,9 +147,9 @@ export const HEADER_LINKS = (pathname: string) => [
     link: PAGES.main.shop,
   },
   {
-    title: "More about Willow",
-    isActive: pathname === PAGES.main.more_about_willow,
-    link: PAGES.main.more_about_willow,
+    title: "Chats",
+    isActive: pathname === PAGES.main.chats,
+    link: PAGES.main.chats,
   },
   {
     title: "Wishlist",
