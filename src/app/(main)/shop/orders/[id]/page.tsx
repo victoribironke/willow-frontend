@@ -1,4 +1,5 @@
 import Product from "@/components/general/product";
+import Order from "@/components/main/order";
 import { BASE_URL, PAGES } from "@/constants/constants";
 import { Metadata } from "next";
 
@@ -39,7 +40,7 @@ const Page = async (props: { params: Promise<{ id: string }> }) => {
   const params = await props.params;
   console.log(params);
 
-  return <Product />;
+  return <Order />;
 };
 
 export default Page;
