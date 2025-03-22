@@ -1,4 +1,3 @@
-import Header from "@/components/main/header";
 import ImageCarousel from "@/components/main/image-carousel";
 import { BASE_URL, IMAGES, PAGES } from "@/constants/constants";
 import { Metadata } from "next";

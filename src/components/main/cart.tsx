@@ -1,10 +1,6 @@
-import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
-import { Leaf, Mail, Minus, Plus, ShoppingBag, User } from "lucide-react";
+import { Leaf, Minus, Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import Link from "next/link";
-import { PAGES } from "@/constants/constants";
 
 const Cart = () => {
   return (

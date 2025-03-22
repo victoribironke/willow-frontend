@@ -44,9 +44,9 @@ const RootLayout = ({
                 className="shadow-none"
                 placeholder="Type to search..."
                 onKeyUp={(e) => {
-                  e.currentTarget.value &&
-                    e.key === "Enter" &&
+                  if (e.currentTarget.value && e.key === "Enter") {
                     push(PAGES.main.shop.search(e.currentTarget.value));
+                  }
                 }}
               />
 
@@ -57,7 +57,9 @@ const RootLayout = ({
                   const input = e.currentTarget
                     .previousElementSibling as HTMLInputElement;
 
-                  input.value && push(PAGES.main.shop.search(input.value));
+                  if (input.value) {
+                    push(PAGES.main.shop.search(input.value));
+                  }
                 }}
               />
             </div>

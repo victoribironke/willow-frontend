@@ -1,4 +1,3 @@
-import Product from "@/components/general/product";
 import Search from "@/components/main/search";
 import { BASE_URL, PAGES } from "@/constants/constants";
 import { Metadata } from "next";
