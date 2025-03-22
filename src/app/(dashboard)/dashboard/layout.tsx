@@ -57,7 +57,7 @@ const RootLayout = ({
     }
 
     if (JSON.parse(data).role !== "SELLER") {
-      push(PAGES.main.profile);
+      push(PAGES.main.shop.profile);
       return;
     }
 

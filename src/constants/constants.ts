@@ -25,6 +25,7 @@ export const PAGES = {
       orders: "/shop/orders",
       profile: "/shop/profile",
       wishlist: "/shop/wishlist",
+      order: (id: string) => `/shop/orders/${id}`,
       seller: (id: string) => `/shop/seller/${id}`,
       product: (id: string) => `/shop/product/${id}`,
       search: (term: string) => `/shop/search/${term}`,
@@ -36,15 +37,11 @@ export const PAGES = {
     chat: "/dashboard/chat",
     analytics: "/dashboard/analytics",
     list_product: "/dashboard/list-product",
-    products: {
-      home: "/dashboard/products",
-      product: (id: string) => `/dashboard/products/${id}`,
-    },
-    orders: {
-      home: "/dashboard/orders",
-      order: (id: string) => `/dashboard/orders/${id}`,
-    },
+    products: "/dashboard/products",
+    orders: "/dashboard/orders",
     profile: "/dashboard/profile",
+    order: (id: string) => `/dashboard/orders/${id}`,
+    product: (id: string) => `/dashboard/products/${id}`,
   },
 
   auth: {
@@ -123,17 +120,17 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
     title: "Products",
     icon: Package,
     isActive:
-      pathname === PAGES.dashboard.products.home ||
+      pathname === PAGES.dashboard.products ||
       pathname.includes("/dashboard/product"),
-    link: PAGES.dashboard.products.home,
+    link: PAGES.dashboard.products,
   },
   {
     title: "Orders",
     icon: ShoppingBag,
     isActive:
-      pathname === PAGES.dashboard.orders.home ||
+      pathname === PAGES.dashboard.orders ||
       pathname.includes("/dashboard/orders"),
-    link: PAGES.dashboard.orders.home,
+    link: PAGES.dashboard.orders,
   },
   {
     title: "Profile",

@@ -23,7 +23,7 @@ const RootLayout = ({
       push(
         JSON.parse(data).role === "SELLER"
           ? PAGES.dashboard.home
-          : PAGES.main.profile
+          : PAGES.main.shop.profile
       );
     }
   }, [pathname]);

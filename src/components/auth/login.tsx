@@ -40,7 +40,9 @@ const Login = () => {
     }
 
     setUserDetails(data);
-    push(data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.profile);
+    push(
+      data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.shop.profile
+    );
   };
 
   useEffect(() => setError(""), [email, password]);

@@ -69,7 +69,7 @@ const Products = () => {
 
                   <div>
                     <Link
-                      href={PAGES.dashboard.products.product("fklaj")}
+                      href={PAGES.dashboard.product("fklaj")}
                       className="font-medium hover:underline"
                     >
                       Mixed tote bag (Red bottoms)
