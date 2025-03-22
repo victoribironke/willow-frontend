@@ -12,6 +12,7 @@ import { validateEmail } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { user_details } from "@/app/atoms/atoms";
 import { useSetRecoilState } from "recoil";
+import VerifyAccount from "./verify-account";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -107,7 +108,9 @@ const Login = () => {
         </div>
 
         {error && (
-          <p className="text-red text-sm w-full text-center">{error}</p>
+          <p className="text-red text-sm w-full text-center">
+            {error} <VerifyAccount e={error} email={email} />
+          </p>
         )}
 
         <Button
