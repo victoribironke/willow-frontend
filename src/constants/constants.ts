@@ -22,6 +22,7 @@ export const PAGES = {
     shop: {
       home: "/shop",
       chats: "/shop/chats",
+      cart: "/shop/cart",
       orders: "/shop/orders",
       profile: "/shop/profile",
       wishlist: "/shop/wishlist",
