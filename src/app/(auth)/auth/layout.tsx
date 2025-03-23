@@ -6,6 +6,8 @@ import { PAGES } from "@/constants/constants";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/general/logo";
 import VerticalImageCarousel from "@/components/auth/vertical-image-carousel";
+import { user_details } from "@/app/atoms/atoms";
+import { useSetAtom } from "jotai";
 
 const RootLayout = ({
   children,
@@ -14,13 +16,18 @@ const RootLayout = ({
 }>) => {
   const { push } = useRouter();
   const pathname = usePathname();
+  const setUserDetails = useSetAtom(user_details);
 
   useEffect(() => {
     const data = localStorage.getItem("willow_auth_data");
 
     if (data && pathname === PAGES.auth.login) {
+      const d = JSON.parse(data);
+
+      setUserDetails(d.user);
+
       push(
-        JSON.parse(data).role === "SELLER"
+        d.user.role === "SELLER"
           ? PAGES.dashboard.home
           : PAGES.main.shop.profile
       );

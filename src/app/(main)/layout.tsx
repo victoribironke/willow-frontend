@@ -5,10 +5,12 @@ import PageLoader from "@/components/general/page-loader";
 import { Input } from "@/components/ui/input";
 import { HEADER_LINKS, PAGES } from "@/constants/constants";
 import { cn, getJwtExpiration } from "@/lib/utils";
+import { useSetAtom } from "jotai";
 import { Search, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { user_details } from "../atoms/atoms";
 
 const RootLayout = ({
   children,
@@ -18,6 +20,7 @@ const RootLayout = ({
   const pathname = usePathname();
   const { push } = useRouter();
   const [loading, setLoading] = useState(true);
+  const setUserDetails = useSetAtom(user_details);
 
   useEffect(() => {
     const data = localStorage.getItem("willow_auth_data");
@@ -27,12 +30,12 @@ const RootLayout = ({
       return;
     }
 
-    if (JSON.parse(data).role === "SELLER") {
+    if (JSON.parse(data).user.role === "SELLER") {
       push(PAGES.dashboard.home);
       return;
     }
 
-    const { access_token } = JSON.parse(data);
+    const { access_token, user } = JSON.parse(data);
 
     const date_ms = new Date().getTime();
     const expires_at = getJwtExpiration(access_token);
@@ -43,6 +46,7 @@ const RootLayout = ({
       return;
     }
 
+    setUserDetails(user);
     setLoading(false);
   }, [push]);
 

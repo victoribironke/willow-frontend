@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -16,9 +16,34 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { Ellipsis } from "lucide-react";
+import { useAtomValue } from "jotai";
+import { user_details } from "@/app/atoms/atoms";
+import { getSellerDetails, getSellerOrders } from "@/lib/requests/seller";
+import toast from "react-hot-toast";
+import PageLoader from "../general/page-loader";
 
 const Orders = () => {
   const [tab, setTab] = useState("All");
+  const [loading, setLoading] = useState(true);
+  const userInfo = useAtomValue(user_details);
+
+  useEffect(() => {
+    (async () => {
+      console.log(userInfo);
+      const { data, error } = await getSellerOrders(userInfo?.id || "");
+
+      setLoading(false);
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      console.log(data);
+    })();
+  }, []);
+
+  if (loading) return <PageLoader />;
 
   return (
     <>

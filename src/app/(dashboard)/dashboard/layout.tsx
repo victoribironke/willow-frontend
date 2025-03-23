@@ -23,6 +23,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { logOut } from "@/lib/auth";
 import { Menu } from "lucide-react";
+import { useSetAtom } from "jotai";
+import { user_details } from "@/app/atoms/atoms";
 
 // export const metadata: Metadata = {
 //   title: "Home ~ Willow",
@@ -46,6 +48,7 @@ const RootLayout = ({
   const [loading, setLoading] = useState(true);
   const { push } = useRouter();
   const pathname = usePathname();
+  const setUserDetails = useSetAtom(user_details);
 
   useEffect(() => {
     const data = localStorage.getItem("willow_auth_data");
@@ -55,12 +58,12 @@ const RootLayout = ({
       return;
     }
 
-    if (JSON.parse(data).role !== "SELLER") {
+    if (JSON.parse(data).user.role !== "SELLER") {
       push(PAGES.main.shop.profile);
       return;
     }
 
-    const { access_token } = JSON.parse(data);
+    const { access_token, user } = JSON.parse(data);
 
     const date_ms = new Date().getTime();
     const expires_at = getJwtExpiration(access_token);
@@ -71,6 +74,7 @@ const RootLayout = ({
       return;
     }
 
+    setUserDetails(user);
     setLoading(false);
   }, [push]);
 

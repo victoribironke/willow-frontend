@@ -40,6 +40,8 @@ const Login = () => {
       return;
     }
 
+    console.log(data);
+
     setUserDetails(data);
     push(
       data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.shop.profile

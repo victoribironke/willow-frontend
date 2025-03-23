@@ -96,8 +96,10 @@ export const ENDPOINTS = {
     BACKEND_URL + `/customers/${uid}/orders/${oid}`,
 
   // SELLER
-  get_details: (uid: string) => BACKEND_URL + `/sellers/${uid}`,
-  get_products: (uid: string) => BACKEND_URL + `/sellers/${uid}/products`,
+  get_seller_details: (uid: string) => BACKEND_URL + `/sellers/${uid}`,
+  get_seller_products: (uid: string) =>
+    BACKEND_URL + `/sellers/${uid}/products`,
+  get_seller_orders: (uid: string) => BACKEND_URL + `/sellers/${uid}/orders`,
 };
 
 export const IMAGE_TIPS = [
