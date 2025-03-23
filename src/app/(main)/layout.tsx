@@ -1,12 +1,14 @@
 "use client";
 
 import Logo from "@/components/general/logo";
+import PageLoader from "@/components/general/page-loader";
 import { Input } from "@/components/ui/input";
 import { HEADER_LINKS, PAGES } from "@/constants/constants";
-import { cn } from "@/lib/utils";
+import { cn, getJwtExpiration } from "@/lib/utils";
 import { Search, ShoppingCart, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const RootLayout = ({
   children,
@@ -15,6 +17,36 @@ const RootLayout = ({
 }>) => {
   const pathname = usePathname();
   const { push } = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const data = localStorage.getItem("willow_auth_data");
+
+    if (!data) {
+      push(PAGES.auth.login);
+      return;
+    }
+
+    if (JSON.parse(data).role === "SELLER") {
+      push(PAGES.dashboard.home);
+      return;
+    }
+
+    const { access_token } = JSON.parse(data);
+
+    const date_ms = new Date().getTime();
+    const expires_at = getJwtExpiration(access_token);
+
+    if (!expires_at || date_ms >= expires_at) {
+      localStorage.removeItem("willow_auth_data");
+      push(PAGES.auth.login);
+      return;
+    }
+
+    setLoading(false);
+  }, [push]);
+
+  if (loading) return <PageLoader fullScreen />;
 
   return (
     <main className="w-full min-h-screen flex items-center flex-col relative pt-20">
