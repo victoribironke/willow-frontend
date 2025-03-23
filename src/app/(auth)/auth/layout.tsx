@@ -5,7 +5,6 @@ import { Suspense, useEffect } from "react";
 import { PAGES } from "@/constants/constants";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/general/logo";
-import { RecoilRoot } from "recoil";
 import VerticalImageCarousel from "@/components/auth/vertical-image-carousel";
 
 const RootLayout = ({
@@ -29,20 +28,19 @@ const RootLayout = ({
   }, [pathname]);
 
   return (
-    <RecoilRoot>
-      <Suspense>
-        <Toaster />
+    <Suspense>
+      <Toaster />
 
-        <div className="w-full grid min-h-svh lg:grid-cols-2">
-          <div className="flex flex-col gap-4 p-6 md:p-10">
-            <Logo />
+      <div className="w-full grid min-h-svh lg:grid-cols-2">
+        <div className="flex flex-col gap-4 p-6 md:p-10">
+          <Logo />
 
-            <div className="flex flex-1 items-center justify-center">
-              <div className="w-full max-w-sm">{children}</div>
-            </div>
+          <div className="flex flex-1 items-center justify-center">
+            <div className="w-full max-w-sm">{children}</div>
           </div>
+        </div>
 
-          {/* <div className="relative hidden bg-muted lg:block">
+        {/* <div className="relative hidden bg-muted lg:block">
             <Image
               src={IMAGES.auth_image.src}
               width={IMAGES.auth_image.w}
@@ -52,10 +50,9 @@ const RootLayout = ({
             />
           </div> */}
 
-          <VerticalImageCarousel />
-        </div>
-      </Suspense>
-    </RecoilRoot>
+        <VerticalImageCarousel />
+      </div>
+    </Suspense>
   );
 };
 

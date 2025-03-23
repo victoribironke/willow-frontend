@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Calendar,
   CircleCheck,
@@ -18,8 +20,16 @@ import {
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import PageLoader from "../general/page-loader";
+import { useEffect, useState } from "react";
+import { getSellerDetails } from "@/lib/requests/seller";
+import { useAtomValue } from "jotai";
+import { user_details } from "@/app/atoms/atoms";
+import toast from "react-hot-toast";
 
 const Home = () => {
+  const [loading, setLoading] = useState(true);
+  const userInfo = useAtomValue(user_details);
   const overview = [
     { title: "Product orders", icon: ShoppingCart, value: 0 },
     { title: "Chats", icon: MessagesSquare, value: 0 },
@@ -28,6 +38,23 @@ const Home = () => {
     { title: "Products shipped", icon: Send, value: 0 },
     { title: "Products out of stock", icon: CircleX, value: 0 },
   ];
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await getSellerDetails(userInfo?.id || "");
+
+      setLoading(false);
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      console.log(data);
+    })();
+  }, []);
+
+  if (loading) return <PageLoader fullScreen />;
 
   return (
     <>

@@ -1,7 +1,4 @@
 import { User } from "@/types/dashboard";
-import { atom } from "recoil";
+import { atom } from "jotai";
 
-export const user_details = atom<User | null>({
-  key: "user details",
-  default: null,
-});
+export const user_details = atom<User | null>(null);
