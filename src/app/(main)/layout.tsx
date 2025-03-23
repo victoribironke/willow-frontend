@@ -66,12 +66,19 @@ const RootLayout = ({
 
             <Link href={PAGES.main.shop.cart}>
               <ShoppingCart
-                size={25}
+                size={20}
                 className={pathname === PAGES.main.shop.cart ? "text-main" : ""}
               />
             </Link>
 
-            <User size={25} />
+            <Link href={PAGES.main.shop.profile}>
+              <User
+                size={20}
+                className={
+                  pathname === PAGES.main.shop.profile ? "text-main" : ""
+                }
+              />
+            </Link>
           </div>
         </div>
       </header>
