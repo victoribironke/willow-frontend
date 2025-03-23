@@ -8,7 +8,7 @@ import { PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import { validateEmail } from "@/lib/utils";
 import toast from "react-hot-toast";
-import { sendPasswordResetLink } from "@/lib/requests";
+import { sendPasswordResetLink } from "@/lib/requests/auth";
 import { LoaderCircle } from "lucide-react";
 
 const ForgotPassword = () => {

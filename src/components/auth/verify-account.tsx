@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { resendOtp, verifyOtp } from "@/lib/requests";
+import { resendOtp, verifyOtp } from "@/lib/requests/auth";
 import { LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";

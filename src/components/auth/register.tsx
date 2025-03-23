@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { AccountType } from "@/types/general";
 import Image from "next/image";
-import { registerUser, resendOtp, verifyOtp } from "@/lib/requests";
+import { registerUser, resendOtp, verifyOtp } from "@/lib/requests/auth";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
 import { user_details } from "@/app/atoms/atoms";

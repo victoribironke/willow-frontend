@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
-import { loginUser } from "@/lib/requests";
+import { loginUser } from "@/lib/requests/auth";
 import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { validateEmail } from "@/lib/utils";
 import { useRouter } from "next/navigation";

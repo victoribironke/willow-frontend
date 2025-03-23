@@ -72,6 +72,7 @@ export const IMAGES = {
 };
 
 export const ENDPOINTS = {
+  // AUTH
   register_user: BACKEND_URL + "/users/register",
   login_user: BACKEND_URL + "/auth/login",
   forgot_password: BACKEND_URL + "/auth/forgot-password",
@@ -79,6 +80,20 @@ export const ENDPOINTS = {
     BACKEND_URL + `/auth/password-reset?resetToken=${token}`,
   verify_otp: BACKEND_URL + "/auth/verify-account",
   resend_otp: BACKEND_URL + "/auth/resend-otp",
+
+  // CUSTOMERS
+  get_cart: (uid: string) => BACKEND_URL + `/customers/${uid}/cart`,
+  update_cart: (uid: string, pid: string) =>
+    BACKEND_URL + `/customers/${uid}/cart/${pid}`,
+  update_liked_products: (uid: string, pid: string) =>
+    BACKEND_URL + `/customers/${uid}/liked-products/${pid}`,
+  post_review: (uid: string, pid: string) =>
+    BACKEND_URL + `/customers/${uid}/products/${pid}/reviews`,
+  delete_review: (uid: string, pid: string, rid: string) =>
+    BACKEND_URL + `/customers/${uid}/products/${pid}/reviews/${rid}`,
+  get_orders: (uid: string) => BACKEND_URL + `/customers/${uid}/orders`,
+  get_order: (uid: string, oid: string) =>
+    BACKEND_URL + `/customers/${uid}/orders/${oid}`,
 };
 
 export const IMAGE_TIPS = [

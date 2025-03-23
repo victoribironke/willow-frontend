@@ -7,7 +7,7 @@ import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { resetPassword } from "@/lib/requests";
+import { resetPassword } from "@/lib/requests/auth";
 import { LoaderCircle } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { useSearchParams } from "next/navigation";
