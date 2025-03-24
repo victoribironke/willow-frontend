@@ -36,10 +36,9 @@ export const generateMetadata = async (props: {
 };
 
 const Page = async (props: { params: Promise<{ id: string }> }) => {
-  const params = await props.params;
-  console.log(params);
+  const { id } = await props.params;
 
-  return <Order />;
+  return <Order orderId={id} />;
 };
 
 export default Page;

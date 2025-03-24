@@ -21,12 +21,12 @@ import { user_details } from "@/app/atoms/atoms";
 import { getSellerDetails, getSellerOrders } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { Order } from "@/interfaces/general";
+import { Order, OrderItem } from "@/interfaces/general";
 
 const Orders = () => {
   const [tab, setTab] = useState("All");
   const [loading, setLoading] = useState(true);
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<OrderItem[]>([]);
   const userInfo = useAtomValue(user_details);
 
   useEffect(() => {
@@ -34,14 +34,14 @@ const Orders = () => {
       console.log(userInfo);
       const { data, error } = await getSellerOrders(userInfo?.id || "");
 
-      setLoading(false);
-
       if (error) {
         toast.error(error);
         return;
       }
 
-      setOrders(data as Order[]);
+      setLoading(false);
+
+      setOrders(data as OrderItem[]);
     })();
   }, []);
 
@@ -89,10 +89,7 @@ const Orders = () => {
                 <TableCell className="pl-4">
                   <div className="flex items-center gap-2">
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage
-                        src={o.orderItems[0].product.images}
-                        alt="Product image"
-                      />
+                      <AvatarImage src={o.product.images} alt="Product image" />
                       <AvatarFallback className="rounded-lg">DP</AvatarFallback>
                     </Avatar>
 
@@ -101,12 +98,11 @@ const Orders = () => {
                         href={PAGES.dashboard.order(o.id)}
                         className="font-medium hover:underline"
                       >
-                        {o.orderItems[0].product.name}
+                        {o.product.name}
                       </Link>
 
                       <p className="text-sm text-muted-foreground">
-                        {" "}
-                        {o.orderItems[0].product.category}
+                        {o.product.category}
                       </p>
                     </div>
                   </div>
@@ -117,19 +113,19 @@ const Orders = () => {
                     <p className="font-medium">{o.id}</p>
 
                     <p className="text-sm text-muted-foreground">
-                      {formatDateTime(o.createdAt)}
+                      {formatDateTime(o.product.createdAt)}
                     </p>
                   </div>
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
                   <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit">
-                    {o.orderItems[0].customerStatus}
+                    {o.customerStatus}
                   </div>
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
-                  {o.orderItems[0].quantity}
+                  {o.quantity}
                 </TableCell>
-                <TableCell>{o.totalAmount}</TableCell>
+                <TableCell>{o.price}</TableCell>
                 <TableCell>
                   <Button variant="ghost">
                     <Ellipsis />
