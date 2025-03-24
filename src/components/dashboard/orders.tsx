@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { useEffect, useState } from "react";
@@ -21,10 +21,12 @@ import { user_details } from "@/app/atoms/atoms";
 import { getSellerDetails, getSellerOrders } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
+import { Order } from "@/interfaces/general";
 
 const Orders = () => {
   const [tab, setTab] = useState("All");
   const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState<Order[]>([]);
   const userInfo = useAtomValue(user_details);
 
   useEffect(() => {
@@ -39,7 +41,7 @@ const Orders = () => {
         return;
       }
 
-      console.log(data);
+      setOrders(data as Order[]);
     })();
   }, []);
 
@@ -82,50 +84,59 @@ const Orders = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="pl-4">
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage
-                      src="https://github.com/victoribironke.png"
-                      alt="Track cover"
-                    />
-                    <AvatarFallback className="rounded-lg">DP</AvatarFallback>
-                  </Avatar>
+            {orders.map((o, i) => (
+              <TableRow key={i}>
+                <TableCell className="pl-4">
+                  <div className="flex items-center gap-2">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage
+                        src={o.orderItems[0].product.images}
+                        alt="Product image"
+                      />
+                      <AvatarFallback className="rounded-lg">DP</AvatarFallback>
+                    </Avatar>
 
-                  <div>
-                    <Link
-                      href={PAGES.dashboard.order("fklaj")}
-                      className="font-medium hover:underline"
-                    >
-                      Mixed tote bag (Red bottoms)
-                    </Link>
+                    <div>
+                      <Link
+                        href={PAGES.dashboard.order(o.id)}
+                        className="font-medium hover:underline"
+                      >
+                        {o.orderItems[0].product.name}
+                      </Link>
 
-                    <p className="text-sm text-muted-foreground">Accessory</p>
+                      <p className="text-sm text-muted-foreground">
+                        {" "}
+                        {o.orderItems[0].product.category}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </TableCell>
+                </TableCell>
 
-              <TableCell className="font-medium whitespace-nowrap">
-                <div>
-                  <p className="font-medium">#01ARZ3NDEKTS</p>
+                <TableCell className="font-medium whitespace-nowrap">
+                  <div>
+                    <p className="font-medium">{o.id}</p>
 
-                  <p className="text-sm text-muted-foreground">Jan 24, 2025</p>
-                </div>
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit">
-                  Delivered
-                </div>
-              </TableCell>
-              <TableCell className="whitespace-nowrap">127</TableCell>
-              <TableCell>9,500</TableCell>
-              <TableCell>
-                <Button variant="ghost">
-                  <Ellipsis />
-                </Button>
-              </TableCell>
-            </TableRow>
+                    <p className="text-sm text-muted-foreground">
+                      {formatDateTime(o.createdAt)}
+                    </p>
+                  </div>
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit">
+                    {o.orderItems[0].customerStatus}
+                  </div>
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {o.orderItems[0].quantity}
+                </TableCell>
+                <TableCell>{o.totalAmount}</TableCell>
+                <TableCell>
+                  <Button variant="ghost">
+                    <Ellipsis />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

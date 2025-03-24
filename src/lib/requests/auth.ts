@@ -1,5 +1,5 @@
 import { ENDPOINTS } from "@/constants/constants";
-import { NewUser } from "@/types/auth";
+import { NewUser } from "@/interfaces/general";
 
 export const registerUser = async (data: NewUser) => {
   try {

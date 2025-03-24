@@ -1,5 +1,6 @@
 import { ENDPOINTS } from "@/constants/constants";
 import { verifyAuthState } from "../auth";
+import { Order } from "@/interfaces/general";
 
 export const getSellerDetails = async (userId: string) => {
   try {
@@ -36,7 +37,7 @@ export const getSellerOrders = async (userId: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data, error: null };
+    return { data: res.data as Order[], error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };

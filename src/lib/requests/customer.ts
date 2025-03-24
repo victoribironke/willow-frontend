@@ -1,5 +1,5 @@
 import { ENDPOINTS } from "@/constants/constants";
-import { Cart, NewReview } from "@/types/general";
+import { Cart, NewReview } from "@/interfaces/general";
 
 export const removeItemFromCart = async (userId: string, productId: string) => {
   try {

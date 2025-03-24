@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AccountType } from "@/types/general";
+import { AccountType } from "@/interfaces/general";
 import Image from "next/image";
 import { registerUser, resendOtp, verifyOtp } from "@/lib/requests/auth";
 import { useRouter } from "next/navigation";

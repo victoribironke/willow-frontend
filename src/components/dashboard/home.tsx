@@ -54,7 +54,7 @@ const Home = () => {
     })();
   }, []);
 
-  if (loading) return <PageLoader fullScreen />;
+  if (loading) return <PageLoader />;
 
   return (
     <>
