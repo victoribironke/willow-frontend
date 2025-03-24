@@ -1,6 +1,5 @@
 import { ENDPOINTS } from "@/constants/constants";
-import { verifyAuthState } from "../auth";
-import { Order, OrderItem } from "@/interfaces/general";
+import { OrderItem } from "@/interfaces/general";
 
 export const getSellerDetails = async (userId: string) => {
   try {

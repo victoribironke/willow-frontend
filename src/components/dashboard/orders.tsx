@@ -18,10 +18,10 @@ import { PAGES } from "@/constants/constants";
 import { Ellipsis } from "lucide-react";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
-import { getSellerDetails, getSellerOrders } from "@/lib/requests/seller";
+import { getSellerOrders } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { Order, OrderItem } from "@/interfaces/general";
+import { OrderItem } from "@/interfaces/general";
 
 const Orders = () => {
   const [tab, setTab] = useState("All");

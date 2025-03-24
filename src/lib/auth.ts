@@ -1,5 +1,4 @@
 import { PAGES } from "@/constants/constants";
-import { log } from "console";
 import { redirect } from "next/navigation";
 import { getJwtExpiration } from "./utils";
 
