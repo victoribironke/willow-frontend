@@ -73,3 +73,5 @@ export const formatDateTime = (dateString: string | Date) => {
     hour12: true,
   });
 };
+
+export const getUniqueNumber = () => Date.now();

@@ -27,21 +27,23 @@ const Profile = () => {
   const [files, setFiles] = useState<FileList | null>(null);
 
   const update = async () => {
-    const formdata = new FormData();
+    // const formdata = new FormData();
 
-    if (files) {
-      formdata.append("avatar", files[0]);
-    }
+    // if (files) {
+    //   formdata.append("avatar", files[0]);
+    // }
 
-    formdata.append("businessName", name);
-    formdata.append("bio", bio);
+    // formdata.append("businessName", name);
+    // formdata.append("bio", bio);
+
+    const d = {
+      businessName: name,
+      bio,
+    };
 
     setIsLoading(true);
 
-    const { data, error } = await updateSellerProfile(
-      userInfo?.id || "",
-      formdata
-    );
+    const { data, error } = await updateSellerProfile(userInfo?.id || "", d);
 
     setIsLoading(false);
 

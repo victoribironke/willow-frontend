@@ -99,6 +99,7 @@ export const ENDPOINTS = {
   get_seller_details: (uid: string) => BACKEND_URL + `/sellers/${uid}`,
   get_seller_products: (uid: string) =>
     BACKEND_URL + `/sellers/${uid}/products`,
+  create_product: (uid: string) => BACKEND_URL + `/sellers/${uid}/products`,
   get_seller_product: (uid: string, pid: string) =>
     BACKEND_URL + `/sellers/${uid}/products/${pid}`,
   get_seller_orders: (uid: string) => BACKEND_URL + `/sellers/${uid}/orders`,
@@ -191,4 +192,62 @@ export const HEADER_LINKS = (pathname: string) => [
   },
 ];
 
-export const SUSTAINABILITY_FEATURES = ["Reusable", "Energy efficient"].sort();
+export const SUSTAINABILITY_FEATURES = [
+  "BIODEGRADABLE",
+  "COMPOSTABLE",
+  "REUSABLE",
+  "RECYCLED_MATERIALS",
+  "WATER_EFFICIENT",
+  "SOLAR_POWERED",
+  "MINIMAL_CARBON_FOOTPRINT",
+  "ENERGY_EFFICIENT",
+  "ZERO_WASTE",
+  "PLASTIC_FREE",
+  "REPAIRABLE_DESIGN",
+  "UPCYCLED",
+  "CARBON_OFFSET",
+  "ORGANIC_MATERIALS",
+  "FAIR_TRADE",
+  "VEGAN",
+  "NON_TOXIC",
+  "REGENERATIVE_AGRICULTURE",
+  "SLOW_PRODUCTION",
+  "WASTE_REDUCING_DESIGN",
+  "CIRCULAR_DESIGN",
+  "WILDLIFE_FRIENDLY",
+  "DURABLE_DESIGN",
+  "LOW_EMISSION_PRODUCTION",
+  "CHEMICAL_FREE",
+  "CRUELTY_FREE",
+  "TREE_FREE",
+  "ETHICALLY_SOURCED",
+  "RENEWABLE_ENERGY_USED",
+  "SOCIALLY_RESPONSIBLE",
+]
+  .sort()
+  .map((a) => a.split("_").join(" "));
+
+export const PACKAGING = [
+  "PLASTIC_FREE",
+  "BIODEGRADABLE",
+  "RECYCLED_PAPER",
+  "RECYCLED_CARDBOARD",
+  "REUSABLE_PACKAGING",
+  "COMPOSTABLE_PACKAGING",
+  "MINIMAL_PACKAGING",
+  "GLASS_CONTAINER",
+  "METAL_CONTAINER",
+  "RECYCLED_PLASTIC",
+  "PLASTIC_CONTAINER",
+  "PAPERBOARD_BOX",
+  "BAMBOO_PACKAGING",
+  "ALUMINUM_CONTAINER",
+  "OTHER_ECO_FRIENDLY",
+  "UNKNOWN_PACKAGING",
+]
+  .sort()
+  .map((a) => a.split("_").join(" "));
+
+export const SOURCING = ["LOCALLY_SOURCED", "INTERNATIONALLY_SOURCED"]
+  .sort()
+  .map((a) => a.split("_").join(" "));

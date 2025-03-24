@@ -30,7 +30,7 @@ const Products = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(userInfo);
+      // console.log(userInfo);
       const { data, error } = await getSellerProducts(userInfo?.id || "");
 
       if (error) {
