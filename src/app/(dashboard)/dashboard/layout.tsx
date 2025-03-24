@@ -25,6 +25,7 @@ import { logOut } from "@/lib/auth";
 import { Menu } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
+import { Toaster } from "react-hot-toast";
 
 // export const metadata: Metadata = {
 //   title: "Home ~ Willow",
@@ -82,6 +83,8 @@ const RootLayout = ({
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster />
+
       <div className="w-full [--header-height:calc(theme(spacing.14))] bg-[#f5f5f5]">
         <section className="w-full min-h-screen flex items-center flex-col relative pt-16">
           <div className="w-full bg-white border-b p-4 flex items-center justify-center fixed z-50 top-0">

@@ -31,7 +31,6 @@ const Orders = () => {
 
   useEffect(() => {
     (async () => {
-      console.log(userInfo);
       const { data, error } = await getSellerOrders(userInfo?.id || "");
 
       if (error) {

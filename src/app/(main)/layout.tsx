@@ -11,6 +11,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { user_details } from "../atoms/atoms";
+import { Toaster } from "react-hot-toast";
 
 const RootLayout = ({
   children,
@@ -54,6 +55,8 @@ const RootLayout = ({
 
   return (
     <main className="w-full min-h-screen flex items-center flex-col relative pt-20">
+      <Toaster />
+
       <header className="w-full bg-white border-b p-4 flex items-center justify-center fixed z-50 top-0">
         <div className="w-full max-w-screen-xl bg-re flex gap-4 items-center justify-between">
           {/* header content */}

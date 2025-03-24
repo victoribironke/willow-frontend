@@ -15,6 +15,12 @@ export interface NewReview {
   comment: string;
 }
 
+export interface UpdateProfile {
+  avatar: File | null;
+  businessName: string;
+  bio: string;
+}
+
 // Enums
 export enum AIChatStatus {
   OPEN = "OPEN",

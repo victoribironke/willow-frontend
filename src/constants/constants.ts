@@ -99,9 +99,13 @@ export const ENDPOINTS = {
   get_seller_details: (uid: string) => BACKEND_URL + `/sellers/${uid}`,
   get_seller_products: (uid: string) =>
     BACKEND_URL + `/sellers/${uid}/products`,
+  get_seller_product: (uid: string, pid: string) =>
+    BACKEND_URL + `/sellers/${uid}/products/${pid}`,
   get_seller_orders: (uid: string) => BACKEND_URL + `/sellers/${uid}/orders`,
   get_seller_order: (uid: string, oid: string) =>
     BACKEND_URL + `/sellers/${uid}/orders/${oid}`,
+  update_seller_profile: (uid: string) =>
+    BACKEND_URL + `/sellers/${uid}/update-profile`,
 };
 
 export const IMAGE_TIPS = [

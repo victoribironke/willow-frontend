@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -15,9 +15,36 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import { Product } from "@/interfaces/general";
+import { useAtomValue } from "jotai";
+import { user_details } from "@/app/atoms/atoms";
+import { getSellerProducts } from "@/lib/requests/seller";
+import toast from "react-hot-toast";
+import PageLoader from "../general/page-loader";
 
 const Products = () => {
   const [tab, setTab] = useState("Listed");
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const userInfo = useAtomValue(user_details);
+
+  useEffect(() => {
+    (async () => {
+      console.log(userInfo);
+      const { data, error } = await getSellerProducts(userInfo?.id || "");
+
+      if (error) {
+        toast.error(error);
+        return;
+      }
+
+      setLoading(false);
+
+      setProducts(data as Product[]);
+    })();
+  }, []);
+
+  if (loading) return <PageLoader />;
 
   return (
     <>
@@ -56,49 +83,54 @@ const Products = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="pl-4">
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage
-                      src="https://github.com/victoribironke.png"
-                      alt="Track cover"
-                    />
-                    <AvatarFallback className="rounded-lg">DP</AvatarFallback>
-                  </Avatar>
+            {products.map((p, i) => (
+              <TableRow key={i}>
+                <TableCell className="pl-4">
+                  <div className="flex items-center gap-2">
+                    <Avatar className="h-8 w-8 rounded-lg">
+                      <AvatarImage src={p.images} alt="Product image" />
+                      <AvatarFallback className="rounded-lg">DP</AvatarFallback>
+                    </Avatar>
 
-                  <div>
-                    <Link
-                      href={PAGES.dashboard.product("fklaj")}
-                      className="font-medium hover:underline"
-                    >
-                      Mixed tote bag (Red bottoms)
-                    </Link>
+                    <div>
+                      <Link
+                        href={PAGES.dashboard.product(p.id)}
+                        className="font-medium hover:underline"
+                      >
+                        {p.name}
+                      </Link>
 
-                    <p className="text-sm text-muted-foreground">Accessory</p>
+                      <p className="text-sm text-muted-foreground">
+                        {p.category}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </TableCell>
+                </TableCell>
 
-              <TableCell className="font-medium whitespace-nowrap">
-                <div>
-                  <p className="font-medium">#01ARZ3NDEKTS</p>
+                <TableCell className="font-medium whitespace-nowrap">
+                  <div>
+                    <p className="font-medium">{p.id}</p>
 
-                  <p className="text-sm text-muted-foreground">Jan 24, 2025</p>
-                </div>
-              </TableCell>
-              <TableCell className="whitespace-nowrap">Zero waste</TableCell>
-              <TableCell className="whitespace-nowrap">127</TableCell>
-              <TableCell>9,500</TableCell>
-              <TableCell>
-                <Button
-                  variant="outline"
-                  className="border-red text-red hover:text-red"
-                >
-                  Delist
-                </Button>
-              </TableCell>
-            </TableRow>
+                    <p className="text-sm text-muted-foreground">
+                      {formatDateTime(p.createdAt)}
+                    </p>
+                  </div>
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {p.sustainabilityTag}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">{p.inStock}</TableCell>
+                <TableCell>{p.price}</TableCell>
+                <TableCell>
+                  <Button
+                    variant="outline"
+                    className="border-red text-red hover:text-red"
+                  >
+                    Delist
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

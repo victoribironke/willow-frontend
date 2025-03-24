@@ -11,26 +11,59 @@ import {
 import { Button } from "../ui/button";
 import { Leaf, Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import Star from "./star";
 import ProductReviews from "./product-reviews";
 import ProductDetails from "./product-details";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import SimilarProducts from "../dashboard/similar-products";
 import CuratedPicks from "../main/curated-picks";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import { Product } from "@/interfaces/general";
+import { getSellerProduct } from "@/lib/requests/seller";
+import { user_details } from "@/app/atoms/atoms";
+import { useAtomValue } from "jotai";
+import toast from "react-hot-toast";
+import PageLoader from "./page-loader";
 
-const Product = () => {
+const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");
   const pathname = usePathname();
+  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<Product | null>(null);
+  const userInfo = useAtomValue(user_details);
+  const { push } = useRouter();
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await getSellerProduct(
+        userInfo?.id || "",
+        productId
+      );
+
+      if (error) {
+        toast.error(error);
+
+        if (error === "Product not found.") push(PAGES.dashboard.products);
+
+        return;
+      }
+
+      setLoading(false);
+
+      setProduct(data as Product);
+    })();
+  }, []);
+
+  if (loading) return <PageLoader />;
 
   return (
     <>
       {pathname.includes("/dashboard/") && (
         <>
-          <h1 className="text-xl lg:text-2xl font-medium">Products</h1>
+          <h1 className="text-xl lg:text-2xl font-medium">Product</h1>
           <p className="text-[#696969]">View product</p>
           <Separator />
         </>
@@ -40,11 +73,11 @@ const Product = () => {
         <div className="w-full flex items-center justify-center gap-4 flex-col">
           <Carousel className="w-full">
             <CarouselContent>
-              {Array.from({ length: 5 }).map((_, index) => (
+              {product?.images.map((img, index) => (
                 <CarouselItem key={index}>
                   <div className="overflow-hidden aspect-square rounded-xl">
                     <img
-                      src="https://github.com/victoribironke.png"
+                      src={img}
                       alt="Image"
                       className="w-full h-full object-cover"
                     />
@@ -57,13 +90,13 @@ const Product = () => {
           </Carousel>
 
           <div className="grid grid-cols-5 w-full gap-4">
-            {Array.from({ length: 5 }).map((_, index) => (
+            {product?.images.map((img, index) => (
               <div
                 className="overflow-hidden aspect-square rounded-xl w-full"
                 key={index}
               >
                 <img
-                  src="https://github.com/victoribironke.png"
+                  src={img}
                   alt="Image"
                   className="w-full h-full object-cover"
                 />
@@ -77,27 +110,27 @@ const Product = () => {
             variant="outline"
             className="text-main hover:text-main hover:bg-white cursor-default"
           >
-            <Leaf /> Biodegradable
+            <Leaf /> {product?.sustainabilityTag}
           </Button>
 
           <div className="flex flex-col gap-2">
-            <h4 className="text-xl lg:text-2xl font-medium">
-              Pine Scent Body Rub
+            <h4 className="text-xl lg:text-2xl font-medium">{product?.name}</h4>
+
+            {/* <div className="flex items-center gap-2">
+              <Star filled />
+              <Star filled />
+              <Star />
+              <Star />
+              <Star />
+
+              <p className="font-medium">{product.}</p>
+            </div> */}
+
+            <p className="text-[#696969] font-medium">{product?.category}</p>
+
+            <h4 className="text-lg lg:text-xl font-medium">
+              ₦ {product?.price}
             </h4>
-
-            <div className="flex items-center gap-2">
-              <Star filled />
-              <Star filled />
-              <Star />
-              <Star />
-              <Star />
-
-              <p className="font-medium">2.0</p>
-            </div>
-
-            <p className="text-[#696969] font-medium">Cosmetics</p>
-
-            <h4 className="text-lg lg:text-xl font-medium">₦ 23,500</h4>
           </div>
 
           <Separator />
@@ -107,20 +140,24 @@ const Product = () => {
               <p className="lg:text-lg text-[#696969] font-medium mb-2">
                 Sourcing
               </p>
-              <p className="text-sm lg:text-base font-medium">International</p>
+              <p className="text-sm lg:text-base font-medium">
+                {product?.sourcing.split("_").join(" ")}
+              </p>
             </div>
 
             <div>
               <p className="lg:text-lg text-[#696969] font-medium mb-2">
                 Packaging
               </p>
-              <p className="text-sm lg:text-base font-medium">Reusable</p>
+              <p className="text-sm lg:text-base font-medium">
+                {product?.packaging.split("_").join(" ")}
+              </p>
             </div>
           </div>
 
           <Separator />
 
-          <p className="text-[#696969]">120 left</p>
+          <p className="text-[#696969]">{product?.inStock} left</p>
 
           {pathname.includes("/dashboard/") ? (
             <Button variant="destructive">Delist</Button>
@@ -143,10 +180,10 @@ const Product = () => {
               </div>
 
               <Link
-                href={PAGES.main.shop.seller("jf")}
+                href={PAGES.main.shop.seller(product?.sellerId as string)}
                 className="text-muted-foreground underline"
               >
-                PureBody Ltd.
+                {product?.seller.businessName}
               </Link>
             </>
           )}
@@ -184,12 +221,12 @@ const Product = () => {
               tab === "ratings" ? "text-black" : "text-muted-foreground"
             }
           >
-            6
+            {product?.reviews.length}
           </Badge>
         </Button>
       </div>
 
-      {tab === "details" && (
+      {/* {tab === "details" && (
         <>
           <ProductDetails />
           {pathname.includes("/dashboard/products/") && <SimilarProducts />}
@@ -197,9 +234,9 @@ const Product = () => {
       )}
       {tab === "ratings" && <ProductReviews />}
 
-      {pathname.includes("/product/") && <CuratedPicks />}
+      {pathname.includes("/product/") && <CuratedPicks />} */}
     </>
   );
 };
 
-export default Product;
+export default ProductPage;

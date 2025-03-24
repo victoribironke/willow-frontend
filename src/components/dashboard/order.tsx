@@ -32,7 +32,6 @@ const Order = ({ orderId }: { orderId: string }) => {
 
   useEffect(() => {
     (async () => {
-      console.log(userInfo);
       const { data, error } = await getSellerOrder(userInfo?.id || "", orderId);
 
       if (error) {
