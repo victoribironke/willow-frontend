@@ -1,5 +1,5 @@
 import { ENDPOINTS } from "@/constants/constants";
-import { Cart, NewReview } from "@/interfaces/general";
+import { Cart, Customer, NewReview } from "@/interfaces/general";
 
 export const removeItemFromCart = async (userId: string, productId: string) => {
   try {
@@ -219,6 +219,50 @@ export const getOrder = async (userId: string, orderId: string) => {
       return { data: null, error: res.message + "." };
 
     return { data: res.data, error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const getCustomerDetails = async (userId: string) => {
+  try {
+    const req = await fetch(ENDPOINTS.get_customer_details(userId), {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data as Customer, error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const updateCustomerDetails = async (userId: string, d: any) => {
+  try {
+    const req = await fetch(ENDPOINTS.update_customer_details(userId), {
+      method: "POST",
+      body: JSON.stringify(d),
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: "Successfully updated profile.", error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };

@@ -83,6 +83,9 @@ export const ENDPOINTS = {
 
   // CUSTOMERS
   get_cart: (uid: string) => BACKEND_URL + `/customers/${uid}/cart`,
+  get_customer_details: (uid: string) => BACKEND_URL + `/customers/${uid}`,
+  update_customer_details: (uid: string) =>
+    BACKEND_URL + `/customers/${uid}/update-profile`,
   update_cart: (uid: string, pid: string) =>
     BACKEND_URL + `/customers/${uid}/cart/${pid}`,
   update_liked_products: (uid: string, pid: string) =>
