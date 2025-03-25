@@ -27,6 +27,7 @@ import { user_details } from "@/app/atoms/atoms";
 import { useAtomValue } from "jotai";
 import toast from "react-hot-toast";
 import PageLoader from "./page-loader";
+import { getProduct } from "@/lib/requests/general";
 
 const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");
@@ -38,17 +39,19 @@ const ProductPage = ({ productId }: { productId: string }) => {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await getSellerProduct(
-        userInfo?.id || "",
-        productId
-      );
+      const { data, error } = await getProduct(productId);
 
       setLoading(false);
 
       if (error) {
         toast.error(error);
 
-        if (error === "Product not found.") push(PAGES.dashboard.products);
+        if (error === "Product not found.")
+          push(
+            userInfo?.role === "SELLER"
+              ? PAGES.dashboard.products
+              : PAGES.main.shop.home
+          );
 
         return;
       }

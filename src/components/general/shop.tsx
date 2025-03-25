@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { IMAGES } from "@/constants/constants";
+import { IMAGES, PAGES } from "@/constants/constants";
 import { Heart, Leaf, ShoppingBasket } from "lucide-react";
 import Image from "next/image";
 import PageLoader from "./page-loader";
@@ -20,6 +20,7 @@ import {
   removeItemFromLikedProducts,
 } from "@/lib/requests/customer";
 import { formatNumber } from "@/lib/utils";
+import Link from "next/link";
 
 const Shop = () => {
   const [tab, setTab] = useState("Listed");
@@ -120,20 +121,24 @@ const Shop = () => {
                 />
               </div>
 
-              <p className="font-medium">{p.name}</p>
+              <Link
+                href={PAGES.main.shop.product(p.id)}
+                className="font-medium hover:underline"
+              >
+                {p.name}
+              </Link>
 
               <p className="text-sm text-[#696969]">{p.category}</p>
 
               <p className="text-sm font-medium">₦ {formatNumber(p.price)}</p>
 
-              {!cartItems.includes(p.id) && (
-                <Button
-                  className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2"
-                  onClick={() => addToCart(p.id)}
-                >
-                  <ShoppingBasket size={20} />
-                </Button>
-              )}
+              <Button
+                className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2"
+                onClick={() => addToCart(p.id)}
+                disabled={cartItems.includes(p.id)}
+              >
+                <ShoppingBasket size={20} />
+              </Button>
             </div>
           ))}
         </div>

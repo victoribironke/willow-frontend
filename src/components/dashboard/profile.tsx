@@ -59,13 +59,9 @@ const Profile = () => {
     (async () => {
       const { data, error } = await getSellerDetails(userInfo?.id || "");
 
-      if (error) {
-        toast.error(error);
-
-        return;
-      }
-
       setLoading(false);
+
+      if (error) return toast.error(error);
 
       setSeller(data as Seller);
     })();

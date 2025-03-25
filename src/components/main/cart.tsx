@@ -142,7 +142,7 @@ const Cart = () => {
               </div>
 
               <Link
-                href={PAGES.main.shop.seller("jf")}
+                href={PAGES.main.shop.seller(c.product.sellerId)}
                 className="text-muted-foreground underline text-sm"
               >
                 PureBody Ltd.
