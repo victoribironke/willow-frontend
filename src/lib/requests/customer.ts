@@ -22,7 +22,7 @@ export const removeItemFromCart = async (userId: string, productId: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data.message + ".", error: null };
+    return { data: "Product removed from cart successfully.", error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };

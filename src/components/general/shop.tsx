@@ -62,11 +62,11 @@ const Shop = () => {
       const { data: c } = await getCart(userInfo?.id || "");
       const { data: l } = await getLikedProducts(userInfo?.id || "");
 
+      setLoading(false);
+
       if (error) {
         return toast.error(error);
       }
-
-      setLoading(false);
 
       setProducts(data as Product[]);
       setCartItems(c?.map((j) => j.productId) as string[]);

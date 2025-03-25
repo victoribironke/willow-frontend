@@ -43,6 +43,8 @@ const ProductPage = ({ productId }: { productId: string }) => {
         productId
       );
 
+      setLoading(false);
+
       if (error) {
         toast.error(error);
 
@@ -50,8 +52,6 @@ const ProductPage = ({ productId }: { productId: string }) => {
 
         return;
       }
-
-      setLoading(false);
 
       setProduct(data as Product);
     })();
@@ -77,7 +77,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
                 <CarouselItem key={index}>
                   <div className="overflow-hidden aspect-square rounded-xl">
                     <img
-                      src={img}
+                      src={img.url}
                       alt="Image"
                       className="w-full h-full object-cover"
                     />
@@ -96,7 +96,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
                 key={index}
               >
                 <img
-                  src={img}
+                  src={img.url}
                   alt="Image"
                   className="w-full h-full object-cover"
                 />

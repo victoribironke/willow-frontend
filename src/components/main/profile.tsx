@@ -86,13 +86,13 @@ const Profile = () => {
     (async () => {
       const { data, error } = await getCustomerDetails(userInfo?.id || "");
 
+      setLoading(false);
+
       if (error) {
         toast.error(error);
 
         return;
       }
-
-      setLoading(false);
 
       setCustomer(data as Customer);
     })();
