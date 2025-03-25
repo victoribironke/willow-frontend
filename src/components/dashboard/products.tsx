@@ -42,7 +42,7 @@ const Products = () => {
       return;
     }
 
-    toast.error(data);
+    toast.success(data);
     setProducts((k) => k.filter((a) => a.id !== id));
   };
 

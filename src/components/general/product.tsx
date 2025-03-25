@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
 import { Leaf, Minus, Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, formatNumber } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import Star from "./star";
@@ -22,7 +22,7 @@ import CuratedPicks from "../main/curated-picks";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { Product } from "@/interfaces/general";
-import { getSellerProduct } from "@/lib/requests/seller";
+import { deleteProduct, getSellerProduct } from "@/lib/requests/seller";
 import { user_details } from "@/app/atoms/atoms";
 import { useAtomValue } from "jotai";
 import toast from "react-hot-toast";
@@ -33,9 +33,26 @@ const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
+  const [IsDelistloading, setIsDelistLoading] = useState(true);
   const [product, setProduct] = useState<Product | null>(null);
   const userInfo = useAtomValue(user_details);
   const { push } = useRouter();
+
+  const remove = async (id: string) => {
+    setIsDelistLoading(true);
+
+    const { data, error } = await deleteProduct(userInfo?.id || "", id);
+
+    setIsDelistLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.success(data);
+    push(PAGES.dashboard.products);
+  };
 
   useEffect(() => {
     (async () => {
@@ -113,26 +130,26 @@ const ProductPage = ({ productId }: { productId: string }) => {
             variant="outline"
             className="text-main hover:text-main hover:bg-white cursor-default"
           >
-            <Leaf /> {product?.sustainabilityTag}
+            <Leaf /> {product?.sustainabilityFeatures[0].split("_").join(" ")}
           </Button>
 
           <div className="flex flex-col gap-2">
             <h4 className="text-xl lg:text-2xl font-medium">{product?.name}</h4>
 
-            {/* <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Star filled />
               <Star filled />
               <Star />
               <Star />
               <Star />
 
-              <p className="font-medium">{product.}</p>
-            </div> */}
+              <p className="font-medium">{product?.reviews.length} reviews</p>
+            </div>
 
             <p className="text-[#696969] font-medium">{product?.category}</p>
 
             <h4 className="text-lg lg:text-xl font-medium">
-              ₦ {product?.price}
+              ₦ {formatNumber(product?.price || 0)}
             </h4>
           </div>
 
@@ -160,7 +177,11 @@ const ProductPage = ({ productId }: { productId: string }) => {
 
           <Separator />
 
-          <p className="text-[#696969]">{product?.inStock} left</p>
+          <p className="text-[#696969]">
+            {product?.inStock
+              ? product.inStock + " left"
+              : "Delivered on demand"}
+          </p>
 
           {pathname.includes("/dashboard/") ? (
             <Button variant="destructive">Delist</Button>

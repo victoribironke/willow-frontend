@@ -13,7 +13,7 @@ export const BASE_URL =
     ? "http://localhost:3000"
     : "https://willow-frontend.vercel.app";
 
-export const BACKEND_URL = "https://willow-backend.onrender.com/api/v1";
+export const BACKEND_URL = "https://willow-backend-1.onrender.com/api/v1";
 
 export const PAGES = {
   main: {
