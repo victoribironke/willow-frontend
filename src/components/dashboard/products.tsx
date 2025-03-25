@@ -18,19 +18,36 @@ import { PAGES } from "@/constants/constants";
 import { Product } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
-import { getSellerProducts } from "@/lib/requests/seller";
+import { deleteProduct, getSellerProducts } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
+import { LoaderCircle } from "lucide-react";
 
 const Products = () => {
   const [tab, setTab] = useState("Listed");
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const userInfo = useAtomValue(user_details);
 
+  const remove = async (id: string) => {
+    setIsLoading(true);
+
+    const { data, error } = await deleteProduct(userInfo?.id || "", id);
+
+    setIsLoading(false);
+
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
+    toast.error(data);
+    setProducts((k) => k.filter((a) => a.id !== id));
+  };
+
   useEffect(() => {
     (async () => {
-      // console.log(userInfo);
       const { data, error } = await getSellerProducts(userInfo?.id || "");
 
       if (error) {
@@ -125,8 +142,11 @@ const Products = () => {
                   <Button
                     variant="outline"
                     className="border-red text-red hover:text-red"
+                    onClick={() => remove(p.id)}
+                    disabled={isLoading}
                   >
-                    Delist
+                    Delist{" "}
+                    {isLoading && <LoaderCircle className="animate-spin" />}
                   </Button>
                 </TableCell>
               </TableRow>

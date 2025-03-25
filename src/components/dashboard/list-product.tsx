@@ -101,6 +101,8 @@ const ListProduct = () => {
       toast.error(error);
       return;
     }
+
+    console.log(data);
   };
 
   const filesToDataURLs = async (files: { id: number; file: File }[]) => {
@@ -404,9 +406,9 @@ const ListProduct = () => {
 
         {/* Button that spans full width */}
         <Button
-          className="w-full bg-main hover:bg-main/90 cursor-pointer mx-auto self-center col-span-1 md:col-span-2"
-          // onClick={() => validate()}
-          // disabled={loading}
+          className="w-full max-w-sm mx-auto bg-main hover:bg-main/90 cursor-pointer self-center col-span-1 md:col-span-2"
+          onClick={create}
+          disabled={isLoading}
         >
           Upload
           {/* {loading && <LoaderCircle className="animate-spin" />} */}

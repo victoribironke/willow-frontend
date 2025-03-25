@@ -100,6 +100,8 @@ export const ENDPOINTS = {
   get_seller_products: (uid: string) =>
     BACKEND_URL + `/sellers/${uid}/products`,
   create_product: (uid: string) => BACKEND_URL + `/sellers/${uid}/products`,
+  delete_product: (uid: string, pid: string) =>
+    BACKEND_URL + `/sellers/${uid}/products/${pid}`,
   get_seller_product: (uid: string, pid: string) =>
     BACKEND_URL + `/sellers/${uid}/products/${pid}`,
   get_seller_orders: (uid: string) => BACKEND_URL + `/sellers/${uid}/orders`,

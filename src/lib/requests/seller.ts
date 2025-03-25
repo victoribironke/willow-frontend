@@ -150,7 +150,29 @@ export const createProduct = async (userId: string, d: any) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: "Successfully created product.", error: null };
+    return { data: res, error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const deleteProduct = async (userId: string, productId: string) => {
+  try {
+    const req = await fetch(ENDPOINTS.delete_product(userId, productId), {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: "Product deleted successfully.", error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };
