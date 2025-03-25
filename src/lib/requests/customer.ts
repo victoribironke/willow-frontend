@@ -1,5 +1,11 @@
 import { ENDPOINTS } from "@/constants/constants";
-import { Cart, Customer, NewReview } from "@/interfaces/general";
+import {
+  Cart,
+  CartItem,
+  Customer,
+  LikedProduct,
+  NewReview,
+} from "@/interfaces/general";
 
 export const removeItemFromCart = async (userId: string, productId: string) => {
   try {
@@ -44,6 +50,27 @@ export const addItemToCart = async (
       return { data: null, error: res.message + "." };
 
     return { data: "Cart updated.", error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const getLikedProducts = async (userId: string) => {
+  try {
+    const req = await fetch(ENDPOINTS.get_liked_products(userId), {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data as LikedProduct[], error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };
@@ -99,7 +126,7 @@ export const addItemToLikedProducts = async (
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: "Cart updated.", error: null };
+    return { data: res.data.message + ".", error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };
@@ -176,7 +203,7 @@ export const getCart = async (userId: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data.cartItems as Cart[], error: null };
+    return { data: res.data.cartItems as CartItem[], error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };

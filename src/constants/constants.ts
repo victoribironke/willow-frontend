@@ -81,8 +81,12 @@ export const ENDPOINTS = {
   verify_otp: BACKEND_URL + "/auth/verify-account",
   resend_otp: BACKEND_URL + "/auth/resend-otp",
 
+  get_products: BACKEND_URL + "/products",
+
   // CUSTOMERS
   get_cart: (uid: string) => BACKEND_URL + `/customers/${uid}/cart`,
+  get_liked_products: (uid: string) =>
+    BACKEND_URL + `/customers/${uid}/liked-products`,
   get_customer_details: (uid: string) => BACKEND_URL + `/customers/${uid}`,
   update_customer_details: (uid: string) =>
     BACKEND_URL + `/customers/${uid}/update-profile`,

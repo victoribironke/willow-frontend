@@ -267,11 +267,19 @@ export interface Review {
   createdAt: Date;
 }
 
+export interface Image {
+  key: string;
+  mimetype: string;
+  originalname: string;
+  size: number;
+  url: string;
+}
+
 export interface Product {
   id: string;
   name: string;
   description: string;
-  images: any; // Json
+  images: Image[]; // Json
   inStock?: number;
   onDemand: boolean;
   category: string;
