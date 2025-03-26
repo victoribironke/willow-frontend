@@ -7,18 +7,55 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import { useAtomValue } from "jotai";
+import { user_details } from "@/app/atoms/atoms";
+import { useEffect, useState } from "react";
+import { Order } from "@/interfaces/general";
+import { useRouter } from "next/navigation";
+import { getOrder } from "@/lib/requests/customer";
+import toast from "react-hot-toast";
+import PageLoader from "../general/page-loader";
+import { formatNumber } from "@/lib/utils";
 
-const Order = () => {
+const OrderPage = ({ orderId }: { orderId: string }) => {
+  const userInfo = useAtomValue(user_details);
+  const [loading, setLoading] = useState(true);
+  const [order, setOrder] = useState<Order | null>(null);
+  const { push } = useRouter();
+
   const summary = [
-    { title: "Number of items:", value: "2" },
-    { title: "Total + shipping:", value: "₦ 60,500" },
+    { title: "Number of items:", value: order?.orderItems.length },
+    {
+      title: "Total + shipping:",
+      value: `₦ ${formatNumber(order?.totalAmount || 0)}`,
+    },
   ];
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await getOrder(userInfo?.id || "", orderId);
+
+      if (error) {
+        toast.error(error);
+
+        if (error === "Order not found.") push(PAGES.dashboard.orders);
+
+        return;
+      }
+
+      setLoading(false);
+
+      setOrder(data as Order);
+    })();
+  }, []);
+
+  if (loading) return <PageLoader />;
 
   return (
     <>
       <h1 className="text-xl lg:text-2xl font-medium">Order</h1>
 
-      <p>Ordrer #1JFDO903FVSA</p>
+      <p>Ordrer {order?.id}</p>
 
       <Table className="max-w-[15rem]">
         <TableBody>
@@ -40,52 +77,57 @@ const Order = () => {
 
       <p className="text-lg lg:text-xl font-medium">Items in your order</p>
 
-      <div className="w-full max-w-4xl relative bg-white border shadow rounded-lg flex gap-6 p-4">
-        <Avatar className="size-36 rounded-lg">
-          <AvatarImage
-            src="https://github.com/victoribironke.png"
-            alt="Image"
-          />
-          <AvatarFallback className="rounded-lg">DP</AvatarFallback>
-        </Avatar>
+      {order?.orderItems.map((o, i) => (
+        <div
+          key={i}
+          className="w-full max-w-4xl relative bg-white border shadow rounded-lg flex gap-6 p-4"
+        >
+          <Avatar className="size-36 rounded-lg">
+            <AvatarImage src={o.product.images[0].url} alt="Image" />
+            <AvatarFallback className="rounded-lg">DP</AvatarFallback>
+          </Avatar>
 
-        <div className="w-full flex flex-col gap-4">
-          <div className="w-full flex items-center justify-between">
-            <Button
-              variant="outline"
-              className="text-main hover:text-main hover:bg-white cursor-default text-sm"
-            >
-              <Leaf /> Biodegradable
-            </Button>
+          <div className="w-full flex flex-col gap-4">
+            <div className="w-full flex items-center justify-between">
+              <Button
+                variant="outline"
+                className="text-main hover:text-main hover:bg-white cursor-default text-sm"
+              >
+                <Leaf />{" "}
+                {o.product.sustainabilityFeatures[0].split("_").join(" ")}
+              </Button>
 
-            <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs lg:text-sm gap-1 rounded-md font-medium w-fit">
-              Delivered
+              <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs lg:text-sm gap-1 rounded-md font-medium w-fit">
+                {o.customerStatus}
+              </div>
             </div>
+
+            <div>
+              <p className="font-medium">{o.product.name}</p>
+              <p className="text-sm text-muted-foreground">
+                {o.product.category}
+              </p>
+            </div>
+
+            <div className="flex items-center absolute bottom-4 right-4">
+              <Button variant="outline" className="hover:bg-white">
+                {o.quantity} x ₦ {formatNumber(o.price)}
+              </Button>
+
+              <Button variant="ghost" className="hover:bg-transparent">
+                ₦ {formatNumber(o.quantity * o.price)}
+              </Button>
+            </div>
+
+            <Link
+              href={PAGES.main.shop.seller(o.sellerId)}
+              className="text-muted-foreground underline"
+            >
+              {o.product.seller.businessName}
+            </Link>
           </div>
-
-          <div>
-            <p className="font-medium">Mixed tote bag (Red bottoms)</p>
-            <p className="text-sm text-muted-foreground">Accessory</p>
-          </div>
-
-          <div className="flex items-center absolute bottom-4 right-4">
-            <Button variant="outline" className="hover:bg-white">
-              2 x ₦ 23,500
-            </Button>
-
-            <Button variant="ghost" className="hover:bg-transparent">
-              ₦ 47,000
-            </Button>
-          </div>
-
-          <Link
-            href={PAGES.main.shop.seller("jf")}
-            className="text-muted-foreground underline"
-          >
-            PureBody Ltd.
-          </Link>
         </div>
-      </div>
+      ))}
 
       <div className="w-full max-w-4xl relative bg-white border shadow rounded-lg flex gap-6 p-4">
         <p className="lg:text-lg">Payment methods</p>
@@ -94,30 +136,13 @@ const Order = () => {
       <div className="w-full max-w-4xl relative bg-white border shadow rounded-lg flex flex-col gap-6 p-4">
         <p className="lg:text-lg">Set address</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-sm gap-4">
-          <div className="grid gap-1">
-            <p className="text-muted-foreground">Country</p>
-
-            <p>Nigeria</p>
-          </div>
-
-          {/* MAP THE REMAINING INTO HERE */}
-        </div>
-
-        <div className="grid gap-1">
-          <p className="text-muted-foreground">Line 1</p>
-
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati,
-            quidem. Aperiam eaque veniam ea labore perspiciatis facilis quaerat
-            repellat alias!
-          </p>
-        </div>
-
-        {/* MAP THE SECOND LINE INTO HERE */}
+        <p>
+          {order?.address.street}, {order?.address.city}, {order?.address.zip},
+          Nigeria
+        </p>
       </div>
     </>
   );
 };
 
-export default Order;
+export default OrderPage;

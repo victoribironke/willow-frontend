@@ -14,6 +14,7 @@ import { getSellerOrder } from "@/lib/requests/seller";
 import { OrderItem } from "@/interfaces/general";
 import { useRouter } from "next/navigation";
 import { PAGES } from "@/constants/constants";
+import { formatNumber } from "@/lib/utils";
 
 const Order = ({ orderId }: { orderId: string }) => {
   const shipping = [
@@ -85,7 +86,7 @@ const Order = ({ orderId }: { orderId: string }) => {
           </Button>
 
           <Button variant="ghost" className="hover:bg-transparent">
-            ₦ {order?.price}
+            ₦ {formatNumber((order?.quantity || 0) * (order?.price || 0))}
           </Button>
         </div>
       </div>

@@ -172,12 +172,18 @@ export interface CartItem {
   updatedAt: Date;
 }
 
+export interface Address {
+  street: string;
+  city: string;
+  zip: string;
+}
+
 export interface Customer {
   userId: string;
   user: User;
   firstname: string;
   lastname: string;
-  address?: any; // Json
+  address?: Address; // Json
   points: number;
   cart?: Cart;
   transanctions: Transaction[];
@@ -217,7 +223,7 @@ export interface Order {
   customerId: string;
   weight: number;
   totalAmount: number;
-  address: any; // Json
+  address: Address; // Json
   serviceFee: number;
   deliveryFee: number;
   createdAt: Date;
@@ -238,7 +244,7 @@ export interface Recommendation {
 export interface RecycleLocation {
   id: string;
   name: string;
-  address: any; // Json
+  address: Address; // Json
   description?: string;
   createdAt: Date;
   updatedAt: Date;

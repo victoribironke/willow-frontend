@@ -41,12 +41,9 @@ const Orders = () => {
     (async () => {
       const { data, error } = await getSellerOrders(userInfo?.id || "");
 
-      if (error) {
-        toast.error(error);
-        return;
-      }
-
       setLoading(false);
+
+      if (error) return toast.error(error);
 
       setOrders(data as OrderItem[]);
     })();

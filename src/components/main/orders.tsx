@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -10,8 +12,34 @@ import { Separator } from "../ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import { useEffect, useState } from "react";
+import { user_details } from "@/app/atoms/atoms";
+import { useAtomValue } from "jotai";
+import { Order } from "@/interfaces/general";
+import PageLoader from "../general/page-loader";
+import toast from "react-hot-toast";
+import { getOrders } from "@/lib/requests/customer";
+import { formatDateTime, formatNumber } from "@/lib/utils";
 
 const Orders = () => {
+  const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const userInfo = useAtomValue(user_details);
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await getOrders(userInfo?.id || "");
+
+      setLoading(false);
+
+      if (error) return toast.error(error);
+
+      setOrders(data as Order[]);
+    })();
+  }, []);
+
+  if (loading) return <PageLoader />;
+
   return (
     <>
       <h1 className="text-xl lg:text-2xl font-medium">Ordered/Ongoing</h1>
@@ -22,53 +50,37 @@ const Orders = () => {
         <Table className="bg-white">
           <TableHeader>
             <TableRow>
-              <TableHead className="pl-4">Order</TableHead>
-              <TableHead>ID & Date</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead className="pl-4">ID</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Items</TableHead>
               <TableHead>Quantity</TableHead>
               <TableHead>Total Price (₦)</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="pl-4">
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage
-                      src="https://github.com/victoribironke.png"
-                      alt="Track cover"
-                    />
-                    <AvatarFallback className="rounded-lg">DP</AvatarFallback>
-                  </Avatar>
+            {orders.map((o, i) => (
+              <TableRow key={i}>
+                <TableCell className="pl-4">
+                  <Link
+                    href={PAGES.main.shop.order(o.id)}
+                    className="font-medium hover:underline"
+                  >
+                    {o.id}
+                  </Link>
+                </TableCell>
 
-                  <div>
-                    <Link
-                      href={PAGES.main.shop.order("fklaj")}
-                      className="font-medium hover:underline"
-                    >
-                      Mixed tote bag (Red bottoms)
-                    </Link>
-
-                    <p className="text-sm text-muted-foreground">Accessory</p>
-                  </div>
-                </div>
-              </TableCell>
-
-              <TableCell className="font-medium whitespace-nowrap">
-                <div>
-                  <p className="font-medium">#01ARZ3NDEKTS</p>
-
-                  <p className="text-sm text-muted-foreground">Jan 24, 2025</p>
-                </div>
-              </TableCell>
-              <TableCell className="whitespace-nowrap">
-                <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit">
-                  Delivered
-                </div>
-              </TableCell>
-              <TableCell className="whitespace-nowrap">127</TableCell>
-              <TableCell>9,500</TableCell>
-            </TableRow>
+                <TableCell className="font-medium whitespace-nowrap">
+                  {formatDateTime(o.createdAt)}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {o.orderItems.length}
+                </TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {o.orderItems.reduce((a, b) => a + b.quantity, 0)}
+                </TableCell>
+                <TableCell>{formatNumber(o.totalAmount)}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

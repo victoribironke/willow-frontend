@@ -29,6 +29,8 @@ const Shop = () => {
   const [likedProducts, setLikedProducts] = useState<string[]>([]);
   const userInfo = useAtomValue(user_details);
 
+  const new_products = products.filter((p) => p.approvalStatus === "APPROVED");
+
   const addToCart = async (productId: string) => {
     const { error } = await addItemToCart(userInfo?.id || "", productId, 1);
 
@@ -95,7 +97,7 @@ const Shop = () => {
         <h5 className="text-lg md:text-xl font-medium">Top Best Selling</h5>
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-          {products.map((p, i) => (
+          {new_products.map((p, i) => (
             <div
               className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative"
               key={i}

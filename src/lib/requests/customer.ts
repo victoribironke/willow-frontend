@@ -4,6 +4,8 @@ import {
   Customer,
   LikedProduct,
   NewReview,
+  Order,
+  OrderItem,
 } from "@/interfaces/general";
 
 export const removeItemFromCart = async (userId: string, productId: string) => {
@@ -223,7 +225,7 @@ export const getOrders = async (userId: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data, error: null };
+    return { data: res.data as Order[], error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };
@@ -244,7 +246,7 @@ export const getOrder = async (userId: string, orderId: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data, error: null };
+    return { data: res.data as Order, error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };
