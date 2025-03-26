@@ -20,8 +20,6 @@ import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 
 const SellerPage = ({ id }: { id: string }) => {
-  // `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${seller?.businessName}`
-
   const [seller, setSeller] = useState<Seller | null>(null);
   const userInfo = useAtomValue(user_details);
   const [loading, setLoading] = useState(true);
@@ -61,7 +59,10 @@ const SellerPage = ({ id }: { id: string }) => {
         <div className="flex gap-6 items-center justify-start">
           <Avatar className="size-16 rounded-full">
             <AvatarImage
-              src="https://github.com/victoribironke.png"
+              src={
+                seller?.avatar ||
+                `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${seller?.businessName}`
+              }
               alt={"user.name"}
             />
             <AvatarFallback className="rounded-lg">CN</AvatarFallback>
@@ -116,7 +117,8 @@ const SellerPage = ({ id }: { id: string }) => {
                 href={PAGES.main.shop.product(p.id)}
                 className="font-medium hover:underline"
               >
-                {p.name}
+                {p.name.slice(0, 25).trim()}
+                {p.name.length >= 25 && "..."}
               </Link>
 
               <p className="text-sm text-[#696969]">{p.category}</p>

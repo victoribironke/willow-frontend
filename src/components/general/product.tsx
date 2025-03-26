@@ -28,11 +28,15 @@ import { useAtomValue } from "jotai";
 import toast from "react-hot-toast";
 import PageLoader from "./page-loader";
 import { getProduct } from "@/lib/requests/general";
+import { addItemToCart } from "@/lib/requests/customer";
+import { Dialog } from "@radix-ui/react-dialog";
 
 const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
+  const [disabled, setDisabled] = useState(false);
+  const [quantity, setQuantity] = useState(0);
   const [isDelistLoading, setIsDelistLoading] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const userInfo = useAtomValue(user_details);
@@ -52,6 +56,25 @@ const ProductPage = ({ productId }: { productId: string }) => {
 
     toast.success(data);
     push(PAGES.dashboard.products);
+  };
+
+  const addToCart = async (productId: string) => {
+    if (quantity === 0) return;
+
+    setDisabled(true);
+
+    const { error } = await addItemToCart(
+      userInfo?.id || "",
+      productId,
+      quantity
+    );
+
+    if (error) {
+      setDisabled(false);
+      return;
+    }
+
+    toast.success("Added to cart.");
   };
 
   useEffect(() => {
@@ -196,17 +219,25 @@ const ProductPage = ({ productId }: { productId: string }) => {
           ) : (
             <>
               <div className="w-full flex gap-4">
-                <div className="border border-black bg-white flex items-center justify-center gap-4 py-1 px-2 rounded-md">
-                  <button>
+                <Button variant="outline" className="hover:bg-white gap-4">
+                  <div
+                    onClick={() => quantity !== 0 && setQuantity((k) => k - 1)}
+                  >
                     <Minus size={18} />
-                  </button>
-                  <p className="font-medium">0</p>
-                  <button>
-                    <Plus size={18} />
-                  </button>
-                </div>
+                  </div>
 
-                <Button className="w-fit bg-main hover:bg-main/90">
+                  <p className="font-medium">{quantity}</p>
+
+                  <div onClick={() => setQuantity((k) => k + 1)}>
+                    <Plus size={18} />
+                  </div>
+                </Button>
+
+                <Button
+                  className="w-fit bg-main hover:bg-main/90"
+                  disabled={disabled}
+                  onClick={() => addToCart(product?.id || "")}
+                >
                   Add to cart
                 </Button>
               </div>

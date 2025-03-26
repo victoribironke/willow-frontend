@@ -24,14 +24,14 @@ const Profile = () => {
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [image, setImage] = useState("");
-  const [files, setFiles] = useState<FileList | null>(null);
+  const [file, setFile] = useState<File | null>(null);
 
   const update = async () => {
     const formData = new FormData();
 
     // Append fields to FormData
-    if (files && files[0]) {
-      formData.append("avatar", files[0]); // Append the avatar file
+    if (file) {
+      formData.append("avatar", file); // Append the avatar file
     }
     formData.append("businessName", name);
     formData.append("bio", bio);
@@ -99,7 +99,7 @@ const Profile = () => {
             className="absolute opacity-0 cursor-pointer"
             accept=".png,.jpg,.jpeg"
             onChange={(e) => {
-              setFiles(e.target.files);
+              setFile(e.target.files ? e.target.files[0] : null);
 
               if (e.target.files && e.target.files[0]) {
                 const reader = new FileReader();

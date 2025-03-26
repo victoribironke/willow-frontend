@@ -98,7 +98,10 @@ const Shop = () => {
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {products.map((p, i) => (
-            <div className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative">
+            <div
+              className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative"
+              key={i}
+            >
               <div className="w-full flex items-center justify-between">
                 <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit whitespace-nowrap">
                   {/* <Leaf size={14} />{" "} */}
@@ -125,7 +128,8 @@ const Shop = () => {
                 href={PAGES.main.shop.product(p.id)}
                 className="font-medium hover:underline"
               >
-                {p.name}
+                {p.name.slice(0, 25).trim()}
+                {p.name.length >= 25 && "..."}
               </Link>
 
               <p className="text-sm text-[#696969]">{p.category}</p>
