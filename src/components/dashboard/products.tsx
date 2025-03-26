@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime, formatNumber } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { useEffect, useState } from "react";
@@ -21,7 +21,7 @@ import { user_details } from "@/app/atoms/atoms";
 import { deleteProduct, getSellerProducts } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, Trash2 } from "lucide-react";
 
 const Products = () => {
   const [tab, setTab] = useState("Listed");
@@ -29,6 +29,15 @@ const Products = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const userInfo = useAtomValue(user_details);
+
+  const new_products = products.filter((p) => {
+    if (tab === "Listed") return p.approvalStatus === "APPROVED";
+    else if (tab === "Pending") return p.approvalStatus === "PENDING";
+    else if (tab === "Rejected") return p.approvalStatus === "REJECTED";
+    else if (tab === "Out of stock") return p.inStock === 0;
+
+    return p;
+  });
 
   const remove = async (id: string) => {
     setIsLoading(true);
@@ -87,7 +96,7 @@ const Products = () => {
         ))}
       </div>
 
-      <div className="border rounded-lg overflow-hidden">
+      <div className="border rounded-lg overflow-scroll">
         <Table className="bg-white">
           <TableHeader>
             <TableRow>
@@ -95,12 +104,12 @@ const Products = () => {
               <TableHead>ID & Date</TableHead>
               <TableHead>Key tag</TableHead>
               <TableHead>Stock</TableHead>
-              <TableHead>Price (₦)</TableHead>
+              <TableHead className="whitespace-nowrap">Price (₦)</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {products.map((p, i) => (
+            {new_products.map((p, i) => (
               <TableRow key={i}>
                 <TableCell className="pl-4">
                   <div className="flex items-center gap-2">
@@ -112,9 +121,10 @@ const Products = () => {
                     <div>
                       <Link
                         href={PAGES.dashboard.product(p.id)}
-                        className="font-medium hover:underline"
+                        className="font-medium hover:underline whitespace-nowrap"
                       >
-                        {p.name}
+                        {p.name.slice(0, 50)}
+                        {p.name.length >= 50 && "..."}
                       </Link>
 
                       <p className="text-sm text-muted-foreground">
@@ -134,10 +144,12 @@ const Products = () => {
                   </div>
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
-                  {p.sustainabilityTag}
+                  {p.sustainabilityFeatures[0].split("_").join(" ")}
                 </TableCell>
-                <TableCell className="whitespace-nowrap">{p.inStock}</TableCell>
-                <TableCell>{p.price}</TableCell>
+                <TableCell className="whitespace-nowrap">
+                  {p.onDemand ? "Delivered on demand" : p.inStock}
+                </TableCell>
+                <TableCell>{formatNumber(p.price)}</TableCell>
                 <TableCell>
                   <Button
                     variant="outline"
@@ -145,7 +157,7 @@ const Products = () => {
                     onClick={() => remove(p.id)}
                     disabled={isLoading}
                   >
-                    Delist{" "}
+                    <Trash2 />{" "}
                     {isLoading && <LoaderCircle className="animate-spin" />}
                   </Button>
                 </TableCell>

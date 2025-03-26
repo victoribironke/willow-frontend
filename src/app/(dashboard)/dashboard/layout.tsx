@@ -143,7 +143,7 @@ const RootLayout = ({
 
           <div className="w-full bg-gray-100 min-h-[calc(100vh-4rem)] p-4 pb-10 flex items-center flex-col">
             <div className="w-full flex gap-8 max-w-[1280px] h-auto relative">
-              <div className="w-80 hidden md:flex flex-col gap-2 sticky top-20 h-full">
+              <div className="w-80 md:w-2/12 hidden md:flex flex-col gap-2 sticky top-20 h-full">
                 {SIDEBAR_ITEMS(pathname).map((s, i) => (
                   <Link href={s.link} key={i}>
                     <Button
@@ -160,7 +160,9 @@ const RootLayout = ({
                 ))}
               </div>
 
-              <div className="w-full flex flex-col gap-6">{children}</div>
+              <div className="w-full md:w-10/12 flex flex-col gap-6">
+                {children}
+              </div>
             </div>
           </div>
         </section>

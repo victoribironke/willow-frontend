@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
-import { Leaf, Minus, Plus } from "lucide-react";
+import { Leaf, LoaderCircle, Minus, Plus } from "lucide-react";
 import { cn, formatNumber } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
@@ -33,7 +33,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
-  const [IsDelistloading, setIsDelistLoading] = useState(true);
+  const [isDelistLoading, setIsDelistLoading] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const userInfo = useAtomValue(user_details);
   const { push } = useRouter();
@@ -56,7 +56,9 @@ const ProductPage = ({ productId }: { productId: string }) => {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await getProduct(productId);
+      const { data, error } = await (userInfo?.role === "SELLER"
+        ? getSellerProduct(userInfo?.id || "", productId)
+        : getProduct(productId));
 
       setLoading(false);
 
@@ -184,7 +186,13 @@ const ProductPage = ({ productId }: { productId: string }) => {
           </p>
 
           {pathname.includes("/dashboard/") ? (
-            <Button variant="destructive">Delist</Button>
+            <Button
+              variant="destructive"
+              onClick={() => remove(product?.id || "")}
+            >
+              Delist{" "}
+              {isDelistLoading && <LoaderCircle className="animate-spin" />}
+            </Button>
           ) : (
             <>
               <div className="w-full flex gap-4">
@@ -250,15 +258,18 @@ const ProductPage = ({ productId }: { productId: string }) => {
         </Button>
       </div>
 
-      {/* {tab === "details" && (
+      {tab === "details" && (
         <>
-          <ProductDetails />
-          {pathname.includes("/dashboard/products/") && <SimilarProducts />}
+          <ProductDetails
+            desc={product?.description || ""}
+            eolInfo={product?.endOfLifeInfo || ""}
+          />
+          {/* {pathname.includes("/dashboard/products/") && <SimilarProducts />} */}
         </>
       )}
-      {tab === "ratings" && <ProductReviews />}
+      {tab === "ratings" && <ProductReviews reviews={product?.reviews || []} />}
 
-      {pathname.includes("/product/") && <CuratedPicks />} */}
+      {/* {pathname.includes("/product/") && <CuratedPicks />} */}
     </>
   );
 };
