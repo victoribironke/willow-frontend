@@ -51,16 +51,14 @@ const ListProduct = () => {
   const [category, setCategory] = useState("");
   const [sourcing, setSourcing] = useState("");
   const [packaging, setPackaging] = useState("");
-  const [message, setMessage] = useState(
-    "Thank you for your submission. Based on our initial assessment, the available data was insufficient for a definitive sustainability evaluation. We invite you to apply for extended vetting, which provides an extended in-person review to help determine if your product meets our sustainability criteria for listing"
-  );
+  const [message, setMessage] = useState("");
   const [desc, setDesc] = useState("");
   const [endOfLife, setEndOfLife] = useState("");
   const [files, setFiles] = useState<{ id: number; file: File }[]>([]);
   const [images, setImages] = useState<{ id: number; s: string }[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [onDemand, setOnDemand] = useState(false);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const userInfo = useAtomValue(user_details);
 
