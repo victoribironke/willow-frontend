@@ -1,6 +1,14 @@
 "use client";
 
 import { Separator } from "../ui/separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { CloudUpload } from "lucide-react";
 import {
   Tooltip,
@@ -44,12 +52,16 @@ const ListProduct = () => {
   const [category, setCategory] = useState("");
   const [sourcing, setSourcing] = useState("");
   const [packaging, setPackaging] = useState("");
+  const [message, setMessage] = useState(
+    "Thank you for your submission. Based on our initial assessment, the available data was insufficient for a definitive sustainability evaluation. We invite you to apply for extended vetting, which provides an extended in-person review to help determine if your product meets our sustainability criteria for listing"
+  );
   const [desc, setDesc] = useState("");
   const [endOfLife, setEndOfLife] = useState("");
   const [files, setFiles] = useState<{ id: number; file: File }[]>([]);
   const [images, setImages] = useState<{ id: number; s: string }[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [onDemand, setOnDemand] = useState(false);
+  const [open, setOpen] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const userInfo = useAtomValue(user_details);
 
@@ -116,8 +128,22 @@ const ListProduct = () => {
       return;
     }
 
-    console.log(data);
-    toast.success("Product created successfully!");
+    setOpen(true);
+
+    setSusFeats([]);
+    setName("");
+    setPrice("");
+    setProduction("0");
+    setCategory("");
+    setSourcing("");
+    setPackaging("");
+    setDesc("");
+    setEndOfLife("");
+    setFiles([]);
+    setOnDemand(false);
+
+    setMessage(data.message);
+    // toast.success("Product created successfully!");
   };
 
   const filesToDataURLs = async (files: { id: number; file: File }[]) => {
@@ -355,7 +381,7 @@ const ListProduct = () => {
             <SelectContent id="sourcing" className="bg-white">
               <SelectGroup>
                 {SOURCING.map((s, i) => (
-                  <SelectItem value={s} key={i}>
+                  <SelectItem value={s.split(" ").join("_")} key={i}>
                     {s}
                   </SelectItem>
                 ))}
@@ -375,7 +401,7 @@ const ListProduct = () => {
             <SelectContent id="packaging" className="bg-white">
               <SelectGroup>
                 {PACKAGING.map((p, i) => (
-                  <SelectItem value={p} key={i}>
+                  <SelectItem value={p.split(" ").join("_")} key={i}>
                     {p}
                   </SelectItem>
                 ))}
@@ -431,6 +457,39 @@ const ListProduct = () => {
           Upload
         </Button>
       </section>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        {/* <DialogTrigger>Open</DialogTrigger> */}
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Report</DialogTitle>
+            <DialogDescription>
+              The report is based on the review of the product information you
+              provided.
+            </DialogDescription>
+          </DialogHeader>
+
+          <p className="lg:text-lg font-medium">Message</p>
+
+          <p className="text-[0.9rem]">{message}.</p>
+
+          {message.includes("extended vetting") && (
+            <>
+              <p className="lg:text-lg font-medium">Extended vetting</p>
+
+              <p className="text-[0.9rem]">
+                If you feel your product has been incorrectly vetted, please
+                visit our physical location:{" "}
+                <span className="font-medium">
+                  Babcock University, Ilishan-Remo, Ogun state
+                </span>{" "}
+                or contact us at{" "}
+                <span className="font-medium">willowstem25@gmail.com</span>.
+              </p>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
