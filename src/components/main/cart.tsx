@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { Leaf, Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useEffect, useState } from "react";
 import { CartItem } from "@/interfaces/general";
@@ -16,7 +16,6 @@ import { PAGES } from "@/constants/constants";
 
 const Cart = () => {
   const [loading, setLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const userInfo = useAtomValue(user_details);
 

@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
-import { Heart, Leaf, MessageCircleMore, ShoppingBasket } from "lucide-react";
+import { Heart, MessageCircleMore, ShoppingBasket } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
@@ -10,7 +10,7 @@ import { Seller } from "@/interfaces/general";
 import { getSellerDetails } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { formatDateTime, formatNumber } from "@/lib/utils";
+import { formatNumber } from "@/lib/utils";
 import {
   addItemToCart,
   getCart,
@@ -23,7 +23,6 @@ const SellerPage = ({ id }: { id: string }) => {
   const [seller, setSeller] = useState<Seller | null>(null);
   const userInfo = useAtomValue(user_details);
   const [loading, setLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [likedProducts, setLikedProducts] = useState<string[]>([]);
 
@@ -90,7 +89,10 @@ const SellerPage = ({ id }: { id: string }) => {
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {seller?.products.map((p, i) => (
-            <div className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative">
+            <div
+              className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative"
+              key={i}
+            >
               <div className="w-full flex items-center justify-between">
                 <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit whitespace-nowrap">
                   {/* <Leaf size={14} />{" "} */}

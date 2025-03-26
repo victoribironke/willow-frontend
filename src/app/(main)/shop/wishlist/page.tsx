@@ -1,8 +1,5 @@
 import Wishlist from "@/components/main/wishlist";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { BASE_URL, PAGES } from "@/constants/constants";
-import { Heart, Leaf, ShoppingBasket } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

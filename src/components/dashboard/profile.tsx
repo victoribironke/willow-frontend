@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { Seller } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
-import { useRouter } from "next/navigation";
 import { getSellerDetails, updateSellerProfile } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";

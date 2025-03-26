@@ -17,8 +17,6 @@ import Star from "./star";
 import ProductReviews from "./product-reviews";
 import ProductDetails from "./product-details";
 import { usePathname, useRouter } from "next/navigation";
-import SimilarProducts from "../dashboard/similar-products";
-import CuratedPicks from "../main/curated-picks";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { Product } from "@/interfaces/general";
@@ -29,7 +27,6 @@ import toast from "react-hot-toast";
 import PageLoader from "./page-loader";
 import { getProduct } from "@/lib/requests/general";
 import { addItemToCart } from "@/lib/requests/customer";
-import { Dialog } from "@radix-ui/react-dialog";
 
 const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");

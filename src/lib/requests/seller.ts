@@ -1,10 +1,5 @@
 import { ENDPOINTS } from "@/constants/constants";
-import {
-  OrderItem,
-  Product,
-  Seller,
-  UpdateProfile,
-} from "@/interfaces/general";
+import { OrderItem, Product, Seller } from "@/interfaces/general";
 
 export const getSellerDetails = async (userId: string) => {
   try {

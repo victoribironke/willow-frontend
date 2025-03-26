@@ -1,6 +1,5 @@
 import { ENDPOINTS } from "@/constants/constants";
 import {
-  Cart,
   CartItem,
   Customer,
   LikedProduct,

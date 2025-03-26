@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { IMAGES, PAGES } from "@/constants/constants";
-import { Heart, Leaf, ShoppingBasket } from "lucide-react";
+import { Heart, ShoppingBasket } from "lucide-react";
 import Image from "next/image";
 import PageLoader from "./page-loader";
 import { useEffect, useState } from "react";
-import { CartItem, LikedProduct, Product } from "@/interfaces/general";
+import { Product } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import { getProducts } from "@/lib/requests/general";
@@ -23,9 +23,7 @@ import { formatNumber } from "@/lib/utils";
 import Link from "next/link";
 
 const Shop = () => {
-  const [tab, setTab] = useState("Listed");
   const [loading, setLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [likedProducts, setLikedProducts] = useState<string[]>([]);

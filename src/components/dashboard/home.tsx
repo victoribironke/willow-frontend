@@ -19,14 +19,9 @@ import {
 } from "@/components/ui/table";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import PageLoader from "../general/page-loader";
 import { useEffect, useState } from "react";
-import {
-  getSellerDetails,
-  getSellerOrders,
-  getSellerProducts,
-} from "@/lib/requests/seller";
+import { getSellerOrders, getSellerProducts } from "@/lib/requests/seller";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import toast from "react-hot-toast";

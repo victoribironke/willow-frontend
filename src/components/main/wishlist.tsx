@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { Separator } from "../ui/separator";
-import { LikedProduct, Product } from "@/interfaces/general";
+import { LikedProduct } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import {
   addItemToCart,
-  addItemToLikedProducts,
   getCart,
   getLikedProducts,
   removeItemFromLikedProducts,
@@ -68,7 +67,10 @@ const Wishlist = () => {
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
         {likedProducts.map((p, i) => (
-          <div className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative">
+          <div
+            className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative"
+            key={i}
+          >
             <div className="w-full flex items-center justify-between">
               <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit whitespace-nowrap">
                 {/* <Leaf size={14} />{" "} */}

@@ -27,9 +27,6 @@ const Profile = () => {
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
-  const [bio, setBio] = useState("");
-  const [image, setImage] = useState("");
-  const [files, setFiles] = useState<FileList | null>(null);
 
   const info = [
     { title: "First name", val: firstName, setter: setFirstName },
