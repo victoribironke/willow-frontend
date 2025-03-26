@@ -36,7 +36,7 @@ const Products = () => {
     else if (tab === "Rejected") return p.approvalStatus === "REJECTED";
     else if (tab === "Out of stock") return p.inStock === 0;
 
-    return p;
+    return true;
   });
 
   const remove = async (id: string) => {

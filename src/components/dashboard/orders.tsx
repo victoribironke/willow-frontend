@@ -29,6 +29,14 @@ const Orders = () => {
   const [orders, setOrders] = useState<OrderItem[]>([]);
   const userInfo = useAtomValue(user_details);
 
+  const new_orders = orders.filter((o) => {
+    if (tab === "New") return o.customerStatus === "ORDERED";
+    else if (tab === "Shipped") return o.customerStatus === "SHIPPED";
+    else if (tab === "Delivered") return o.customerStatus === "DELIVERED";
+
+    return true;
+  });
+
   useEffect(() => {
     (async () => {
       const { data, error } = await getSellerOrders(userInfo?.id || "");
@@ -83,12 +91,15 @@ const Orders = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {orders.map((o, i) => (
+            {new_orders.map((o, i) => (
               <TableRow key={i}>
                 <TableCell className="pl-4">
                   <div className="flex items-center gap-2">
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage src={o.product.images} alt="Product image" />
+                      <AvatarImage
+                        src={o.product.images[0].url}
+                        alt="Product image"
+                      />
                       <AvatarFallback className="rounded-lg">DP</AvatarFallback>
                     </Avatar>
 
