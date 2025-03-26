@@ -5,7 +5,6 @@ import {
   LikedProduct,
   NewReview,
   Order,
-  OrderItem,
 } from "@/interfaces/general";
 
 export const removeItemFromCart = async (userId: string, productId: string) => {
