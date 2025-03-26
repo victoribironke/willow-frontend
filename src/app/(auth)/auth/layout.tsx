@@ -19,6 +19,8 @@ const RootLayout = ({
   const setUserDetails = useSetAtom(user_details);
 
   useEffect(() => {
+    localStorage.removeItem("willow_auth_data");
+
     const data = localStorage.getItem("willow_auth_data");
 
     if (data && pathname === PAGES.auth.login) {
