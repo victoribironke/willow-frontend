@@ -99,7 +99,10 @@ const ListProduct = () => {
     formData.append("packaging", packaging);
     formData.append("sourcing", sourcing);
     formData.append("endOfLifeInfo", endOfLife);
-    formData.append("sustainabilityFeatures", JSON.stringify(susFeats)); // Ensure this is a JSON string
+    formData.append(
+      "sustainabilityFeatures",
+      JSON.stringify(susFeats.map((s) => s.split(" ").join("_")))
+    ); // Ensure this is a JSON string
 
     // Append images and certificate files
     imageFiles.forEach((file) => {
@@ -327,7 +330,7 @@ const ListProduct = () => {
 
         <div className="grid gap-2">
           <Label htmlFor="production">
-            Production <span className="text-red">*</span>
+            Stock/quantity <span className="text-red">*</span>
           </Label>
 
           <div className="w-full flex gap-2 items-center">
