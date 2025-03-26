@@ -1,5 +1,7 @@
 import { ENDPOINTS } from "@/constants/constants";
-import { NewUser } from "@/interfaces/general";
+import { NewUser, WillowAuthData } from "@/interfaces/general";
+import { getSellerDetails } from "./seller";
+import { getCustomerDetails } from "./customer";
 
 export const registerUser = async (data: NewUser) => {
   try {
@@ -43,10 +45,22 @@ export const verifyOtp = async (email: string, otp: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    const authData = {
+    const authData: WillowAuthData = {
       access_token: res.data.accessToken,
       user: res.data.user,
+      seller: null,
+      customer: null,
     };
+
+    if (res.data.user.role === "SELLER") {
+      const { data } = await getSellerDetails(res.data.user.id);
+
+      authData.seller = data;
+    } else {
+      const { data } = await getCustomerDetails(res.data.user.id);
+
+      authData.customer = data;
+    }
 
     localStorage.setItem("willow_auth_data", JSON.stringify(authData));
 
@@ -78,10 +92,22 @@ export const loginUser = async (email: string, password: string) => {
 
     // console.log(res);
 
-    const authData = {
+    const authData: WillowAuthData = {
       access_token: res.data.accessToken,
       user: res.data.user,
+      seller: null,
+      customer: null,
     };
+
+    if (res.data.user.role === "SELLER") {
+      const { data } = await getSellerDetails(res.data.user.id);
+
+      authData.seller = data;
+    } else {
+      const { data } = await getCustomerDetails(res.data.user.id);
+
+      authData.customer = data;
+    }
 
     localStorage.setItem("willow_auth_data", JSON.stringify(authData));
 

@@ -135,6 +135,13 @@ export enum DiscountType {
 }
 
 // Interfaces/Types
+export interface WillowAuthData {
+  access_token: string;
+  user: string;
+  seller: Seller | null;
+  customer: Customer | null;
+}
+
 export interface Admin {
   userId: string;
   user: User;

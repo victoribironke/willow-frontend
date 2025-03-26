@@ -99,7 +99,7 @@ export const removeItemFromLikedProducts = async (
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data.message + ".", error: null };
+    return { data: "Removed from liked products.", error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };
@@ -127,7 +127,7 @@ export const addItemToLikedProducts = async (
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data.message + ".", error: null };
+    return { data: "Added to liked products.", error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };
