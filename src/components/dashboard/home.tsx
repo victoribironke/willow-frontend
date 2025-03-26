@@ -22,35 +22,63 @@ import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import PageLoader from "../general/page-loader";
 import { useEffect, useState } from "react";
-import { getSellerDetails } from "@/lib/requests/seller";
+import {
+  getSellerDetails,
+  getSellerOrders,
+  getSellerProducts,
+} from "@/lib/requests/seller";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import toast from "react-hot-toast";
+import { OrderItem, Product } from "@/interfaces/general";
+import { formatNumber } from "@/lib/utils";
+import Link from "next/link";
+import { PAGES } from "@/constants/constants";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState<OrderItem[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const userInfo = useAtomValue(user_details);
   const overview = [
-    { title: "Product orders", icon: ShoppingCart, value: 0 },
+    { title: "Product orders", icon: ShoppingCart, value: orders.length },
     { title: "Chats", icon: MessagesSquare, value: 0 },
-    { title: "Returned products", icon: Undo2, value: 0 },
-    { title: "Products awaiting", icon: CircleCheck, value: 0 },
-    { title: "Products shipped", icon: Send, value: 0 },
-    { title: "Products out of stock", icon: CircleX, value: 0 },
+    {
+      title: "Returned products",
+      icon: Undo2,
+      value: orders.filter((o) => o.customerReturnMessage).length,
+    },
+    {
+      title: "Products awaiting",
+      icon: CircleCheck,
+      value: products.filter((p) => p.approvalStatus === "PENDING").length,
+    },
+    {
+      title: "Products shipped",
+      icon: Send,
+      value: orders.filter((o) => o.customerStatus === "SHIPPED").length,
+    },
+    {
+      title: "Products out of stock",
+      icon: CircleX,
+      value: products.filter((f) => f.soldOut).length,
+    },
   ];
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await getSellerDetails(userInfo?.id || "");
+      const { data: o, error: e1 } = await getSellerOrders(userInfo?.id || "");
+      const { data: p, error: e2 } = await getSellerProducts(
+        userInfo?.id || ""
+      );
 
       setLoading(false);
 
-      if (error) {
-        toast.error(error);
-        return;
-      }
+      if (e1) return toast.error(e1);
+      if (e2) return toast.error(e2);
 
-      console.log(data);
+      setOrders(o as OrderItem[]);
+      setProducts(p as Product[]);
     })();
   }, []);
 
@@ -83,7 +111,7 @@ const Home = () => {
       </div>
 
       <div className="w-full flex flex-col lg:flex-row gap-4 items-start">
-        <div className="w-full lg:w-2/3 flex flex-col gap-4 bg-white p-4 border shadow rounded-lg">
+        <div className="w-full flex flex-col gap-4 bg-white p-4 border shadow rounded-lg">
           <div className="flex items-center justify-center gap-2">
             <h3 className="text-lg lg:text-xl font-medium mr-auto">
               Recent orders
@@ -111,22 +139,30 @@ const Home = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                <TableRow>
-                  <TableCell>#01ARZ3NDEKTS</TableCell>
-
-                  <TableCell className="font-medium whitespace-nowrap">
-                    Mixed tote bag (Red bottoms)
-                  </TableCell>
-                  <TableCell className="whitespace-nowrap">4:32 PM</TableCell>
-                  <TableCell className="whitespace-nowrap">2</TableCell>
-                  <TableCell>₦ 9,500</TableCell>
-                </TableRow>
+                {orders.map((o, i) => (
+                  <TableRow key={i}>
+                    <TableCell>{o.id}</TableCell>
+                    <TableCell className="font-medium whitespace-nowrap">
+                      <Link
+                        href={PAGES.dashboard.order(o.id)}
+                        className="hover:underline"
+                      >
+                        {o.product.name}
+                      </Link>
+                    </TableCell>
+                    <TableCell className="whitespace-nowrap">{o.id}</TableCell>
+                    <TableCell className="whitespace-nowrap">
+                      {o.quantity}
+                    </TableCell>
+                    <TableCell>₦ {formatNumber(o.price)}</TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
           </div>
         </div>
 
-        <div className="w-full lg:w-1/3 flex flex-col gap-4 bg-white p-4 border shadow rounded-lg">
+        {/* <div className="w-full lg:w-1/3 flex flex-col gap-4 bg-white p-4 border shadow rounded-lg">
           <div className="flex items-center justify-center gap-2">
             <h3 className="text-lg lg:text-xl font-medium mr-auto">
               Best selling
@@ -140,7 +176,7 @@ const Home = () => {
           <div className="flex gap-4 items-center justify-start">
             <Avatar className="size-10 rounded-lg">
               <AvatarImage
-                src="https://github.com/victoribironke.png"
+                src={products.map(p=>p)}
                 alt={"user.name"}
               />
               <AvatarFallback className="rounded-lg">CN</AvatarFallback>
@@ -174,7 +210,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

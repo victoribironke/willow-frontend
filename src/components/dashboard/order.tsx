@@ -67,7 +67,7 @@ const Order = ({ orderId }: { orderId: string }) => {
 
         <div className="flex items-center gap-4">
           <Avatar className="size-12 rounded-lg">
-            <AvatarImage src={order?.product.images} alt="Image" />
+            <AvatarImage src={order?.product.images[0].url} alt="Image" />
             <AvatarFallback className="rounded-lg">DP</AvatarFallback>
           </Avatar>
 

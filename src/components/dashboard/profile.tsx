@@ -7,7 +7,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { useEffect, useState } from "react";
-import { Seller, UpdateProfile } from "@/interfaces/general";
+import { Seller } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import { useRouter } from "next/navigation";
@@ -27,23 +27,21 @@ const Profile = () => {
   const [files, setFiles] = useState<FileList | null>(null);
 
   const update = async () => {
-    // const formdata = new FormData();
+    const formData = new FormData();
 
-    // if (files) {
-    //   formdata.append("avatar", files[0]);
-    // }
-
-    // formdata.append("businessName", name);
-    // formdata.append("bio", bio);
-
-    const d = {
-      businessName: name,
-      bio,
-    };
+    // Append fields to FormData
+    if (files && files[0]) {
+      formData.append("avatar", files[0]); // Append the avatar file
+    }
+    formData.append("businessName", name);
+    formData.append("bio", bio);
 
     setIsLoading(true);
 
-    const { data, error } = await updateSellerProfile(userInfo?.id || "", d);
+    const { data, error } = await updateSellerProfile(
+      userInfo?.id || "",
+      formData
+    );
 
     setIsLoading(false);
 
@@ -130,18 +128,6 @@ const Profile = () => {
             className="bg-white"
           />
         </div>
-
-        {/* <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="m@example.com"
-            className="bg-white"
-            disabled
-            value={seller?.user.email}
-          /> */}
-        {/* </div> */}
 
         <div className="grid gap-2 col-span-1 md:col-span-2">
           <Label htmlFor="bio">Bio</Label>

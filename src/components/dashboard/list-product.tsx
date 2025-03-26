@@ -40,7 +40,7 @@ const ListProduct = () => {
   const [susFeats, setSusFeats] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [production, setProduction] = useState("");
+  const [production, setProduction] = useState("0");
   const [category, setCategory] = useState("");
   const [sourcing, setSourcing] = useState("");
   const [packaging, setPackaging] = useState("");
@@ -77,23 +77,37 @@ const ListProduct = () => {
   };
 
   const create = async () => {
-    const d = {
-      images: images.map((i) => i.s),
-      name,
-      description: desc,
-      inStock: parseInt(production),
-      onDemand,
-      category,
-      price: parseInt(price),
-      sustainabilityFeatures: susFeats,
-      packaging,
-      sourcing,
-      endOfLifeInfo: endOfLife,
-    };
+    const formData = new FormData();
+    const imageFiles = files.map((f) => f.file);
+
+    // Append all fields to FormData
+    formData.append("name", name);
+    formData.append("description", desc);
+    formData.append("inStock", production);
+    formData.append("onDemand", JSON.stringify(onDemand)); // Send as string 'true' or 'false'
+    formData.append("category", category);
+    formData.append("price", price);
+    formData.append("packaging", packaging);
+    formData.append("sourcing", sourcing);
+    formData.append("endOfLifeInfo", endOfLife);
+    formData.append("sustainabilityFeatures", JSON.stringify(susFeats)); // Ensure this is a JSON string
+
+    // Append images and certificate files
+    imageFiles.forEach((file) => {
+      formData.append("images", file);
+    });
+
+    // Assuming you have a certificate file input
+    const certificateFile = files.find((f) =>
+      f.file.name.includes("certificate")
+    );
+    if (certificateFile) {
+      formData.append("certificate", certificateFile.file);
+    }
 
     setIsLoading(true);
 
-    const { data, error } = await createProduct(userInfo?.id || "", d);
+    const { data, error } = await createProduct(userInfo?.id || "", formData);
 
     setIsLoading(false);
 
@@ -103,6 +117,7 @@ const ListProduct = () => {
     }
 
     console.log(data);
+    toast.success("Product created successfully!");
   };
 
   const filesToDataURLs = async (files: { id: number; file: File }[]) => {
@@ -129,7 +144,6 @@ const ListProduct = () => {
     (async () => {
       try {
         const dataURLs = await filesToDataURLs(files);
-
         setImages(dataURLs);
       } catch (error) {
         console.error("Error converting files to data URLs:", error);
@@ -303,7 +317,11 @@ const ListProduct = () => {
               type="number"
               required
               value={production}
-              onChange={(e) => setProduction(e.target.value)}
+              onChange={(e) => {
+                setProduction(e.target.value);
+
+                if (e.target.value === "") setProduction("0");
+              }}
               placeholder="25"
               className="bg-white"
               disabled={onDemand}
@@ -411,7 +429,6 @@ const ListProduct = () => {
           disabled={isLoading}
         >
           Upload
-          {/* {loading && <LoaderCircle className="animate-spin" />} */}
         </Button>
       </section>
     </>

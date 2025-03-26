@@ -111,40 +111,45 @@ export const getSellerProduct = async (userId: string, productId: string) => {
   }
 };
 
-export const updateSellerProfile = async (userId: string, d: any) => {
+export const updateSellerProfile = async (userId: string, d: FormData) => {
   try {
     const req = await fetch(ENDPOINTS.update_seller_profile(userId), {
       method: "PATCH",
-      body: JSON.stringify(d),
+      body: d, // Send FormData directly
       headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
+        // Do not set Content-Type; let the browser handle it
+        accept: "application/json", // Accept JSON response
       },
-      credentials: "include",
+      credentials: "include", // Include credentials for CORS
     });
+
     const res = await req.json();
 
-    if (res.status !== "success")
+    // Check if the response indicates success
+    if (res.status !== "success") {
       return { data: null, error: res.message + "." };
+    }
 
+    // Return success message
     return { data: "Successfully updated profile.", error: null };
   } catch (e) {
     console.log(e);
-    return { data: null, error: "A server error occured." };
+    return { data: null, error: "A server error occurred." };
   }
 };
 
-export const createProduct = async (userId: string, d: any) => {
+export const createProduct = async (userId: string, d: FormData) => {
   try {
     const req = await fetch(ENDPOINTS.create_product(userId), {
       method: "POST",
-      body: JSON.stringify(d),
+      body: d, // Send FormData directly
+      // Remove the Content-Type header
       headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
+        accept: "application/json", // Keep only the accept header
       },
       credentials: "include",
     });
+
     const res = await req.json();
 
     if (res.status !== "success")
@@ -153,7 +158,7 @@ export const createProduct = async (userId: string, d: any) => {
     return { data: res, error: null };
   } catch (e) {
     console.log(e);
-    return { data: null, error: "A server error occured." };
+    return { data: null, error: "A server error occurred." };
   }
 };
 

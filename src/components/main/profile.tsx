@@ -13,6 +13,7 @@ import {
   updateCustomerDetails,
 } from "@/lib/requests/customer";
 import PageLoader from "../general/page-loader";
+import { logOut } from "@/lib/auth";
 
 const Profile = () => {
   const [customer, setCustomer] = useState<Customer | null>(null);
@@ -219,6 +220,10 @@ const Profile = () => {
           </div>
         )}
       </div>
+
+      <Button variant="destructive" onClick={logOut} className="w-fit">
+        Log out
+      </Button>
     </>
   );
 };

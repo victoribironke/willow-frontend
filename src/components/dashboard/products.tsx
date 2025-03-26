@@ -105,7 +105,7 @@ const Products = () => {
                 <TableCell className="pl-4">
                   <div className="flex items-center gap-2">
                     <Avatar className="h-8 w-8 rounded-lg">
-                      <AvatarImage src={p.images} alt="Product image" />
+                      <AvatarImage src={p.images[0].url} alt="Product image" />
                       <AvatarFallback className="rounded-lg">DP</AvatarFallback>
                     </Avatar>
 
