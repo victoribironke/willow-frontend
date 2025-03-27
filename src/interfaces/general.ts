@@ -323,6 +323,7 @@ export interface Product {
   sustainabilityScore?: string;
   sustainabilityScoreReason?: string;
   sustainabilityTag?: string;
+  sustainability_tag?: string;
   certification?: any; // Json
   sellerId: string;
   seller: Seller;

@@ -52,7 +52,9 @@ const ProductCard = ({
       <div className="w-full flex items-center justify-between">
         <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit whitespace-nowrap">
           <Leaf size={14} />{" "}
-          {convertTextFromUppercase(product.sustainabilityTag)}
+          {convertTextFromUppercase(
+            product.sustainabilityTag || product.sustainability_tag
+          )}
         </div>
 
         <Heart
