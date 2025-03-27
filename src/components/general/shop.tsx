@@ -6,16 +6,24 @@ import { IMAGES } from "@/constants/constants";
 import Image from "next/image";
 import PageLoader from "./page-loader";
 import { useEffect, useState } from "react";
-import { Product } from "@/interfaces/general";
+import { Product, WillowAuthData } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import { getProducts } from "@/lib/requests/general";
 import toast from "react-hot-toast";
-import { getCart, getLikedProducts } from "@/lib/requests/customer";
+import {
+  getCart,
+  getLikedProducts,
+  updateCustomerDetails,
+} from "@/lib/requests/customer";
 import ProductCard from "./product-card";
+import { LoaderCircle } from "lucide-react";
+import { validateEmail } from "@/lib/utils";
 
 const Shop = () => {
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [likedProducts, setLikedProducts] = useState<string[]>([]);
@@ -23,8 +31,45 @@ const Shop = () => {
 
   const new_products = products.filter((p) => p.approvalStatus === "APPROVED");
 
+  const updateInfo = async () => {
+    setIsLoading(true);
+
+    const d = { subscribed, firstname: userInfo?.customer?.firstname };
+
+    const { error } = await updateCustomerDetails(userInfo?.id || "", d);
+
+    setIsLoading(false);
+
+    if (error) return toast.error(error);
+
+    toast.success("Subscribed successfully.");
+    setSubscribed(true);
+
+    const authData = localStorage.getItem("willow_auth_data");
+
+    if (authData) {
+      const d: WillowAuthData = JSON.parse(authData);
+
+      localStorage.setItem(
+        "willow_auth_data",
+        JSON.stringify({
+          ...d,
+          customer: { ...d.customer, subscribed: true },
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     (async () => {
+      const authData = localStorage.getItem("willow_auth_data");
+
+      if (authData) {
+        const d: WillowAuthData = JSON.parse(authData);
+
+        setSubscribed(d.customer?.subscribed || false);
+      }
+
       const { data, error } = await getProducts();
       const { data: c } = await getCart(userInfo?.id || "");
       const { data: l } = await getLikedProducts(userInfo?.id || "");
@@ -76,24 +121,24 @@ const Shop = () => {
         </div>
       </section>
 
-      <section className="w-full flex items-center justify-center flex-col gap-4 my-10">
-        <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl w-full max-w-2xl text-center">
-          Subscribe to our newsletter to get updates to our latest collections
-          and features
-        </h3>
+      {!subscribed && (
+        <section className="w-full flex items-center justify-center flex-col gap-4 my-10">
+          <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl w-full max-w-2xl text-center">
+            Subscribe to our newsletter to get updates to our latest collections
+            and features
+          </h3>
 
-        <p>Get tips and beta access to new features</p>
+          <p>Get tips and beta access to new features</p>
 
-        <Input
-          placeholder="Email address"
-          type="email"
-          className="max-w-xs bg-white"
-        />
-
-        <Button className="w-full bg-main hover:bg-main/90 max-w-xs">
-          Subscribe
-        </Button>
-      </section>
+          <Button
+            className="bg-main hover:bg-main/90 w-full max-w-xs"
+            disabled={isLoading}
+            onClick={updateInfo}
+          >
+            Subscribe {isLoading && <LoaderCircle className="animate-spin" />}
+          </Button>
+        </section>
+      )}
     </>
   );
 };

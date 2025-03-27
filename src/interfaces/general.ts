@@ -213,6 +213,7 @@ export interface Customer {
   lastViewed: LastViewed[];
   conversations: Conversation[];
   AIChat: AIChat[];
+  subscribed: boolean;
 }
 
 export interface LastViewed {
