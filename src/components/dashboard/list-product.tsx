@@ -91,6 +91,9 @@ const ListProduct = () => {
   };
 
   const create = async () => {
+    if (images.length < 2)
+      return toast.error("Please select at least 2 images.");
+
     const formData = new FormData();
     const imageFiles = files.map((f) => f.file);
 
