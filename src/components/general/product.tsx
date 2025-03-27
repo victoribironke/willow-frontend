@@ -189,7 +189,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
                 Sourcing
               </p>
               <p className="text-sm lg:text-base font-medium">
-                {product?.sourcing.split("_").join(" ")}
+                {convertTextFromUppercase(product?.sourcing)}
               </p>
             </div>
 
@@ -198,7 +198,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
                 Packaging
               </p>
               <p className="text-sm lg:text-base font-medium">
-                {product?.packaging.split("_").join(" ")}
+                {convertTextFromUppercase(product?.packaging)}
               </p>
             </div>
           </div>
