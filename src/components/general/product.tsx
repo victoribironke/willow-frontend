@@ -28,6 +28,7 @@ import PageLoader from "./page-loader";
 import { getProduct } from "@/lib/requests/general";
 import { addItemToCart } from "@/lib/requests/customer";
 import CuratedPicks from "../main/curated-picks";
+import SimilarProducts from "../dashboard/similar-products";
 
 const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");
@@ -299,7 +300,9 @@ const ProductPage = ({ productId }: { productId: string }) => {
             desc={product?.description || ""}
             eolInfo={product?.endOfLifeInfo || ""}
           />
-          {/* {pathname.includes("/dashboard/products/") && <SimilarProducts />} */}
+          {pathname.includes("/dashboard/products/") && (
+            <SimilarProducts id={product?.id || ""} />
+          )}
         </>
       )}
       {tab === "ratings" && <ProductReviews reviews={product?.reviews || []} />}

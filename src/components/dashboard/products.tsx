@@ -51,10 +51,7 @@ const Products = () => {
 
     setIsLoading(false);
 
-    if (error) {
-      toast.error(error);
-      return;
-    }
+    if (error) return toast.error(error);
 
     toast.success(data);
     setProducts((k) => k.filter((a) => a.id !== id));
@@ -64,10 +61,7 @@ const Products = () => {
     (async () => {
       const { data, error } = await getSellerProducts(userInfo?.id || "");
 
-      if (error) {
-        toast.error(error);
-        return;
-      }
+      if (error) return toast.error(error);
 
       setLoading(false);
       setProducts(data as Product[]);

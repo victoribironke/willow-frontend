@@ -1,34 +1,53 @@
-import { Leaf } from "lucide-react";
 import { Separator } from "../ui/separator";
+import { useEffect, useState } from "react";
+import { Product } from "@/interfaces/general";
+import { useAtomValue } from "jotai";
+import { user_details } from "@/app/atoms/atoms";
+import { getSellerProducts } from "@/lib/requests/seller";
+import toast from "react-hot-toast";
+import ProductCard from "../general/product-card";
 
-const SimilarProducts = () => {
+const SimilarProducts = ({ id }: { id: string }) => {
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const userInfo = useAtomValue(user_details);
+
+  const filtered_products = products.filter((p) => p.id !== id);
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await getSellerProducts(userInfo?.id || "");
+
+      if (error) return toast.error(error);
+
+      setLoading(false);
+      setProducts(data as Product[]);
+    })();
+  }, []);
+
+  if (filtered_products.length < 5) return <></>;
+
   return (
     <>
-      <h4 className="text-lg lg:text-xl font-medium">Your similar products</h4>
+      <h4 className="text-lg lg:text-xl font-medium">Other products</h4>
 
       <Separator />
 
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <div className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2">
-          <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit">
-            <Leaf size={14} /> Biodegradable
-          </div>
-
-          <div className="overflow-hidden aspect-square rounded-md">
-            <img
-              src="https://github.com/victoribironke.png"
-              alt="Image"
-              className="w-full h-full object-cover"
+      {!loading && (
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filtered_products.map((p, i) => (
+            <ProductCard
+              cartItems={[]}
+              likedProducts={[]}
+              product={p}
+              setCartItems={() => {}}
+              setLikedProducts={() => {}}
+              hideExtra
+              key={i}
             />
-          </div>
-
-          <p className="font-medium">Pine Scent Body Rub</p>
-
-          <p className="text-sm text-[#696969]">Cosmetics</p>
-
-          <p className="text-sm font-medium">₦ 23,500</p>
+          ))}
         </div>
-      </div>
+      )}
     </>
   );
 };
