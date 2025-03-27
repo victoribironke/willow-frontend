@@ -27,6 +27,7 @@ import toast from "react-hot-toast";
 import PageLoader from "./page-loader";
 import { getProduct } from "@/lib/requests/general";
 import { addItemToCart } from "@/lib/requests/customer";
+import CuratedPicks from "../main/curated-picks";
 
 const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");
@@ -303,7 +304,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
       )}
       {tab === "ratings" && <ProductReviews reviews={product?.reviews || []} />}
 
-      {/* {pathname.includes("/product/") && <CuratedPicks />} */}
+      {pathname.includes("/product/") && <CuratedPicks />}
     </>
   );
 };

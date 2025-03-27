@@ -6,6 +6,7 @@ import {
   NewReview,
   Order,
   Product,
+  Recommendation,
 } from "@/interfaces/general";
 
 export const removeItemFromCart = async (userId: string, productId: string) => {
@@ -312,6 +313,27 @@ export const searchProducts = async (text: string) => {
       return { data: null, error: res.message + "." };
 
     return { data: res.data as Product[], error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const getRecommendations = async (userId: string) => {
+  try {
+    const req = await fetch(ENDPOINTS.get_customer_recommendations(userId), {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data as Recommendation[], error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };

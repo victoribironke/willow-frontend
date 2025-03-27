@@ -18,6 +18,7 @@ const ProductCard = ({
   product,
   setCartItems,
   setLikedProducts,
+  hideExtra,
 }: ProductCardProps) => {
   const userInfo = useAtomValue(user_details);
 
@@ -57,12 +58,14 @@ const ProductCard = ({
           )}
         </div>
 
-        <Heart
-          fill={likedProducts.includes(product.id) ? "#00a606" : "#fff"}
-          size={18}
-          className="cursor-pointer text-main"
-          onClick={() => update(product.id)}
-        />
+        {!hideExtra && (
+          <Heart
+            fill={likedProducts.includes(product.id) ? "#00a606" : "#fff"}
+            size={18}
+            className="cursor-pointer text-main"
+            onClick={() => update(product.id)}
+          />
+        )}
       </div>
 
       <div className="overflow-hidden aspect-square rounded-md">
@@ -85,7 +88,7 @@ const ProductCard = ({
 
       <p className="text-sm font-medium">₦ {formatNumber(product.price)}</p>
 
-      {!cartItems.includes(product.id) && (
+      {!cartItems.includes(product.id) && !hideExtra && (
         <Button
           className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2"
           onClick={() => addToCart(product.id)}
