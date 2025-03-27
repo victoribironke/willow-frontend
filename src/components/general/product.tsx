@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
 import { Leaf, LoaderCircle, Minus, Plus } from "lucide-react";
-import { cn, formatNumber } from "@/lib/utils";
+import { cn, convertTextFromUppercase, formatNumber } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import Star from "./star";
@@ -152,7 +152,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
             variant="outline"
             className="text-main hover:text-main hover:bg-white cursor-default"
           >
-            <Leaf /> {product?.sustainabilityFeatures[0].split("_").join(" ")}
+            <Leaf /> {convertTextFromUppercase(product?.sustainabilityTag)}
           </Button>
 
           <div className="flex flex-col gap-2">

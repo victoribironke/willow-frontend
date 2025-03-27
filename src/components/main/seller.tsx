@@ -18,6 +18,7 @@ import {
 } from "@/lib/requests/customer";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import ProductCard from "../general/product-card";
 
 const SellerPage = ({ id }: { id: string }) => {
   const [seller, setSeller] = useState<Seller | null>(null);
@@ -25,12 +26,6 @@ const SellerPage = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [likedProducts, setLikedProducts] = useState<string[]>([]);
-
-  const addToCart = async (productId: string) => {
-    const { error } = await addItemToCart(userInfo?.id || "", productId, 1);
-
-    if (!error) setCartItems((k) => [...k, productId]);
-  };
 
   useEffect(() => {
     (async () => {
@@ -59,7 +54,7 @@ const SellerPage = ({ id }: { id: string }) => {
           <Avatar className="size-16 rounded-full">
             <AvatarImage
               src={
-                seller?.avatar ||
+                seller?.avatar?.url ||
                 `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${seller?.businessName}`
               }
               alt={"user.name"}
@@ -89,52 +84,14 @@ const SellerPage = ({ id }: { id: string }) => {
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {seller?.products.map((p, i) => (
-            <div
-              className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative"
+            <ProductCard
+              cartItems={cartItems}
+              likedProducts={likedProducts}
+              product={p}
+              setCartItems={setCartItems}
+              setLikedProducts={setLikedProducts}
               key={i}
-            >
-              <div className="w-full flex items-center justify-between">
-                <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit whitespace-nowrap">
-                  {/* <Leaf size={14} />{" "} */}
-                  {p.sustainabilityFeatures[0].split("_").join(" ")}
-                </div>
-
-                <Heart
-                  fill={likedProducts.includes(p.id) ? "#00a606" : "#fff"}
-                  size={18}
-                  className="cursor-pointer text-main"
-                  //  onClick={() => update(p.id)}
-                />
-              </div>
-
-              <div className="overflow-hidden aspect-square rounded-md">
-                <img
-                  src={p.images[0].url}
-                  alt="Image"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <Link
-                href={PAGES.main.shop.product(p.id)}
-                className="font-medium hover:underline"
-              >
-                {p.name.slice(0, 25).trim()}
-                {p.name.length >= 25 && "..."}
-              </Link>
-
-              <p className="text-sm text-[#696969]">{p.category}</p>
-
-              <p className="text-sm font-medium">₦ {formatNumber(p.price)}</p>
-
-              <Button
-                className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2"
-                onClick={() => addToCart(p.id)}
-                disabled={cartItems.includes(p.id)}
-              >
-                <ShoppingBasket size={20} />
-              </Button>
-            </div>
+            />
           ))}
         </div>
       </div>

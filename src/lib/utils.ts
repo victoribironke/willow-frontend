@@ -75,3 +75,21 @@ export const formatDateTime = (dateString: string | Date) => {
 };
 
 export const getUniqueNumber = () => Date.now();
+
+export const convertTextFromUppercase = (str: string | undefined) => {
+  if (!str) return "";
+
+  return str
+    .toLowerCase() // Convert the entire string to lowercase
+    .split("_") // Split the string by underscores
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize the first letter of each word
+    .join(" "); // Join the words with a space
+};
+
+export const convertToUpperUnderscoreFormat = (str: string) => {
+  return str
+    .toUpperCase() // Convert the entire string to uppercase
+    .replace(/\s+/g, "_") // Replace spaces with underscores
+    .replace(/_+/g, "_") // Replace multiple underscores with a single underscore
+    .trim(); // Remove any leading or trailing whitespace
+};

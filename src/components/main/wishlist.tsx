@@ -18,11 +18,13 @@ import { Heart, ShoppingBasket } from "lucide-react";
 import { formatNumber } from "@/lib/utils";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import ProductCard from "../general/product-card";
 
 const Wishlist = () => {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [likedProducts, setLikedProducts] = useState<LikedProduct[]>([]);
+  const [lP, setLP] = useState<string[]>([]);
   const userInfo = useAtomValue(user_details);
 
   const addToCart = async (productId: string) => {
@@ -52,6 +54,7 @@ const Wishlist = () => {
 
       setCartItems(c?.map((j) => j.productId) as string[]);
       setLikedProducts(l as LikedProduct[]);
+      setLP(l?.map((j) => j.productId) as string[]);
     })();
   }, []);
 
@@ -67,54 +70,14 @@ const Wishlist = () => {
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
         {likedProducts.map((p, i) => (
-          <div
-            className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative"
+          <ProductCard
+            cartItems={cartItems}
+            likedProducts={lP}
+            product={p.product}
+            setCartItems={setCartItems}
+            setLikedProducts={setLP}
             key={i}
-          >
-            <div className="w-full flex items-center justify-between">
-              <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit whitespace-nowrap">
-                {/* <Leaf size={14} />{" "} */}
-                {p.product.sustainabilityFeatures[0].split("_").join(" ")}
-              </div>
-
-              <Heart
-                fill="#00a606"
-                size={18}
-                className="cursor-pointer text-main"
-                onClick={() => update(p.productId)}
-              />
-            </div>
-
-            <div className="overflow-hidden aspect-square rounded-md">
-              <img
-                src={p.product.images[0].url}
-                alt="Image"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <Link
-              href={PAGES.main.shop.product(p.productId)}
-              className="font-medium hover:underline"
-            >
-              {p.product.name.slice(0, 25).trim()}
-              {p.product.name.length >= 25 && "..."}
-            </Link>
-
-            <p className="text-sm text-[#696969]">{p.product.category}</p>
-
-            <p className="text-sm font-medium">
-              ₦ {formatNumber(p.product.price)}
-            </p>
-
-            <Button
-              className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2"
-              onClick={() => addToCart(p.productId)}
-              disabled={cartItems.includes(p.productId)}
-            >
-              <ShoppingBasket size={20} />
-            </Button>
-          </div>
+          />
         ))}
       </div>
     </>

@@ -35,7 +35,12 @@ import { ChangeEvent, DragEvent, useEffect, useState } from "react";
 import MultiSelect from "../general/multi-select";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "../ui/button";
-import { cn, getUniqueNumber } from "@/lib/utils";
+import {
+  cn,
+  convertTextFromUppercase,
+  convertToUpperUnderscoreFormat,
+  getUniqueNumber,
+} from "@/lib/utils";
 import { user_details } from "@/app/atoms/atoms";
 import { useAtomValue } from "jotai";
 import { createProduct } from "@/lib/requests/seller";
@@ -101,7 +106,7 @@ const ListProduct = () => {
     formData.append("endOfLifeInfo", endOfLife);
     formData.append(
       "sustainabilityFeatures",
-      JSON.stringify(susFeats.map((s) => s.split(" ").join("_")))
+      JSON.stringify(susFeats.map(convertToUpperUnderscoreFormat))
     ); // Ensure this is a JSON string
 
     // Append images and certificate files
@@ -416,7 +421,7 @@ const ListProduct = () => {
             Sustainability features <span className="text-red">*</span>
           </Label>
           <MultiSelect
-            fullList={SUSTAINABILITY_FEATURES}
+            fullList={SUSTAINABILITY_FEATURES.map(convertTextFromUppercase)}
             selected={susFeats}
             setSelected={setSusFeats}
           />

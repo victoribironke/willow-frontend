@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Leaf, Minus, Plus, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useEffect, useState } from "react";
 import { CartItem } from "@/interfaces/general";
@@ -10,7 +10,7 @@ import { user_details } from "@/app/atoms/atoms";
 import toast from "react-hot-toast";
 import { getCart, removeItemFromCart } from "@/lib/requests/customer";
 import PageLoader from "../general/page-loader";
-import { formatNumber } from "@/lib/utils";
+import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 
@@ -98,8 +98,8 @@ const Cart = () => {
             <div className="w-full flex flex-col gap-4">
               <div className="w-full flex items-center justify-between">
                 <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit whitespace-nowrap">
-                  {/* <Leaf size={14} />{" "} */}
-                  {c.product.sustainabilityFeatures[0].split("_").join(" ")}
+                  <Leaf size={14} />{" "}
+                  {convertTextFromUppercase(c.product.sustainabilityTag)}
                 </div>
 
                 {/* <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs lg:text-sm gap-1 rounded-md font-medium w-fit">

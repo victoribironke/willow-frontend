@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { IMAGES, PAGES } from "@/constants/constants";
-import { Heart, ShoppingBasket } from "lucide-react";
+import { IMAGES } from "@/constants/constants";
 import Image from "next/image";
 import PageLoader from "./page-loader";
 import { useEffect, useState } from "react";
@@ -12,15 +11,8 @@ import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import { getProducts } from "@/lib/requests/general";
 import toast from "react-hot-toast";
-import {
-  addItemToCart,
-  addItemToLikedProducts,
-  getCart,
-  getLikedProducts,
-  removeItemFromLikedProducts,
-} from "@/lib/requests/customer";
-import { formatNumber } from "@/lib/utils";
-import Link from "next/link";
+import { getCart, getLikedProducts } from "@/lib/requests/customer";
+import ProductCard from "./product-card";
 
 const Shop = () => {
   const [loading, setLoading] = useState(true);
@@ -30,32 +22,6 @@ const Shop = () => {
   const userInfo = useAtomValue(user_details);
 
   const new_products = products.filter((p) => p.approvalStatus === "APPROVED");
-
-  const addToCart = async (productId: string) => {
-    const { error } = await addItemToCart(userInfo?.id || "", productId, 1);
-
-    if (!error) setCartItems((k) => [...k, productId]);
-  };
-
-  const update = async (productId: string) => {
-    if (likedProducts.includes(productId)) {
-      const { error } = await removeItemFromLikedProducts(
-        userInfo?.id || "",
-        productId
-      );
-
-      if (!error) setLikedProducts((k) => k.filter((j) => j !== productId));
-
-      return;
-    }
-
-    const { error } = await addItemToLikedProducts(
-      userInfo?.id || "",
-      productId
-    );
-
-    if (!error) setLikedProducts((k) => [...k, productId]);
-  };
 
   useEffect(() => {
     (async () => {
@@ -98,52 +64,14 @@ const Shop = () => {
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {new_products.map((p, i) => (
-            <div
-              className="bg-white p-2 rounded-lg border shadow flex flex-col gap-2 relative"
+            <ProductCard
+              cartItems={cartItems}
+              likedProducts={likedProducts}
+              product={p}
+              setCartItems={setCartItems}
+              setLikedProducts={setLikedProducts}
               key={i}
-            >
-              <div className="w-full flex items-center justify-between">
-                <div className="text-main border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit whitespace-nowrap">
-                  {/* <Leaf size={14} />{" "} */}
-                  {p.sustainabilityFeatures[0].split("_").join(" ")}
-                </div>
-
-                <Heart
-                  fill={likedProducts.includes(p.id) ? "#00a606" : "#fff"}
-                  size={18}
-                  className="cursor-pointer text-main"
-                  onClick={() => update(p.id)}
-                />
-              </div>
-
-              <div className="overflow-hidden aspect-square rounded-md">
-                <img
-                  src={p.images[0].url}
-                  alt="Image"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              <Link
-                href={PAGES.main.shop.product(p.id)}
-                className="font-medium hover:underline"
-              >
-                {p.name.slice(0, 25).trim()}
-                {p.name.length >= 25 && "..."}
-              </Link>
-
-              <p className="text-sm text-[#696969]">{p.category}</p>
-
-              <p className="text-sm font-medium">₦ {formatNumber(p.price)}</p>
-
-              <Button
-                className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2"
-                onClick={() => addToCart(p.id)}
-                disabled={cartItems.includes(p.id)}
-              >
-                <ShoppingBasket size={20} />
-              </Button>
-            </div>
+            />
           ))}
         </div>
       </section>

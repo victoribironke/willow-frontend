@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type AccountType = "CUSTOMER" | "SELLER";
 
 export interface NewUser {
@@ -135,6 +137,14 @@ export enum DiscountType {
 }
 
 // Interfaces/Types
+export interface ProductCardProps {
+  product: Product;
+  likedProducts: string[];
+  cartItems: string[];
+  setCartItems: Dispatch<SetStateAction<string[]>>;
+  setLikedProducts: Dispatch<SetStateAction<string[]>>;
+}
+
 export interface WillowAuthData {
   access_token: string;
   user: string;
@@ -327,7 +337,7 @@ export interface Product {
 export interface Seller {
   userId: string;
   user: User;
-  avatar?: any; // Json
+  avatar?: Image; // Json
   businessName: string;
   bio?: string;
   status: SellerStatus;

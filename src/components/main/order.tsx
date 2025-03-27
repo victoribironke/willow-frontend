@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { getOrder } from "@/lib/requests/customer";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { formatNumber } from "@/lib/utils";
+import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
 
 const OrderPage = ({ orderId }: { orderId: string }) => {
   const userInfo = useAtomValue(user_details);
@@ -93,8 +93,7 @@ const OrderPage = ({ orderId }: { orderId: string }) => {
                 variant="outline"
                 className="text-main hover:text-main hover:bg-white cursor-default text-sm"
               >
-                <Leaf />{" "}
-                {o.product.sustainabilityFeatures[0].split("_").join(" ")}
+                <Leaf /> {convertTextFromUppercase(o.product.sustainabilityTag)}
               </Button>
 
               <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs lg:text-sm gap-1 rounded-md font-medium w-fit">

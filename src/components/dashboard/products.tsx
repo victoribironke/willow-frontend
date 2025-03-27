@@ -1,6 +1,11 @@
 "use client";
 
-import { cn, formatDateTime, formatNumber } from "@/lib/utils";
+import {
+  cn,
+  convertTextFromUppercase,
+  formatDateTime,
+  formatNumber,
+} from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { useEffect, useState } from "react";
@@ -65,7 +70,6 @@ const Products = () => {
       }
 
       setLoading(false);
-
       setProducts(data as Product[]);
     })();
   }, []);
@@ -144,7 +148,7 @@ const Products = () => {
                   </div>
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
-                  {p.sustainabilityFeatures[0].split("_").join(" ")}
+                  {convertTextFromUppercase(p.sustainabilityTag)}
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
                   {p.onDemand ? "Delivered on demand" : p.inStock}
