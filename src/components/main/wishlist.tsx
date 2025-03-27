@@ -5,19 +5,9 @@ import { Separator } from "../ui/separator";
 import { LikedProduct } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
-import {
-  addItemToCart,
-  getCart,
-  getLikedProducts,
-  removeItemFromLikedProducts,
-} from "@/lib/requests/customer";
+import { getCart, getLikedProducts } from "@/lib/requests/customer";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { Button } from "../ui/button";
-import { Heart, ShoppingBasket } from "lucide-react";
-import { formatNumber } from "@/lib/utils";
-import Link from "next/link";
-import { PAGES } from "@/constants/constants";
 import ProductCard from "../general/product-card";
 
 const Wishlist = () => {
@@ -26,22 +16,6 @@ const Wishlist = () => {
   const [likedProducts, setLikedProducts] = useState<LikedProduct[]>([]);
   const [lP, setLP] = useState<string[]>([]);
   const userInfo = useAtomValue(user_details);
-
-  const addToCart = async (productId: string) => {
-    const { error } = await addItemToCart(userInfo?.id || "", productId, 1);
-
-    if (!error) setCartItems((k) => [...k, productId]);
-  };
-
-  const update = async (productId: string) => {
-    const { error } = await removeItemFromLikedProducts(
-      userInfo?.id || "",
-      productId
-    );
-
-    if (!error)
-      setLikedProducts((k) => k.filter((j) => j.productId !== productId));
-  };
 
   useEffect(() => {
     (async () => {

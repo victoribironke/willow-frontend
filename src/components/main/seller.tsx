@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "../ui/button";
-import { Heart, MessageCircleMore, ShoppingBasket } from "lucide-react";
+import { MessageCircleMore } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
@@ -10,14 +10,7 @@ import { Seller } from "@/interfaces/general";
 import { getSellerDetails } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { formatNumber } from "@/lib/utils";
-import {
-  addItemToCart,
-  getCart,
-  getLikedProducts,
-} from "@/lib/requests/customer";
-import Link from "next/link";
-import { PAGES } from "@/constants/constants";
+import { getCart, getLikedProducts } from "@/lib/requests/customer";
 import ProductCard from "../general/product-card";
 
 const SellerPage = ({ id }: { id: string }) => {

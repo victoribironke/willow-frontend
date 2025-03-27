@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { IMAGES } from "@/constants/constants";
 import Image from "next/image";
 import PageLoader from "./page-loader";
@@ -18,7 +17,6 @@ import {
 } from "@/lib/requests/customer";
 import ProductCard from "./product-card";
 import { LoaderCircle } from "lucide-react";
-import { validateEmail } from "@/lib/utils";
 
 const Shop = () => {
   const [loading, setLoading] = useState(true);

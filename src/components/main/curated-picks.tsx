@@ -1,5 +1,3 @@
-import { Heart, Leaf, ShoppingBasket } from "lucide-react";
-import { Button } from "../ui/button";
 import ProductCard from "../general/product-card";
 import { useEffect, useState } from "react";
 import { Recommendation } from "@/interfaces/general";

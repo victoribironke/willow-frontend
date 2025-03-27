@@ -1,6 +1,6 @@
 import { user_details } from "@/app/atoms/atoms";
 import { PAGES } from "@/constants/constants";
-import { Product, ProductCardProps } from "@/interfaces/general";
+import { ProductCardProps } from "@/interfaces/general";
 import {
   addItemToCart,
   addItemToLikedProducts,
