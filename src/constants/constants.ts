@@ -83,6 +83,8 @@ export const ENDPOINTS = {
 
   get_products: BACKEND_URL + "/products",
   get_product: (pid: string) => BACKEND_URL + `/products/${pid}`,
+  search_customer_products: (text: string) =>
+    BACKEND_URL + `/products/search?text=${text}`,
 
   // CUSTOMERS
   get_cart: (uid: string) => BACKEND_URL + `/customers/${uid}/cart`,

@@ -35,10 +35,9 @@ export const generateMetadata = async (props: {
 };
 
 const Page = async (props: { params: Promise<{ term: string }> }) => {
-  const params = await props.params;
-  console.log(params);
+  const { term } = await props.params;
 
-  return <Search />;
+  return <Search term={term} />;
 };
 
 export default Page;
