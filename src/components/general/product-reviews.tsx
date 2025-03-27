@@ -53,11 +53,11 @@ const ProductReviews = ({ reviews }: { reviews: Review[] }) => {
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Star filled size="size-4" />
-                <Star filled size="size-4" />
-                <Star size="size-4" />
-                <Star size="size-4" />
-                <Star size="size-4" />
+                <Star size="size-4" filled={Math.floor(r.rating) >= 1} />
+                <Star size="size-4" filled={Math.floor(r.rating) >= 2} />
+                <Star size="size-4" filled={Math.floor(r.rating) >= 3} />
+                <Star size="size-4" filled={Math.floor(r.rating) >= 4} />
+                <Star size="size-4" filled={Math.floor(r.rating) >= 5} />
               </div>
 
               <p className="text-[#696969] text-sm">

@@ -39,6 +39,12 @@ const ProductPage = ({ productId }: { productId: string }) => {
   const userInfo = useAtomValue(user_details);
   const { push } = useRouter();
 
+  const totalRating =
+    product?.reviews.map((a) => a.rating).reduce((a, b) => a + b, 0) || 0;
+  const averageRating = Math.floor(
+    (totalRating / (5 * (product?.reviews.length || 0))) * 5
+  );
+
   const remove = async (id: string) => {
     setIsDelistLoading(true);
 
@@ -159,11 +165,11 @@ const ProductPage = ({ productId }: { productId: string }) => {
             <h4 className="text-xl lg:text-2xl font-medium">{product?.name}</h4>
 
             <div className="flex items-center gap-2">
-              <Star filled />
-              <Star filled />
-              <Star />
-              <Star />
-              <Star />
+              <Star filled={averageRating >= 1} />
+              <Star filled={averageRating >= 2} />
+              <Star filled={averageRating >= 3} />
+              <Star filled={averageRating >= 4} />
+              <Star filled={averageRating >= 5} />
 
               <p className="font-medium">{product?.reviews.length} reviews</p>
             </div>
