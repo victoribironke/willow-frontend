@@ -47,6 +47,7 @@ const RootLayout = ({
   children: React.ReactNode;
 }>) => {
   const [loading, setLoading] = useState(true);
+  const [avatar, setAvatar] = useState("");
   const { push } = useRouter();
   const pathname = usePathname();
   const setUserDetails = useSetAtom(user_details);
@@ -78,6 +79,10 @@ const RootLayout = ({
     }
 
     setUserDetails(user);
+    setAvatar(
+      user.seller.avatar?.url ||
+        `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${user.seller.businessName}`
+    );
     setLoading(false);
   }, [push]);
 
@@ -126,11 +131,8 @@ const RootLayout = ({
 
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Avatar className="h-8 w-8 rounded-full">
-                    <AvatarImage
-                      src="https://github.com/victoribironke.png"
-                      alt={"user.name"}
-                    />
+                  <Avatar className="size-9 rounded-full">
+                    <AvatarImage src={avatar} alt="Profile pic" />
                     <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                   </Avatar>
                 </DropdownMenuTrigger>
