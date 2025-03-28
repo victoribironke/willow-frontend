@@ -147,6 +147,11 @@ export interface ProductCardProps {
   isDashboard?: boolean;
 }
 
+export interface ReportProps {
+  message: string;
+  score: string;
+}
+
 export interface WillowAuthData {
   access_token: string;
   user: string;

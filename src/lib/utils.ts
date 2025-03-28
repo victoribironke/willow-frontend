@@ -93,3 +93,12 @@ export const convertToUpperUnderscoreFormat = (str: string) => {
     .replace(/_+/g, "_") // Replace multiple underscores with a single underscore
     .trim(); // Remove any leading or trailing whitespace
 };
+
+export const getRangeString = (number: number) => {
+  if (number >= 0 && number <= 29) return "We avoid";
+  else if (number >= 30 && number <= 49) return "Not good enough";
+  else if (number >= 50 && number <= 69) return "It's a start";
+  else if (number >= 70 && number <= 89) return "Good";
+  else if (number >= 90 && number <= 100) return "Great";
+  else return "Number out of range (1-100)";
+};
