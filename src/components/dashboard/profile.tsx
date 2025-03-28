@@ -68,7 +68,7 @@ const Profile = () => {
     setName(seller?.businessName || "");
     setBio(seller?.bio || "");
     setImage(
-      seller?.avatar ||
+      seller?.avatar?.url ||
         `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${seller?.businessName}`
     );
   }, [seller]);

@@ -144,6 +144,7 @@ export interface ProductCardProps {
   setCartItems: Dispatch<SetStateAction<string[]>>;
   setLikedProducts: Dispatch<SetStateAction<string[]>>;
   hideExtra?: boolean;
+  isDashboard?: boolean;
 }
 
 export interface WillowAuthData {

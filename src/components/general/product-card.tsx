@@ -19,6 +19,7 @@ const ProductCard = ({
   setCartItems,
   setLikedProducts,
   hideExtra,
+  isDashboard,
 }: ProductCardProps) => {
   const userInfo = useAtomValue(user_details);
 
@@ -77,7 +78,11 @@ const ProductCard = ({
       </div>
 
       <Link
-        href={PAGES.main.shop.product(product.id)}
+        href={
+          isDashboard
+            ? PAGES.dashboard.product(product.id)
+            : PAGES.main.shop.product(product.id)
+        }
         className="font-medium hover:underline"
       >
         {product.name.slice(0, 25).trim()}

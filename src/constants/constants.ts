@@ -1,3 +1,4 @@
+import { ApprovalStatus } from "@/interfaces/general";
 import {
   ChartNoAxesColumn,
   MessageCircleMore,
@@ -43,6 +44,8 @@ export const PAGES = {
     profile: "/dashboard/profile",
     order: (id: string) => `/dashboard/orders/${id}`,
     product: (id: string) => `/dashboard/products/${id}`,
+    search: (term: string, status?: string) =>
+      `/dashboard/search/${term}?status=${status}`,
   },
 
   auth: {
@@ -121,6 +124,9 @@ export const ENDPOINTS = {
     BACKEND_URL + `/sellers/${uid}/orders/${oid}`,
   update_seller_profile: (uid: string) =>
     BACKEND_URL + `/sellers/${uid}/update-profile`,
+  search_seller_products: (uid: string, text: string, filter: ApprovalStatus) =>
+    BACKEND_URL +
+    `/sellers/${uid}/catalogue/search?text=${text}&approvalStatus=${filter}`,
 };
 
 export const IMAGE_TIPS = [

@@ -1,5 +1,10 @@
 import { ENDPOINTS } from "@/constants/constants";
-import { OrderItem, Product, Seller } from "@/interfaces/general";
+import {
+  ApprovalStatus,
+  OrderItem,
+  Product,
+  Seller,
+} from "@/interfaces/general";
 
 export const getSellerDetails = async (userId: string) => {
   try {
@@ -173,6 +178,34 @@ export const deleteProduct = async (userId: string, productId: string) => {
       return { data: null, error: res.message + "." };
 
     return { data: "Product deleted successfully.", error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const searchProducts = async (
+  userId: string,
+  text: string,
+  filter: ApprovalStatus
+) => {
+  try {
+    const req = await fetch(
+      ENDPOINTS.search_seller_products(userId, text, filter),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        credentials: "include",
+      }
+    );
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data as Product[], error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };
