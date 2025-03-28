@@ -43,9 +43,7 @@ const Login = () => {
     // console.log(data);
 
     setUserDetails(data);
-    push(
-      data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.shop.profile
-    );
+    push(data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.shop.home);
   };
 
   useEffect(() => setError(""), [email, password]);

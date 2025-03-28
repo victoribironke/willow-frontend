@@ -29,9 +29,7 @@ const RootLayout = ({
       setUserDetails(d.user);
 
       push(
-        d.user.role === "SELLER"
-          ? PAGES.dashboard.home
-          : PAGES.main.shop.profile
+        d.user.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.shop.home
       );
     }
   }, [pathname]);

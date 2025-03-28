@@ -78,9 +78,7 @@ const Register = () => {
     }
 
     setUserDetails(data);
-    push(
-      data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.shop.profile
-    );
+    push(data.role === "SELLER" ? PAGES.dashboard.home : PAGES.main.shop.home);
   };
 
   const validate = () => {
