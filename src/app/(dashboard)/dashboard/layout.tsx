@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { cn, getJwtExpiration } from "@/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
 import Logo from "@/components/general/logo";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Select,
   SelectContent,
