@@ -51,7 +51,6 @@ const ListProduct = () => {
   const [category, setCategory] = useState("");
   const [sourcing, setSourcing] = useState("");
   const [packaging, setPackaging] = useState("");
-  const [message, setMessage] = useState("");
   const [desc, setDesc] = useState("");
   const [endOfLife, setEndOfLife] = useState("");
   const [files, setFiles] = useState<{ id: number; file: File }[]>([]);
@@ -141,10 +140,7 @@ const ListProduct = () => {
     setFiles([]);
     setOnDemand(false);
 
-    setMessage(data.message);
     setReport({ message: data.message, score: data.data.sustainabilityScore });
-
-    // toast.success("Product created successfully!");
   };
 
   const filesToDataURLs = async (files: { id: number; file: File }[]) => {

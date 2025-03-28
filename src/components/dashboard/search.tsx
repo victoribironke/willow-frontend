@@ -5,7 +5,7 @@ import ProductCard from "../general/product-card";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { searchProducts } from "@/lib/requests/seller";
-import { ApprovalStatus, Product } from "@/interfaces/general";
+import { Product } from "@/interfaces/general";
 import PageLoader from "../general/page-loader";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";

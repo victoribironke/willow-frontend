@@ -1,15 +1,13 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ReportProps } from "@/interfaces/general";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import { cn, getRangeString } from "@/lib/utils";
+import { getRangeString } from "@/lib/utils";
 import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
