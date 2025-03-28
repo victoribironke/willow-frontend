@@ -40,7 +40,7 @@ const Login = () => {
       return;
     }
 
-    console.log(data);
+    // console.log(data);
 
     setUserDetails(data);
     push(

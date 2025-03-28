@@ -74,7 +74,7 @@ const RootLayout = ({
       return;
     }
 
-    const { access_token, user } = JSON.parse(data);
+    const { access_token, user, seller } = JSON.parse(data);
 
     const date_ms = new Date().getTime();
     const expires_at = getJwtExpiration(access_token);
@@ -87,7 +87,7 @@ const RootLayout = ({
 
     setUserDetails(user);
     setAvatar(
-      user.seller.avatar?.url ||
+      seller.avatar?.url ||
         `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${user.seller.businessName}`
     );
     setLoading(false);
@@ -176,10 +176,13 @@ const RootLayout = ({
 
               <DropdownMenu>
                 <DropdownMenuTrigger>
-                  <Avatar className="size-9 rounded-full">
-                    <AvatarImage src={avatar} alt="Profile pic" />
-                    <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                  </Avatar>
+                  <div className="size-9 rounded-full overflow-hidden aspect-square">
+                    <img
+                      src={avatar}
+                      alt="Profile pic"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="mx-4">
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
