@@ -1,21 +1,27 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { Leaf, Minus, Plus, Trash2 } from "lucide-react";
+import { Leaf, LoaderCircle, Minus, Plus, Trash2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useEffect, useState } from "react";
 import { CartItem } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import toast from "react-hot-toast";
-import { getCart, removeItemFromCart } from "@/lib/requests/customer";
+import {
+  getCart,
+  removeItemFromCart,
+  sendCheckoutRequest,
+} from "@/lib/requests/customer";
 import PageLoader from "../general/page-loader";
 import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import PaystackPop from "@paystack/inline-js";
 
 const Cart = () => {
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const userInfo = useAtomValue(user_details);
 
@@ -63,6 +69,39 @@ const Cart = () => {
 
       setCartItems(newCart);
     }
+  };
+
+  const checkout = async () => {
+    if (cartItems.length === 0) return;
+
+    setIsLoading(true);
+
+    const d = {
+      email: userInfo?.email,
+      amount: total,
+      address: userInfo?.customer?.address,
+      serviceFee: 100,
+      cartItems,
+      deliveryFee: 0,
+    };
+
+    console.log(d);
+
+    const { data, error } = await sendCheckoutRequest(userInfo?.id || "", d);
+
+    setIsLoading(false);
+
+    if (error) return toast.error(error);
+
+    const popup = new PaystackPop();
+    const res = popup.resumeTransaction({
+      accessCode: data?.accessCode as string,
+    });
+
+    const status = res.getStatus();
+
+    if (status.status === "success") toast.success("Transaction completed.");
+    else toast.error("Payment was not completed.");
   };
 
   useEffect(() => {
@@ -150,11 +189,15 @@ const Cart = () => {
           </div>
         ))}
 
-        <p className="w-full text-center">
-          Total + shipping: ₦ {formatNumber(total)}
-        </p>
+        <p className="w-full text-center">Total: ₦ {formatNumber(total)}</p>
 
-        <Button className="bg-main hover:bg-main/90">Checkout</Button>
+        <Button
+          className="bg-main hover:bg-main/90"
+          disabled={isLoading}
+          onClick={checkout}
+        >
+          Checkout {isLoading && <LoaderCircle className="animate-spin" />}
+        </Button>
       </div>
     </>
   );

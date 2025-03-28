@@ -339,3 +339,29 @@ export const getRecommendations = async (userId: string) => {
     return { data: null, error: "A server error occured." };
   }
 };
+
+export const sendCheckoutRequest = async (userId: string, d: any) => {
+  try {
+    const req = await fetch(ENDPOINTS.checkout(userId), {
+      method: "POST",
+      body: JSON.stringify(d),
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return {
+      data: res.data as { accessCode: string; order: Order },
+      error: null,
+    };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
