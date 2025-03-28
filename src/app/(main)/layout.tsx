@@ -26,6 +26,11 @@ const RootLayout = ({
   useEffect(() => {
     // localStorage.removeItem("willow_auth_data");
 
+    if (pathname === PAGES.main.more_about_willow) {
+      setLoading(false);
+      return;
+    }
+
     const data = localStorage.getItem("willow_auth_data");
 
     if (!data) {
