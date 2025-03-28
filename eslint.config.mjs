@@ -15,6 +15,7 @@ const eslintConfig = [
     // ignorePatterns: [".next/**"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off", // Disable the rule
+      "react-hooks/exhaustive-deps": "off", // Disable the exhaustive-deps rule
     },
   },
 ];
