@@ -85,7 +85,7 @@ const Cart = () => {
       deliveryFee: 0,
     };
 
-    console.log(d);
+    // console.log(d);
 
     const { data, error } = await sendCheckoutRequest(userInfo?.id || "", d);
 
