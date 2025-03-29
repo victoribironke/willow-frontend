@@ -2,7 +2,6 @@
 
 import { Button } from "../ui/button";
 import { Leaf, LoaderCircle, Minus, Plus, Trash2 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useEffect, useState } from "react";
 import { CartItem } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
