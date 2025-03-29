@@ -36,25 +36,25 @@ const Report = ({
 
       <Separator />
 
-      <div className="w-full flex items-center justify-center gap-4">
+      <div className="w-full flex items-center justify-center gap-4 mt-4">
         <Angry
-          size={50}
+          size={55}
           className={s >= 0 && s <= 29 ? "text-red" : "text-[#696969]"}
         />
         <Frown
-          size={50}
+          size={55}
           className={s >= 30 && s <= 49 ? "text-yellow" : "text-[#696969]"}
         />
         <Meh
-          size={50}
+          size={55}
           className={s >= 50 && s <= 69 ? "text-black" : "text-[#696969]"}
         />
         <Smile
-          size={50}
+          size={55}
           className={s >= 70 && s <= 89 ? "text-main/50" : "text-[#696969]"}
         />
         <Laugh
-          size={50}
+          size={55}
           className={s >= 90 && s <= 100 ? "text-main" : "text-[#696969]"}
         />
       </div>

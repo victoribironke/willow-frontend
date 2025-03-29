@@ -33,9 +33,9 @@ const Chats = () => {
 
   return (
     <>
-      <h1 className="text-xl lg:text-2xl font-medium">Chat</h1>
+      <h1 className="text-xl lg:text-2xl font-medium">Chats</h1>
 
-      <p className="text-[#696969]">Manage your chats</p>
+      <p className="text-[#696969]">Manage your chats with customers</p>
 
       <Separator />
 

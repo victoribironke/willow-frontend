@@ -21,7 +21,7 @@ const Reviewing = () => {
         src="https://lottie.host/9134bf01-8e43-49a5-9f56-505620de1286/cSHsHXAREx.lottie"
         loop
         autoplay
-        className="max-w-xs mx-auto"
+        className="w-full max-w-sm mx-auto -mb-5 mt-4"
       />
 
       <h1 className="text-lg lg:text-xl font-medium w-full text-center">
