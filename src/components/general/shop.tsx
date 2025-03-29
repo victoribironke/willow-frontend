@@ -88,7 +88,7 @@ const Shop = () => {
 
   return (
     <>
-      <div className="flex items-center justify-center rounded-xl relative overflow-hidden aspect-[2/0.6]">
+      <div className="flex items-center justify-center rounded-lg relative overflow-hidden aspect-[2/0.6]">
         <Image
           src={IMAGES.shop_image.src}
           width={IMAGES.shop_image.w}
