@@ -27,6 +27,7 @@ import { deleteProduct, getSellerProducts } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
 import { LoaderCircle, Trash2 } from "lucide-react";
+import DelistProduct from "./delist-product";
 
 const Products = () => {
   const [tab, setTab] = useState("Listed");
@@ -43,19 +44,6 @@ const Products = () => {
 
     return true;
   });
-
-  const remove = async (id: string) => {
-    setIsLoading(true);
-
-    const { data, error } = await deleteProduct(userInfo?.id || "", id);
-
-    setIsLoading(false);
-
-    if (error) return toast.error(error);
-
-    toast.success(data);
-    setProducts((k) => k.filter((a) => a.id !== id));
-  };
 
   useEffect(() => {
     (async () => {
@@ -149,15 +137,11 @@ const Products = () => {
                 </TableCell>
                 <TableCell>{formatNumber(p.price)}</TableCell>
                 <TableCell>
-                  <Button
-                    variant="outline"
-                    className="border-red text-red hover:text-red"
-                    onClick={() => remove(p.id)}
-                    disabled={isLoading}
-                  >
-                    <Trash2 />{" "}
-                    {isLoading && <LoaderCircle className="animate-spin" />}
-                  </Button>
+                  <DelistProduct
+                    uid={userInfo?.id || ""}
+                    pid={p.id}
+                    set={setProducts}
+                  />
                 </TableCell>
               </TableRow>
             ))}

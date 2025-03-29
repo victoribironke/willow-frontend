@@ -29,6 +29,7 @@ import { getProduct } from "@/lib/requests/general";
 import { addItemToCart, getCart } from "@/lib/requests/customer";
 import CuratedPicks from "../main/curated-picks";
 import SimilarProducts from "../dashboard/similar-products";
+import DelistProduct from "../dashboard/delist-product";
 
 const ProductPage = ({ productId }: { productId: string }) => {
   const [tab, setTab] = useState("details");
@@ -47,22 +48,6 @@ const ProductPage = ({ productId }: { productId: string }) => {
   const averageRating = Math.floor(
     (totalRating / (5 * (product?.reviews.length || 0))) * 5
   );
-
-  const remove = async (id: string) => {
-    setIsDelistLoading(true);
-
-    const { data, error } = await deleteProduct(userInfo?.id || "", id);
-
-    setIsDelistLoading(false);
-
-    if (error) {
-      toast.error(error);
-      return;
-    }
-
-    toast.success(data);
-    push(PAGES.dashboard.products);
-  };
 
   const addToCart = async (productId: string) => {
     if (quantity === 0) return;
@@ -221,13 +206,11 @@ const ProductPage = ({ productId }: { productId: string }) => {
           </p>
 
           {pathname.includes("/dashboard/") ? (
-            <Button
-              variant="destructive"
-              onClick={() => remove(product?.id || "")}
-            >
-              Delist{" "}
-              {isDelistLoading && <LoaderCircle className="animate-spin" />}
-            </Button>
+            <DelistProduct
+              pid={product?.id || ""}
+              uid={userInfo?.id || ""}
+              isDashboard={true}
+            />
           ) : cartItems.includes(product?.id || "") ? (
             <>
               <Link href={PAGES.main.shop.cart}>
