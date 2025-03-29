@@ -11,6 +11,7 @@ import { Heart, Leaf, ShoppingBasket } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
+import toast from "react-hot-toast";
 
 const ProductCard = ({
   cartItems,
@@ -26,7 +27,11 @@ const ProductCard = ({
   const addToCart = async (productId: string) => {
     const { error } = await addItemToCart(userInfo?.id || "", productId, 1);
 
-    if (!error) setCartItems((k) => [...k, productId]);
+    if (!error) {
+      setCartItems((k) => [...k, productId]);
+
+      toast.success("Product added to cart.");
+    }
   };
 
   const update = async (productId: string) => {
@@ -36,7 +41,11 @@ const ProductCard = ({
         productId
       );
 
-      if (!error) setLikedProducts((k) => k.filter((j) => j !== productId));
+      if (!error) {
+        setLikedProducts((k) => k.filter((j) => j !== productId));
+
+        toast.success("Product added to wishlist.");
+      }
 
       return;
     }
@@ -46,7 +55,11 @@ const ProductCard = ({
       productId
     );
 
-    if (!error) setLikedProducts((k) => [...k, productId]);
+    if (!error) {
+      setLikedProducts((k) => [...k, productId]);
+
+      toast.success("Product removed from wishlist.");
+    }
   };
 
   return (
