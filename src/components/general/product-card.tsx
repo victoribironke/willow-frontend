@@ -120,7 +120,7 @@ const ProductCard = ({
             href={PAGES.main.shop.cart}
             className="absolute bottom-2 hover:underline right-4 text-sm text-main"
           >
-            Check cart
+            Visit cart
           </Link>
         ) : (
           <Button

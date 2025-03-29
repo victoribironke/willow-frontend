@@ -68,19 +68,25 @@ const Shop = () => {
         setSubscribed(d.customer?.subscribed || false);
       }
 
-      const { data, error } = await getProducts();
-      const { data: c } = await getCart(userInfo?.id || "");
-      const { data: l } = await getLikedProducts(userInfo?.id || "");
+      try {
+        const [productsRes, cartRes, likedRes] = await Promise.all([
+          getProducts(),
+          getCart(userInfo?.id || ""),
+          getLikedProducts(userInfo?.id || ""),
+        ]);
 
-      setLoading(false);
+        setLoading(false);
 
-      if (error) {
-        return toast.error(error);
+        if (productsRes.error) return toast.error(productsRes.error);
+
+        setProducts(productsRes.data as Product[]);
+        setCartItems(cartRes.data?.map((j) => j.productId) as string[]);
+        setLikedProducts(likedRes.data?.map((j) => j.productId) as string[]);
+      } catch (error) {
+        setLoading(false);
+
+        toast.error("An error occurred while fetching data.");
       }
-
-      setProducts(data as Product[]);
-      setCartItems(c?.map((j) => j.productId) as string[]);
-      setLikedProducts(l?.map((j) => j.productId) as string[]);
     })();
   }, []);
 

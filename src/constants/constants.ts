@@ -36,12 +36,13 @@ export const PAGES = {
 
   dashboard: {
     home: "/dashboard",
-    chat: "/dashboard/chat",
+    chats: "/dashboard/chats",
     analytics: "/dashboard/analytics",
     list_product: "/dashboard/list-product",
     products: "/dashboard/products",
     orders: "/dashboard/orders",
     profile: "/dashboard/profile",
+    chat: (id: string) => `/dashboard/chats/${id}`,
     order: (id: string) => `/dashboard/orders/${id}`,
     product: (id: string) => `/dashboard/products/${id}`,
     search: (text?: string, status?: string) =>
@@ -128,6 +129,10 @@ export const ENDPOINTS = {
   search_seller_products: (uid: string, text: string, filter: ApprovalStatus) =>
     BACKEND_URL +
     `/sellers/${uid}/catalogue/search?text=${text}&approvalStatus=${filter}`,
+  get_seller_conversations: (uid: string) =>
+    BACKEND_URL + `/sellers/${uid}/conversations`,
+  get_seller_conversation: (uid: string, cid: string) =>
+    BACKEND_URL + `/sellers/${uid}/conversations/${cid}`,
 };
 
 export const IMAGE_TIPS = [
@@ -151,15 +156,17 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
   {
     title: "Chat",
     icon: MessageCircleMore,
-    isActive: pathname === PAGES.dashboard.chat,
-    link: PAGES.dashboard.chat,
+    isActive:
+      pathname === PAGES.dashboard.chats ||
+      pathname.includes(PAGES.dashboard.chats),
+    link: PAGES.dashboard.chats,
   },
-  {
-    title: "Analytics",
-    icon: ChartNoAxesColumn,
-    isActive: pathname === PAGES.dashboard.analytics,
-    link: PAGES.dashboard.analytics,
-  },
+  // {
+  //   title: "Analytics",
+  //   icon: ChartNoAxesColumn,
+  //   isActive: pathname === PAGES.dashboard.analytics,
+  //   link: PAGES.dashboard.analytics,
+  // },
   {
     title: "List product",
     icon: MonitorUp,
@@ -171,7 +178,7 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
     icon: Package,
     isActive:
       pathname === PAGES.dashboard.products ||
-      pathname.includes("/dashboard/product"),
+      pathname.includes(PAGES.dashboard.products),
     link: PAGES.dashboard.products,
   },
   {
@@ -179,7 +186,7 @@ export const SIDEBAR_ITEMS = (pathname: string) => [
     icon: ShoppingBag,
     isActive:
       pathname === PAGES.dashboard.orders ||
-      pathname.includes("/dashboard/orders"),
+      pathname.includes(PAGES.dashboard.orders),
     link: PAGES.dashboard.orders,
   },
   {
