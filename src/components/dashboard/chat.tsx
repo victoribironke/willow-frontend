@@ -10,10 +10,13 @@ import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Send } from "lucide-react";
 
 const Chat = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);
-  const [convos, setConvos] = useState<Conversation[]>([]);
+  const [convo, setConvo] = useState<Conversation | null>(null);
   const userInfo = useAtomValue(user_details);
 
   // useEffect(() => {
@@ -38,29 +41,29 @@ const Chat = ({ id }: { id: string }) => {
 
       <Separator />
 
-      <div className="w-full flex flex-col">
-        <Link href={PAGES.dashboard.chat("fsd")}>
-          <div className="hover:bg-white rounded-lg cursor-pointer border-b p-3 gap-4 flex items-center justify-center">
-            <div className="overflow-hidden aspect-square rounded-full w-10">
-              <img
-                src="https://avatars.1b96cf6605c095713225e0ab3d88fd1c.r2.cloudflarestorage.com/1742994674630-Babcock.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=3074514f03916b56750f94c7626a8462%2F20250329%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250329T135405Z&X-Amz-Expires=604800&X-Amz-Signature=e9969ea1e67b415c35e059b95361d2dfd3057581a640d0cfab3234a357762cc3&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject"
-                alt="Image"
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="mr-auto">
-              <p className="font-medium">Victor Ibironke</p>
-
-              <p className="text-sm text-muted-foreground">
-                This is the last message that was sent to me. This is a
-                placeholder so beware
-              </p>
-            </div>
-
-            <p className="text-muted-foreground text-sm">03:43 PM</p>
+      <div className="bg-white border rounded-2xl max-w-4xl overflow-hidden">
+        <div className="w-full p-4 border-b flex items-center gap-4">
+          <div className="overflow-hidden aspect-square rounded-full w-8">
+            <img
+              src={`https://api.dicebear.com/9.x/fun-emoji/svg?seed=Victor`}
+              // src={`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${c.customer.firstname}`}
+              alt="Image"
+              className="w-full h-full object-cover"
+            />
           </div>
-        </Link>
+
+          <p className="font-medium">Victor Ibironke</p>
+        </div>
+
+        <div className="h-[calc(100vh-23rem)] p-2 overflow-scroll"></div>
+
+        <div className="border-t w-full flex items-center gap-4 p-4">
+          <Input className="focus-visible:border-main  focus-visible:ring-0" />
+
+          <Button variant="outline" className="text-main border-main">
+            <Send />
+          </Button>
+        </div>
       </div>
     </>
   );

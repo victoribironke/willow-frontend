@@ -1,3 +1,4 @@
+import Chat from "@/components/dashboard/chat";
 import Product from "@/components/general/product";
 import { BASE_URL, PAGES } from "@/constants/constants";
 import { getProduct } from "@/lib/requests/general";
@@ -73,7 +74,7 @@ export const generateMetadata = async (props: {
 const Page = async (props: { params: Promise<{ id: string }> }) => {
   const { id } = await props.params;
 
-  return <Product productId={id} />;
+  return <Chat id={id} />;
 };
 
 export default Page;
