@@ -62,18 +62,24 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      const { data: o, error: e1 } = await getSellerOrders(userInfo?.id || "");
-      const { data: p, error: e2 } = await getSellerProducts(
-        userInfo?.id || ""
-      );
+      try {
+        const [ordersRes, productsRes] = await Promise.all([
+          getSellerOrders(userInfo?.id || ""),
+          getSellerProducts(userInfo?.id || ""),
+        ]);
 
-      setLoading(false);
+        setLoading(false);
 
-      if (e1) return toast.error(e1);
-      if (e2) return toast.error(e2);
+        if (ordersRes.error) return toast.error(ordersRes.error);
+        if (productsRes.error) return toast.error(productsRes.error);
 
-      setOrders(o as OrderItem[]);
-      setProducts(p as Product[]);
+        setOrders(ordersRes.data as OrderItem[]);
+        setProducts(productsRes.data as Product[]);
+      } catch (error) {
+        setLoading(false);
+
+        toast.error("An error occurred while fetching data.");
+      }
     })();
   }, []);
 

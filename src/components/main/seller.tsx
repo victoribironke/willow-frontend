@@ -22,17 +22,25 @@ const SellerPage = ({ id }: { id: string }) => {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await getSellerDetails(id);
-      const { data: c } = await getCart(userInfo?.id || "");
-      const { data: l } = await getLikedProducts(userInfo?.id || "");
+      try {
+        const [sellerRes, cartRes, likedRes] = await Promise.all([
+          getSellerDetails(id),
+          getCart(userInfo?.id || ""),
+          getLikedProducts(userInfo?.id || ""),
+        ]);
 
-      setLoading(false);
+        setLoading(false);
 
-      if (error) return toast.error(error);
+        if (sellerRes.error) return toast.error(sellerRes.error);
 
-      setSeller(data as Seller);
-      setCartItems(c?.map((j) => j.productId) as string[]);
-      setLikedProducts(l?.map((j) => j.productId) as string[]);
+        setSeller(sellerRes.data as Seller);
+        setCartItems(cartRes.data?.map((j) => j.productId) as string[]);
+        setLikedProducts(likedRes.data?.map((j) => j.productId) as string[]);
+      } catch (error) {
+        setLoading(false);
+
+        toast.error("An error occurred while fetching data.");
+      }
     })();
   }, []);
 
@@ -76,16 +84,18 @@ const SellerPage = ({ id }: { id: string }) => {
         <h4 className="text-lg lg:text-xl font-medium">Catalogue</h4>
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-          {seller?.products.map((p, i) => (
-            <ProductCard
-              cartItems={cartItems}
-              likedProducts={likedProducts}
-              product={p}
-              setCartItems={setCartItems}
-              setLikedProducts={setLikedProducts}
-              key={i}
-            />
-          ))}
+          {seller?.products
+            .filter((p) => p.approvalStatus === "APPROVED")
+            .map((p, i) => (
+              <ProductCard
+                cartItems={cartItems}
+                likedProducts={likedProducts}
+                product={p}
+                setCartItems={setCartItems}
+                setLikedProducts={setLikedProducts}
+                key={i}
+              />
+            ))}
         </div>
       </div>
     </>

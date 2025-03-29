@@ -125,7 +125,7 @@ const Cart = () => {
         Shopping Cart
       </h1>
 
-      <div className="bg-white w-full mx-auto p-4 rounded-lg shadow border max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="bg-white w-full mx-auto p-4 rounded-lg shadow border max-w-4xl flex flex-col gap-4">
         {cartItems.map((c, i) => (
           <div className="w-full relative flex gap-6" key={i}>
             <Link href={PAGES.main.shop.product(c.product.id)}>
@@ -191,7 +191,7 @@ const Cart = () => {
           </div>
         ))}
 
-        <div className="col-span-1 lg:col-span-2 mt-4 flex flex-col gap-4">
+        <div className="mt-4 flex flex-col gap-4">
           <div className="w-full flex items-center justify-center gap-2">
             <p className="font-medium">Total: </p>
             <div className="text-main border px-2 py-1 flex items-center justify-center text-sm gap-1 rounded-md font-medium w-fit whitespace-nowrap">

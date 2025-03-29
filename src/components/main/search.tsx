@@ -27,19 +27,27 @@ const Search = () => {
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
+      try {
+        setLoading(true);
 
-      const { data, error } = await searchProducts(text);
-      const { data: c } = await getCart(userInfo?.id || "");
-      const { data: l } = await getLikedProducts(userInfo?.id || "");
+        const [searchRes, cartRes, likedRes] = await Promise.all([
+          searchProducts(text),
+          getCart(userInfo?.id || ""),
+          getLikedProducts(userInfo?.id || ""),
+        ]);
 
-      setLoading(false);
+        setLoading(false);
 
-      if (error) return toast.error(error);
+        if (searchRes.error) return toast.error(searchRes.error);
 
-      setProducts(data as Product[]);
-      setCartItems(c?.map((j) => j.productId) as string[]);
-      setLikedProducts(l?.map((j) => j.productId) as string[]);
+        setProducts(searchRes.data as Product[]);
+        setCartItems(cartRes.data?.map((j) => j.productId) as string[]);
+        setLikedProducts(likedRes.data?.map((j) => j.productId) as string[]);
+      } catch (error) {
+        setLoading(false);
+
+        toast.error("An error occurred while fetching data.");
+      }
     })();
   }, [text]);
 

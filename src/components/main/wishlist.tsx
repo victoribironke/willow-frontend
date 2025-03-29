@@ -19,16 +19,24 @@ const Wishlist = () => {
 
   useEffect(() => {
     (async () => {
-      const { data: l, error } = await getLikedProducts(userInfo?.id || "");
-      const { data: c } = await getCart(userInfo?.id || "");
+      try {
+        const [likedRes, cartRes] = await Promise.all([
+          getLikedProducts(userInfo?.id || ""),
+          getCart(userInfo?.id || ""),
+        ]);
 
-      setLoading(false);
+        setLoading(false);
 
-      if (error) return toast.error(error);
+        if (likedRes.error) return toast.error(likedRes.error);
 
-      setCartItems(c?.map((j) => j.productId) as string[]);
-      setLikedProducts(l as LikedProduct[]);
-      setLP(l?.map((j) => j.productId) as string[]);
+        setCartItems(cartRes.data?.map((j) => j.productId) as string[]);
+        setLikedProducts(likedRes.data as LikedProduct[]);
+        setLP(likedRes.data?.map((j) => j.productId) as string[]);
+      } catch (error) {
+        setLoading(false);
+
+        toast.error("An error occurred while fetching data.");
+      }
     })();
   }, []);
 
