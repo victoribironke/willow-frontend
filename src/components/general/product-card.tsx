@@ -82,13 +82,21 @@ const ProductCard = ({
         )}
       </div>
 
-      <div className="overflow-hidden aspect-square rounded-md">
-        <img
-          src={product.images[0].url}
-          alt="Image"
-          className="w-full h-full object-cover"
-        />
-      </div>
+      <Link
+        href={
+          isDashboard
+            ? PAGES.dashboard.product(product.id)
+            : PAGES.main.shop.product(product.id)
+        }
+      >
+        <div className="overflow-hidden aspect-square rounded-md">
+          <img
+            src={product.images[0].url}
+            alt="Image"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </Link>
 
       <Link
         href={
@@ -96,7 +104,7 @@ const ProductCard = ({
             ? PAGES.dashboard.product(product.id)
             : PAGES.main.shop.product(product.id)
         }
-        className="font-medium hover:underline"
+        className="font-medium"
       >
         {product.name.slice(0, 25).trim()}
         {product.name.length >= 25 && "..."}
@@ -106,14 +114,22 @@ const ProductCard = ({
 
       <p className="text-sm font-medium">₦ {formatNumber(product.price)}</p>
 
-      {!cartItems.includes(product.id) && !hideExtra && (
-        <Button
-          className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2"
-          onClick={() => addToCart(product.id)}
-        >
-          <ShoppingBasket size={20} />
-        </Button>
-      )}
+      {!hideExtra &&
+        (cartItems.includes(product.id) ? (
+          <Link
+            href={PAGES.main.shop.cart}
+            className="absolute bottom-2 hover:underline right-4 text-sm text-main"
+          >
+            Check cart
+          </Link>
+        ) : (
+          <Button
+            className="text-white hover:bg-main/90 h-auto bg-main w-fit absolute bottom-2 right-2"
+            onClick={() => addToCart(product.id)}
+          >
+            <ShoppingBasket size={20} />
+          </Button>
+        ))}
     </div>
   );
 };
