@@ -8,7 +8,7 @@ const VerticalImageCarousel = () => {
   const column2Ref = useRef<HTMLDivElement | null>(null);
   const column3Ref = useRef<HTMLDivElement | null>(null);
 
-  const speed = 20000;
+  const speed = 25000;
 
   const { eight, five, four, nine, one, seven, six, three, two } =
     IMAGES.more_about_willow;
