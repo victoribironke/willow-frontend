@@ -4,7 +4,7 @@ import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { PAGES, SIDEBAR_ITEMS } from "@/constants/constants";
+import { LOCAL_STORAGE_KEY, PAGES, SIDEBAR_ITEMS } from "@/constants/constants";
 import { Button } from "@/components/ui/button";
 import { cn, getJwtExpiration } from "@/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -61,7 +61,7 @@ const RootLayout = ({
   useEffect(() => {
     // localStorage.removeItem("willow_auth_data");
 
-    const data = localStorage.getItem("willow_auth_data");
+    const data = localStorage.getItem(LOCAL_STORAGE_KEY);
 
     if (!data) {
       push(PAGES.auth.login);
@@ -79,7 +79,7 @@ const RootLayout = ({
     const expires_at = getJwtExpiration(access_token);
 
     if (!expires_at || date_ms >= expires_at) {
-      localStorage.removeItem("willow_auth_data");
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
       push(PAGES.auth.login);
       return;
     }

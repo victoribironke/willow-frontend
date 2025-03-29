@@ -1,6 +1,5 @@
 import { ApprovalStatus } from "@/interfaces/general";
 import {
-  ChartNoAxesColumn,
   MessageCircleMore,
   MonitorUp,
   Package,
@@ -13,6 +12,8 @@ export const BASE_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
     : "https://willow-frontend.vercel.app";
+
+export const LOCAL_STORAGE_KEY = "willow";
 
 export const BACKEND_URL = "https://willow-backend-1.onrender.com/api/v1";
 

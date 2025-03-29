@@ -157,6 +157,7 @@ export interface WillowAuthData {
   user: string;
   seller: Seller | null;
   customer: Customer | null;
+  cartItems: CartItem[];
 }
 
 export interface Admin {

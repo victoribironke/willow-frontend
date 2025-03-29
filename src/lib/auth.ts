@@ -1,15 +1,15 @@
-import { PAGES } from "@/constants/constants";
+import { LOCAL_STORAGE_KEY, PAGES } from "@/constants/constants";
 import { redirect } from "next/navigation";
 import { getJwtExpiration } from "./utils";
 
 export const logOut = () => {
-  localStorage.removeItem("willow_auth_data");
+  localStorage.removeItem(LOCAL_STORAGE_KEY);
 
   redirect(PAGES.auth.login);
 };
 
 export const verifyAuthState = () => {
-  const data = localStorage.getItem("willow_auth_data");
+  const data = localStorage.getItem(LOCAL_STORAGE_KEY);
 
   if (!data) logOut();
 

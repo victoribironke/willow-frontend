@@ -1,4 +1,4 @@
-import { ENDPOINTS } from "@/constants/constants";
+import { ENDPOINTS, LOCAL_STORAGE_KEY } from "@/constants/constants";
 import { NewUser, WillowAuthData } from "@/interfaces/general";
 import { getSellerDetails } from "./seller";
 import { getCustomerDetails } from "./customer";
@@ -45,7 +45,7 @@ export const verifyOtp = async (email: string, otp: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    const authData: WillowAuthData = {
+    const authData: Partial<WillowAuthData> = {
       access_token: res.data.accessToken,
       user: res.data.user,
       seller: null,
@@ -62,7 +62,7 @@ export const verifyOtp = async (email: string, otp: string) => {
       authData.customer = data;
     }
 
-    localStorage.setItem("willow_auth_data", JSON.stringify(authData));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(authData));
 
     return { data: res.data.user, error: null };
   } catch (e) {
@@ -92,7 +92,7 @@ export const loginUser = async (email: string, password: string) => {
 
     // console.log(res);
 
-    const authData: WillowAuthData = {
+    const authData: Partial<WillowAuthData> = {
       access_token: res.data.accessToken,
       user: res.data.user,
       seller: null,
@@ -109,7 +109,7 @@ export const loginUser = async (email: string, password: string) => {
       authData.customer = data;
     }
 
-    localStorage.setItem("willow_auth_data", JSON.stringify(authData));
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(authData));
 
     return { data: res.data.user, error: null };
   } catch (e) {

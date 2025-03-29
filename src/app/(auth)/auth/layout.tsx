@@ -2,7 +2,7 @@
 
 import { Toaster } from "react-hot-toast";
 import { Suspense, useEffect } from "react";
-import { PAGES } from "@/constants/constants";
+import { LOCAL_STORAGE_KEY, PAGES } from "@/constants/constants";
 import { usePathname, useRouter } from "next/navigation";
 import Logo from "@/components/general/logo";
 import VerticalImageCarousel from "@/components/auth/vertical-image-carousel";
@@ -21,7 +21,7 @@ const RootLayout = ({
   useEffect(() => {
     // localStorage.removeItem("willow_auth_data");
 
-    const data = localStorage.getItem("willow_auth_data");
+    const data = localStorage.getItem(LOCAL_STORAGE_KEY);
 
     if (data && pathname === PAGES.auth.login) {
       const d = JSON.parse(data);

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { IMAGES } from "@/constants/constants";
+import { IMAGES, LOCAL_STORAGE_KEY } from "@/constants/constants";
 import Image from "next/image";
 import PageLoader from "./page-loader";
 import { useEffect, useState } from "react";
@@ -43,13 +43,13 @@ const Shop = () => {
     toast.success("Subscribed successfully.");
     setSubscribed(true);
 
-    const authData = localStorage.getItem("willow_auth_data");
+    const authData = localStorage.getItem(LOCAL_STORAGE_KEY);
 
     if (authData) {
       const d: WillowAuthData = JSON.parse(authData);
 
       localStorage.setItem(
-        "willow_auth_data",
+        LOCAL_STORAGE_KEY,
         JSON.stringify({
           ...d,
           customer: { ...d.customer, subscribed: true },
@@ -60,7 +60,7 @@ const Shop = () => {
 
   useEffect(() => {
     (async () => {
-      const authData = localStorage.getItem("willow_auth_data");
+      const authData = localStorage.getItem(LOCAL_STORAGE_KEY);
 
       if (authData) {
         const d: WillowAuthData = JSON.parse(authData);

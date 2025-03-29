@@ -3,7 +3,7 @@
 import Logo from "@/components/general/logo";
 import PageLoader from "@/components/general/page-loader";
 import { Input } from "@/components/ui/input";
-import { HEADER_LINKS, PAGES } from "@/constants/constants";
+import { HEADER_LINKS, LOCAL_STORAGE_KEY, PAGES } from "@/constants/constants";
 import { cn, getJwtExpiration } from "@/lib/utils";
 import { useSetAtom } from "jotai";
 import { Search, ShoppingCart, User } from "lucide-react";
@@ -31,7 +31,7 @@ const RootLayout = ({
       return;
     }
 
-    const data = localStorage.getItem("willow_auth_data");
+    const data = localStorage.getItem(LOCAL_STORAGE_KEY);
 
     if (!data) {
       push(PAGES.auth.login);
@@ -49,7 +49,7 @@ const RootLayout = ({
     const expires_at = getJwtExpiration(access_token);
 
     if (!expires_at || date_ms >= expires_at) {
-      localStorage.removeItem("willow_auth_data");
+      localStorage.removeItem(LOCAL_STORAGE_KEY);
       push(PAGES.auth.login);
       return;
     }
