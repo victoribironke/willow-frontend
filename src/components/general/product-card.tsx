@@ -89,7 +89,7 @@ const ProductCard = ({
             : PAGES.main.shop.product(product.id)
         }
       >
-        <div className="overflow-hidden aspect-square rounded-md">
+        <div className="overflow-hidden aspect-square rounded-md border shadow">
           <img
             src={product.images[0].url}
             alt="Image"
