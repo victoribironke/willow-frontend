@@ -30,7 +30,7 @@ export const PAGES = {
       order: (id: string) => `/shop/orders/${id}`,
       seller: (id: string) => `/shop/seller/${id}`,
       product: (id: string) => `/shop/product/${id}`,
-      search: (term: string) => `/shop/search/${term}`,
+      search: (text?: string) => `/shop/search?text=${text}`,
     },
   },
 
@@ -44,8 +44,8 @@ export const PAGES = {
     profile: "/dashboard/profile",
     order: (id: string) => `/dashboard/orders/${id}`,
     product: (id: string) => `/dashboard/products/${id}`,
-    search: (term: string, status?: string) =>
-      `/dashboard/search/${term}?status=${status}`,
+    search: (text?: string, status?: string) =>
+      `/dashboard/search?text=${text}&status=${status}`,
   },
 
   auth: {

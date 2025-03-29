@@ -56,7 +56,7 @@ const RootLayout = ({
   const searchParams = useSearchParams();
   const f = searchParams.get("status") as string;
 
-  const [filter, setFilter] = useState(f);
+  const [filter, setFilter] = useState(f || "Listed");
 
   useEffect(() => {
     // localStorage.removeItem("willow_auth_data");

@@ -11,11 +11,12 @@ import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import { useSearchParams } from "next/navigation";
 
-const Search = ({ term }: { term: string }) => {
+const Search = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const userInfo = useAtomValue(user_details);
   const searchParams = useSearchParams();
+  const text = searchParams.get("text") as string;
   const filter = searchParams.get("status") as string;
 
   const filters: Record<string, any> = {
@@ -30,7 +31,7 @@ const Search = ({ term }: { term: string }) => {
 
       const { data, error } = await searchProducts(
         userInfo?.id || "",
-        term,
+        encodeURIComponent(text),
         filters[filter as keyof typeof filters]
       );
 
@@ -40,7 +41,7 @@ const Search = ({ term }: { term: string }) => {
 
       setProducts(data as Product[]);
     })();
-  }, []);
+  }, [text, filter]);
 
   if (loading) return <PageLoader />;
 
@@ -49,7 +50,7 @@ const Search = ({ term }: { term: string }) => {
       <h1 className="text-xl lg:text-2xl font-medium">
         Found <span className="text-main">{products.length}</span> similar
         products for &quot;
-        <span className="text-main">{term}</span>&quot;
+        <span className="text-main">{text}</span>&quot;
       </h1>
 
       <Separator />

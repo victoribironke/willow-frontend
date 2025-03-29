@@ -13,17 +13,23 @@ import { Product } from "@/interfaces/general";
 import PageLoader from "../general/page-loader";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
+import { useSearchParams } from "next/navigation";
 
-const Search = ({ term }: { term: string }) => {
+const Search = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<Product[]>([]);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [likedProducts, setLikedProducts] = useState<string[]>([]);
   const userInfo = useAtomValue(user_details);
 
+  const searchParams = useSearchParams();
+  const text = searchParams.get("text") as string;
+
   useEffect(() => {
     (async () => {
-      const { data, error } = await searchProducts(term);
+      setLoading(true);
+
+      const { data, error } = await searchProducts(text);
       const { data: c } = await getCart(userInfo?.id || "");
       const { data: l } = await getLikedProducts(userInfo?.id || "");
 
@@ -35,7 +41,7 @@ const Search = ({ term }: { term: string }) => {
       setCartItems(c?.map((j) => j.productId) as string[]);
       setLikedProducts(l?.map((j) => j.productId) as string[]);
     })();
-  }, []);
+  }, [text]);
 
   if (loading) return <PageLoader />;
 
@@ -44,7 +50,7 @@ const Search = ({ term }: { term: string }) => {
       <h1 className="text-xl lg:text-2xl font-medium">
         Found <span className="text-main">{products.length}</span> similar
         products for &quot;
-        <span className="text-main">{term}</span>&quot;
+        <span className="text-main">{text}</span>&quot;
       </h1>
 
       <Separator />
