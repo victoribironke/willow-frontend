@@ -27,6 +27,8 @@ const SimilarProducts = ({ id }: { id: string }) => {
 
   if (filtered_products.length < 5) return <></>;
 
+  if (products.length === 0) return <></>;
+
   return (
     <>
       <h4 className="text-lg lg:text-xl font-medium">Other products</h4>

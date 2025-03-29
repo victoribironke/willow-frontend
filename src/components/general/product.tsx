@@ -26,7 +26,7 @@ import { useAtomValue } from "jotai";
 import toast from "react-hot-toast";
 import PageLoader from "./page-loader";
 import { getProduct } from "@/lib/requests/general";
-import { addItemToCart } from "@/lib/requests/customer";
+import { addItemToCart, getCart } from "@/lib/requests/customer";
 import CuratedPicks from "../main/curated-picks";
 import SimilarProducts from "../dashboard/similar-products";
 
@@ -39,6 +39,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
   const [isDelistLoading, setIsDelistLoading] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const userInfo = useAtomValue(user_details);
+  const [cartItems, setCartItems] = useState<string[]>([]);
   const { push } = useRouter();
 
   const totalRating =
@@ -103,6 +104,16 @@ const ProductPage = ({ productId }: { productId: string }) => {
         return;
       }
 
+      if (userInfo?.role !== "SELLER") {
+        setLoading(true);
+
+        const { data: c } = await getCart(userInfo?.id || "");
+
+        setLoading(false);
+
+        setCartItems(c?.map((j) => j.productId) as string[]);
+      }
+
       setProduct(data as Product);
     })();
   }, []);
@@ -121,7 +132,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
 
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="w-full flex items-center justify-center gap-4 flex-col">
-          <Carousel className="w-full">
+          <Carousel className="w-full border shadow rounded-lg">
             <CarouselContent>
               {product?.images.map((img, index) => (
                 <CarouselItem key={index}>
@@ -142,7 +153,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
           <div className="grid grid-cols-5 w-full gap-4">
             {product?.images.map((img, index) => (
               <div
-                className="overflow-hidden aspect-square rounded-xl w-full"
+                className="overflow-hidden aspect-square rounded-lg w-full border shadow"
                 key={index}
               >
                 <img
@@ -163,8 +174,14 @@ const ProductPage = ({ productId }: { productId: string }) => {
             <Leaf /> {convertTextFromUppercase(product?.sustainabilityTag)}
           </Button>
 
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-4">
             <h4 className="text-xl lg:text-2xl font-medium">{product?.name}</h4>
+
+            <p className="text-[#696969] font-medium">{product?.category}</p>
+
+            <h4 className="text-lg lg:text-xl font-medium">
+              ₦ {formatNumber(product?.price || 0)}
+            </h4>
 
             <div className="flex items-center gap-2">
               <Star filled={averageRating >= 1} />
@@ -175,30 +192,20 @@ const ProductPage = ({ productId }: { productId: string }) => {
 
               <p className="font-medium">{product?.reviews.length} reviews</p>
             </div>
-
-            <p className="text-[#696969] font-medium">{product?.category}</p>
-
-            <h4 className="text-lg lg:text-xl font-medium">
-              ₦ {formatNumber(product?.price || 0)}
-            </h4>
           </div>
 
           <Separator />
 
           <div className="flex gap-8">
             <div>
-              <p className="lg:text-lg text-[#696969] font-medium mb-2">
-                Sourcing
-              </p>
+              <p className="text-[#696969] font-medium mb-2">Sourcing</p>
               <p className="text-sm lg:text-base font-medium">
                 {convertTextFromUppercase(product?.sourcing)}
               </p>
             </div>
 
             <div>
-              <p className="lg:text-lg text-[#696969] font-medium mb-2">
-                Packaging
-              </p>
+              <p className="text-[#696969] font-medium mb-2">Packaging</p>
               <p className="text-sm lg:text-base font-medium">
                 {convertTextFromUppercase(product?.packaging)}
               </p>
@@ -221,6 +228,21 @@ const ProductPage = ({ productId }: { productId: string }) => {
               Delist{" "}
               {isDelistLoading && <LoaderCircle className="animate-spin" />}
             </Button>
+          ) : cartItems.includes(product?.id || "") ? (
+            <>
+              <Link href={PAGES.main.shop.cart}>
+                <Button className="w-fit bg-main hover:bg-main/90">
+                  Visit cart
+                </Button>
+              </Link>
+
+              <Link
+                href={PAGES.main.shop.seller(product?.sellerId as string)}
+                className="text-muted-foreground underline"
+              >
+                {product?.seller.businessName}
+              </Link>
+            </>
           ) : (
             <>
               <div className="w-full flex gap-4">
@@ -265,7 +287,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
             "border-b-2 rounded-none w-full text-base",
             tab === "details"
               ? "border-black text-black"
-              : "border-muted-foreground text-muted-foreground hover:text-muted-foreground"
+              : "border-muted-foreground/50 text-muted-foreground/50 hover:text-muted-foreground/50"
           )}
           onClick={() => setTab("details")}
         >
@@ -278,7 +300,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
             "border-b-2 rounded-none w-full text-base",
             tab === "ratings"
               ? "border-black text-black"
-              : "border-muted-foreground text-muted-foreground hover:text-muted-foreground"
+              : "border-muted-foreground/50 text-muted-foreground/50 hover:text-muted-foreground/50"
           )}
           onClick={() => setTab("ratings")}
         >

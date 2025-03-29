@@ -23,6 +23,8 @@ const CuratedPicks = () => {
     })();
   }, []);
 
+  if (recs.length === 0) return <></>;
+
   return (
     <section className="flex flex-col gap-4 w-full">
       <h4 className="text-lg lg:text-xl font-medium">Curated picks for you</h4>
