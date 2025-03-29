@@ -257,6 +257,8 @@ export const SUSTAINABILITY_FEATURES = [
   .map((a) => a.split("_").join(" "));
 
 export const PACKAGING = [
+  "UNKNOWN_PACKAGING",
+  "PLASTIC_BAG",
   "PLASTIC_FREE",
   "BIODEGRADABLE",
   "RECYCLED_PAPER",
@@ -271,11 +273,8 @@ export const PACKAGING = [
   "PAPERBOARD_BOX",
   "BAMBOO_PACKAGING",
   "ALUMINUM_CONTAINER",
-  "OTHER_ECO_FRIENDLY",
-  "UNKNOWN_PACKAGING",
-]
-  .sort()
-  .map((a) => a.split("_").join(" "));
+  "OTHER",
+].map((a) => a.split("_").join(" "));
 
 export const SOURCING = ["LOCALLY_SOURCED", "INTERNATIONALLY_SOURCED"]
   .sort()
