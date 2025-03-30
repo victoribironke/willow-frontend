@@ -8,8 +8,6 @@ import { useAtomValue } from "jotai";
 import { getConversations } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import Link from "next/link";
-import { PAGES } from "@/constants/constants";
 import { cn, formatDateTime } from "@/lib/utils";
 import Chat from "./chat";
 

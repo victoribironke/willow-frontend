@@ -55,7 +55,7 @@ export const verifyOtp = async (email: string, otp: string) => {
     if (res.data.user.role === "SELLER") {
       const { data } = await getSellerDetails(res.data.user.id);
 
-      authData.seller = data;
+      authData.seller = data?.user;
     } else {
       const { data } = await getCustomerDetails(res.data.user.id);
 
@@ -102,7 +102,7 @@ export const loginUser = async (email: string, password: string) => {
     if (res.data.user.role === "SELLER") {
       const { data } = await getSellerDetails(res.data.user.id);
 
-      authData.seller = data;
+      authData.seller = data?.user;
     } else {
       const { data } = await getCustomerDetails(res.data.user.id);
 

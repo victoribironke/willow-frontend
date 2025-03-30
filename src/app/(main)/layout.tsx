@@ -16,7 +16,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { user_details } from "../atoms/atoms";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import AIChat from "@/components/main/ai-chat";
 
 const RootLayout = ({

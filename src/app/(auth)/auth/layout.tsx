@@ -1,6 +1,5 @@
 "use client";
 
-import { Toaster } from "react-hot-toast";
 import { Suspense, useEffect } from "react";
 import { LOCAL_STORAGE_KEY, PAGES } from "@/constants/constants";
 import { usePathname, useRouter } from "next/navigation";

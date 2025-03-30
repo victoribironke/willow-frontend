@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  BACKEND_URL,
   LOCAL_STORAGE_KEY,
   PAGES,
   SIDEBAR_ITEMS,
@@ -36,7 +35,7 @@ import { logOut } from "@/lib/auth";
 import { Menu, Search } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 
 const queryClient = new QueryClient({
@@ -101,7 +100,7 @@ const RootLayout = ({
       console.log("WebSocket connection opened!");
     };
 
-    ws.onerror = () => {
+    ws.onerror = (error) => {
       console.error("Error received:", error);
 
       toast.error("Internal socket error.");

@@ -1,19 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Separator } from "../ui/separator";
 import { ChatReceived, Conversation } from "@/interfaces/general";
 import { user_details } from "@/app/atoms/atoms";
 import { useAtomValue } from "jotai";
 import { getConversation } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { PAGES, ws } from "@/constants/constants";
+import { ws } from "@/constants/constants";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Send } from "lucide-react";
 import { cn, formatDateTime } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 
 const Chat = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);
