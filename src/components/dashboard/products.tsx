@@ -23,16 +23,14 @@ import { PAGES } from "@/constants/constants";
 import { Product } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
-import { deleteProduct, getSellerProducts } from "@/lib/requests/seller";
+import { getSellerProducts } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { LoaderCircle, Trash2 } from "lucide-react";
 import DelistProduct from "./delist-product";
 
 const Products = () => {
   const [tab, setTab] = useState("Listed");
   const [loading, setLoading] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const userInfo = useAtomValue(user_details);
 

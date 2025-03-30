@@ -76,6 +76,7 @@ const Home = () => {
         setOrders(ordersRes.data as OrderItem[]);
         setProducts(productsRes.data as Product[]);
       } catch (error) {
+        console.error(error);
         setLoading(false);
 
         toast.error("An error occurred while fetching data.");

@@ -33,6 +33,7 @@ const Wishlist = () => {
         setLikedProducts(likedRes.data as LikedProduct[]);
         setLP(likedRes.data?.map((j) => j.productId) as string[]);
       } catch (error) {
+        console.error(error);
         setLoading(false);
 
         toast.error("An error occurred while fetching data.");

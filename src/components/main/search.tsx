@@ -44,6 +44,7 @@ const Search = () => {
         setCartItems(cartRes.data?.map((j) => j.productId) as string[]);
         setLikedProducts(likedRes.data?.map((j) => j.productId) as string[]);
       } catch (error) {
+        console.error(error);
         setLoading(false);
 
         toast.error("An error occurred while fetching data.");

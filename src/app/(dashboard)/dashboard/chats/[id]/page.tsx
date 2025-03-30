@@ -1,5 +1,4 @@
 import Chat from "@/components/dashboard/chat";
-import Product from "@/components/general/product";
 import { BASE_URL, PAGES } from "@/constants/constants";
 import { getProduct } from "@/lib/requests/general";
 import { Metadata } from "next";

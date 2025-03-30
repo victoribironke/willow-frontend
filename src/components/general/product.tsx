@@ -9,7 +9,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "../ui/button";
-import { Leaf, LoaderCircle, Minus, Plus } from "lucide-react";
+import { Leaf, Minus, Plus } from "lucide-react";
 import { cn, convertTextFromUppercase, formatNumber } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
@@ -20,7 +20,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { Product } from "@/interfaces/general";
-import { deleteProduct, getSellerProduct } from "@/lib/requests/seller";
+import { getSellerProduct } from "@/lib/requests/seller";
 import { user_details } from "@/app/atoms/atoms";
 import { useAtomValue } from "jotai";
 import toast from "react-hot-toast";
@@ -37,7 +37,6 @@ const ProductPage = ({ productId }: { productId: string }) => {
   const [loading, setLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [quantity, setQuantity] = useState(0);
-  const [isDelistLoading, setIsDelistLoading] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
   const userInfo = useAtomValue(user_details);
   const [cartItems, setCartItems] = useState<string[]>([]);

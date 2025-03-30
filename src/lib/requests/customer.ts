@@ -1,7 +1,6 @@
 import { ENDPOINTS } from "@/constants/constants";
 import {
   AIChat,
-  AIChatHistory,
   CartItem,
   Customer,
   LikedProduct,
