@@ -131,7 +131,7 @@ const AIChatPage = () => {
               <div
                 key={i}
                 className={cn(
-                  "w-full max-w-xs flex flex-col gap-2",
+                  "w-fit max-w-xs flex flex-col gap-2",
                   m.role === "model" ? "self-start" : "self-end"
                 )}
               >
