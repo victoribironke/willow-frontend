@@ -40,11 +40,11 @@ export const generateMetadata = async (props: {
 
   return {
     // work on this
-    title: `${data?.businessName} ~ Willow`,
-    description: data?.bio,
+    title: `${data?.user.businessName} ~ Willow`,
+    description: data?.user.bio,
     openGraph: {
-      title: `${data?.businessName} ~ Willow`,
-      description: data?.bio,
+      title: `${data?.user.businessName} ~ Willow`,
+      description: data?.user.bio,
       type: "website",
       url: BASE_URL + PAGES.main.shop.seller(id),
       images: [
@@ -55,8 +55,8 @@ export const generateMetadata = async (props: {
     },
     twitter: {
       card: "summary_large_image",
-      title: `${data?.businessName} ~ Willow`,
-      description: data?.bio,
+      title: `${data?.user.businessName} ~ Willow`,
+      description: data?.user.bio,
       images: [
         {
           url: "", // Fix this

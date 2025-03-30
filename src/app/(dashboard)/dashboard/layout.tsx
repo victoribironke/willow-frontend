@@ -4,7 +4,13 @@ import PageLoader from "@/components/general/page-loader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { LOCAL_STORAGE_KEY, PAGES, SIDEBAR_ITEMS } from "@/constants/constants";
+import {
+  BACKEND_URL,
+  LOCAL_STORAGE_KEY,
+  PAGES,
+  SIDEBAR_ITEMS,
+  ws,
+} from "@/constants/constants";
 import { Button } from "@/components/ui/button";
 import { cn, getJwtExpiration } from "@/lib/utils";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -30,7 +36,7 @@ import { logOut } from "@/lib/auth";
 import { Menu, Search } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { Input } from "@/components/ui/input";
 
 const queryClient = new QueryClient({
@@ -90,6 +96,15 @@ const RootLayout = ({
       seller.avatar?.url ||
         `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${user.seller.businessName}`
     );
+
+    ws.onopen = () => {
+      console.log("WebSocket connection opened!");
+    };
+
+    ws.onerror = () => {
+      toast.error("Internal socket error.");
+    };
+
     setLoading(false);
   }, [push]);
 
@@ -97,8 +112,6 @@ const RootLayout = ({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-
       <div className="w-full [--header-height:calc(theme(spacing.14))] bg-[#f5f5f5]">
         <section className="w-full min-h-screen flex items-center flex-col relative pt-[4.5rem]">
           <div className="w-full bg-white border-b p-4 flex items-center justify-center fixed z-50 top-0">

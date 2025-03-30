@@ -12,6 +12,8 @@ import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
 import { getCart, getLikedProducts } from "@/lib/requests/customer";
 import ProductCard from "../general/product-card";
+import Link from "next/link";
+import { PAGES } from "@/constants/constants";
 
 const SellerPage = ({ id }: { id: string }) => {
   const [seller, setSeller] = useState<Seller | null>(null);
@@ -19,12 +21,13 @@ const SellerPage = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [likedProducts, setLikedProducts] = useState<string[]>([]);
+  const [convoId, setConvoId] = useState("");
 
   useEffect(() => {
     (async () => {
       try {
         const [sellerRes, cartRes, likedRes] = await Promise.all([
-          getSellerDetails(id),
+          getSellerDetails(id, userInfo?.id || ""),
           getCart(userInfo?.id || ""),
           getLikedProducts(userInfo?.id || ""),
         ]);
@@ -33,9 +36,10 @@ const SellerPage = ({ id }: { id: string }) => {
 
         if (sellerRes.error) return toast.error(sellerRes.error);
 
-        setSeller(sellerRes.data as Seller);
+        setSeller(sellerRes.data?.user as Seller);
         setCartItems(cartRes.data?.map((j) => j.productId) as string[]);
         setLikedProducts(likedRes.data?.map((j) => j.productId) as string[]);
+        setConvoId((sellerRes.data?.conversationId || "new") as string);
       } catch (error) {
         console.error(error);
         setLoading(false);
@@ -70,9 +74,18 @@ const SellerPage = ({ id }: { id: string }) => {
               Joined {seller?.user.id}
             </p> */}
 
-            <Button className="bg-main hover:bg-main/90 w-fit">
-              <MessageCircleMore /> Message
-            </Button>
+            {
+              <Link
+                href={PAGES.main.shop.chat(
+                  convoId,
+                  encodeURIComponent(seller?.businessName || "")
+                )}
+              >
+                <Button className="bg-main hover:bg-main/90 w-fit">
+                  <MessageCircleMore /> Message
+                </Button>
+              </Link>
+            }
           </div>
         </div>
 

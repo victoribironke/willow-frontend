@@ -13,14 +13,16 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Send } from "lucide-react";
 import { cn, formatDateTime } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const Chat = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);
   const [convo, setConvo] = useState<Conversation | null>(null);
   const userInfo = useAtomValue(user_details);
   const scrollElement = useRef<HTMLSpanElement>(null);
-  const { push } = useRouter();
+  const searchParams = useSearchParams();
+
+  const name = searchParams.get("name");
 
   useEffect(() => {
     (async () => {
@@ -29,10 +31,9 @@ const Chat = ({ id }: { id: string }) => {
       setLoading(false);
 
       if (error) {
-        toast.error(error);
+        if (error !== "Conversation not found.") return toast.error(error);
 
-        if (error === "Conversation not found.") push(PAGES.dashboard.chats);
-
+        setConvo(null);
         return;
       }
 
@@ -48,7 +49,9 @@ const Chat = ({ id }: { id: string }) => {
     <>
       <h1 className="text-xl lg:text-2xl font-medium">Chat</h1>
 
-      <p className="text-[#696969]">Chat with {convo?.customer.firstname}</p>
+      <p className="text-[#696969]">
+        Chat with {id === "new" ? name : convo?.customer.firstname}
+      </p>
 
       <Separator />
 

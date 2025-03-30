@@ -7,9 +7,9 @@ import {
   Seller,
 } from "@/interfaces/general";
 
-export const getSellerDetails = async (userId: string) => {
+export const getSellerDetails = async (userId: string, customerId?: string) => {
   try {
-    const req = await fetch(ENDPOINTS.get_seller_details(userId), {
+    const req = await fetch(ENDPOINTS.get_seller_details(userId, customerId), {
       headers: {
         "Content-Type": "application/json",
         accept: "application/json",
@@ -21,7 +21,10 @@ export const getSellerDetails = async (userId: string) => {
     if (res.status !== "success")
       return { data: null, error: res.message + "." };
 
-    return { data: res.data as Seller, error: null };
+    return {
+      data: res.data as { user: Seller; conversationId: string },
+      error: null,
+    };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };

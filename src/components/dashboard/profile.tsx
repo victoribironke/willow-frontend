@@ -60,7 +60,7 @@ const Profile = () => {
 
       if (error) return toast.error(error);
 
-      setSeller(data as Seller);
+      setSeller(data?.user as Seller);
     })();
   }, []);
 

@@ -17,6 +17,13 @@ export const LOCAL_STORAGE_KEY = "willow";
 
 export const BACKEND_URL = "https://willow-backend-1.onrender.com/api/v1";
 
+export const ws = new WebSocket(
+  `${BACKEND_URL.replace("/api/v1", "").replace(
+    "https",
+    "wss"
+  )}/api/v1/chat/connect`
+);
+
 export const PAGES = {
   main: {
     home: "/",
@@ -28,7 +35,7 @@ export const PAGES = {
       orders: "/shop/orders",
       profile: "/shop/profile",
       wishlist: "/shop/wishlist",
-      chat: (id: string) => `/shop/chats/${id}`,
+      chat: (id: string, name?: string) => `/shop/chats/${id}?name=${name}`,
       order: (id: string) => `/shop/orders/${id}`,
       seller: (id: string) => `/shop/seller/${id}`,
       product: (id: string) => `/shop/product/${id}`,
@@ -123,7 +130,8 @@ export const ENDPOINTS = {
     BACKEND_URL + `/customers/${uid}/conversations/${cid}`,
 
   // SELLER
-  get_seller_details: (uid: string) => BACKEND_URL + `/sellers/${uid}`,
+  get_seller_details: (uid: string, cid?: string) =>
+    BACKEND_URL + `/sellers/${uid}?customerId=${cid}`,
   get_seller_products: (uid: string) =>
     BACKEND_URL + `/sellers/${uid}/products`,
   create_product: (uid: string) => BACKEND_URL + `/sellers/${uid}/products`,

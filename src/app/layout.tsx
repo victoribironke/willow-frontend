@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Suspense } from "react";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,6 +16,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className="antialiased flex items-center justify-center bg-[#f5f5f5]">
+        <Toaster />
         <Suspense>{children}</Suspense>
       </body>
     </html>
