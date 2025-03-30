@@ -137,10 +137,10 @@ const AIChatPage = () => {
               >
                 <p
                   className={cn(
-                    "p-3 w-full",
+                    "w-full",
                     m.role === "model"
-                      ? "self-start bg-muted rounded-e-xl rounded-t-xl"
-                      : "self-end bg-main text-white rounded-s-xl rounded-t-xl"
+                      ? "self-start rounded-e-xl rounded-t-xl pb-2"
+                      : "self-end bg-main text-white rounded-s-xl rounded-t-xl p-3"
                   )}
                 >
                   {typeof m.parts[0].text === "string"
@@ -187,7 +187,7 @@ const AIChatPage = () => {
 
             {sending && (
               <div className="w-fit max-w-xs flex flex-col gap-2 self-start">
-                <p className="p-3 w-full self-start bg-muted flex gap-2 items-center rounded-e-xl rounded-t-xl text-main animate-pulse">
+                <p className="p-3 w-full self-start flex gap-2 items-center rounded-e-xl rounded-t-xl text-main animate-pulse">
                   <Sparkle size={15} /> Working on it...
                 </p>
               </div>
