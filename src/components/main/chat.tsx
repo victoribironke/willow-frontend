@@ -5,7 +5,7 @@ import { Separator } from "../ui/separator";
 import { Conversation } from "@/interfaces/general";
 import { user_details } from "@/app/atoms/atoms";
 import { useAtomValue } from "jotai";
-import { getConversation } from "@/lib/requests/seller";
+import { getConversation } from "@/lib/requests/customer";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
 import { PAGES } from "@/constants/constants";
@@ -56,15 +56,16 @@ const Chat = ({ id }: { id: string }) => {
         <div className="w-full p-4 border-b flex items-center gap-4">
           <div className="overflow-hidden aspect-square rounded-full w-8">
             <img
-              src={`https://api.dicebear.com/9.x/fun-emoji/svg?seed=${convo?.customer.firstname}`}
+              src={
+                convo?.seller.avatar?.url ||
+                `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${convo?.seller.businessName}`
+              }
               alt="Image"
               className="w-full h-full object-cover"
             />
           </div>
 
-          <p className="font-medium">
-            {convo?.customer.firstname} {convo?.customer.lastname}
-          </p>
+          <p className="font-medium">{convo?.seller.businessName}</p>
         </div>
 
         <div className="h-[calc(100vh-23rem)] p-2 overflow-scroll flex flex-col gap-4">

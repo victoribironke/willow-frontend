@@ -28,6 +28,7 @@ export const PAGES = {
       orders: "/shop/orders",
       profile: "/shop/profile",
       wishlist: "/shop/wishlist",
+      chat: (id: string) => `/shop/chats/${id}`,
       order: (id: string) => `/shop/orders/${id}`,
       seller: (id: string) => `/shop/seller/${id}`,
       product: (id: string) => `/shop/product/${id}`,
@@ -116,6 +117,10 @@ export const ENDPOINTS = {
     BACKEND_URL + `/customers/${uid}/ai-conversation`,
   get_order: (uid: string, oid: string) =>
     BACKEND_URL + `/customers/${uid}/orders/${oid}`,
+  get_customer_conversations: (uid: string) =>
+    BACKEND_URL + `/customers/${uid}/conversations`,
+  get_customer_conversation: (uid: string, cid: string) =>
+    BACKEND_URL + `/customers/${uid}/conversations/${cid}`,
 
   // SELLER
   get_seller_details: (uid: string) => BACKEND_URL + `/sellers/${uid}`,
