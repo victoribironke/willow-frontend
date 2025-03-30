@@ -102,6 +102,8 @@ const RootLayout = ({
     };
 
     ws.onerror = () => {
+      console.error("Error received:", error);
+
       toast.error("Internal socket error.");
     };
 

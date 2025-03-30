@@ -69,6 +69,12 @@ const AIChatPage = () => {
     setSending(false);
 
     if (error) {
+      if (error === "You have reached your limit, Try again in an hour.") {
+        setError(error);
+
+        return;
+      }
+
       setError("An error occured. Please try again later.");
       return;
     }

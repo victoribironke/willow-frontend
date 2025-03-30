@@ -147,6 +147,21 @@ export interface ProductCardProps {
   isDashboard?: boolean;
 }
 
+export interface ChatReceived {
+  id: string;
+  conversationId: string;
+  senderId: string;
+  receiverId: string;
+  content: string;
+  createdAt: string;
+}
+
+export interface ChatSent {
+  conversationId: string;
+  content: string;
+  recipientId: string;
+}
+
 export interface ReportProps {
   message: string;
   score: string;
@@ -363,9 +378,9 @@ export interface Seller {
 
 export interface Conversation {
   id: string;
-  customer: Customer;
+  customer: Customer | any;
   customerId: string;
-  seller: Seller;
+  seller: Seller | any;
   sellerId: string;
   createdAt: Date;
   updatedAt: Date;
@@ -397,7 +412,7 @@ export interface HelpTicketResponse {
 
 export interface Message {
   id: string;
-  conversation: Conversation;
+  conversation: Conversation | any;
   conversationId: string;
   senderId: string;
   receiverId: string;

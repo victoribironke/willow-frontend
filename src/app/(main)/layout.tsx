@@ -66,7 +66,9 @@ const RootLayout = ({
       console.log("WebSocket connection opened!");
     };
 
-    ws.onerror = () => {
+    ws.onerror = (error) => {
+      console.error("Error received:", error);
+
       toast.error("Internal socket error.");
     };
 

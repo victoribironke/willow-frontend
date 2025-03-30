@@ -10,12 +10,20 @@ import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
-import { formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime } from "@/lib/utils";
+import Chat from "./chat";
+import { useSearchParams } from "next/navigation";
 
 const Chats = () => {
   const [loading, setLoading] = useState(true);
   const [convos, setConvos] = useState<Conversation[]>([]);
   const userInfo = useAtomValue(user_details);
+
+  const searchParams = useSearchParams();
+
+  const convoId = searchParams.get("id");
+
+  const [id, setId] = useState(convoId ? convoId : "");
 
   useEffect(() => {
     (async () => {
@@ -39,10 +47,22 @@ const Chats = () => {
 
       <Separator />
 
-      <div className="w-full flex flex-col">
-        {convos.map((c, i) => (
-          <Link href={PAGES.dashboard.chat(c.id)} key={i}>
-            <div className="hover:bg-white rounded-lg cursor-pointer border-b p-3 gap-4 flex items-center justify-center">
+      <div className="w-full flex gap-4">
+        <div
+          className={cn(
+            "flex flex-col h-[calc(100vh-15rem)] overflow-scroll",
+            id ? "w-1/3" : "w-full"
+          )}
+        >
+          {convos.map((c, i) => (
+            <div
+              key={i}
+              className={cn(
+                "bg-white rounded-xl cursor-pointer border hover:shadow p-3 gap-4 flex items-center justify-center",
+                c.id === id ? "border-main" : ""
+              )}
+              onClick={() => setId(c.id)}
+            >
               <div className="overflow-hidden aspect-square rounded-full w-10">
                 <img
                   src={
@@ -58,17 +78,21 @@ const Chats = () => {
                 <p className="font-medium">{c.seller.businessName}</p>
 
                 <p className="text-sm text-muted-foreground">
-                  {c.messages[-1].content.slice(0, 50).trim()}
-                  {c.messages[-1].content.length >= 50 && "..."}
+                  {c.messages.at(-1)?.content.slice(0, 50).trim()}
+                  {(c.messages.at(-1)?.content.length || 0) >= 50 && "..."}
                 </p>
               </div>
 
-              <p className="text-muted-foreground text-sm">
-                {formatDateTime(c.messages[-1].createdAt)}
-              </p>
+              {!id && (
+                <p className="text-muted-foreground text-sm">
+                  {formatDateTime(c.messages.at(-1)?.createdAt || new Date())}
+                </p>
+              )}
             </div>
-          </Link>
-        ))}
+          ))}
+        </div>
+
+        {id && <Chat id={id} />}
       </div>
     </>
   );

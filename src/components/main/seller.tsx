@@ -78,7 +78,8 @@ const SellerPage = ({ id }: { id: string }) => {
               <Link
                 href={PAGES.main.shop.chat(
                   convoId,
-                  encodeURIComponent(seller?.businessName || "")
+                  encodeURIComponent(seller?.businessName || ""),
+                  seller?.userId || ""
                 )}
               >
                 <Button className="bg-main hover:bg-main/90 w-fit">

@@ -35,7 +35,8 @@ export const PAGES = {
       orders: "/shop/orders",
       profile: "/shop/profile",
       wishlist: "/shop/wishlist",
-      chat: (id: string, name?: string) => `/shop/chats/${id}?name=${name}`,
+      chat: (id: string, name?: string, sid?: string) =>
+        `/shop/chats?id=${id}&name=${name}&seller_id=${sid}`,
       order: (id: string) => `/shop/orders/${id}`,
       seller: (id: string) => `/shop/seller/${id}`,
       product: (id: string) => `/shop/product/${id}`,
@@ -51,7 +52,6 @@ export const PAGES = {
     products: "/dashboard/products",
     orders: "/dashboard/orders",
     profile: "/dashboard/profile",
-    chat: (id: string) => `/dashboard/chats/${id}`,
     order: (id: string) => `/dashboard/orders/${id}`,
     product: (id: string) => `/dashboard/products/${id}`,
     search: (text?: string, status?: string) =>
@@ -223,7 +223,9 @@ export const HEADER_LINKS = (pathname: string) => [
   },
   {
     title: "Chats",
-    isActive: pathname === PAGES.main.shop.chats,
+    isActive:
+      pathname === PAGES.main.shop.chats ||
+      pathname.includes(PAGES.dashboard.chats),
     link: PAGES.main.shop.chats,
   },
   {
