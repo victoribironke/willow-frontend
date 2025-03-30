@@ -15,6 +15,7 @@ import {
   SelectGroup,
   SelectItem,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { useRouter } from "next/navigation";
 import {
@@ -145,10 +146,13 @@ const RootLayout = ({
 
                 <Select value={filter} onValueChange={setFilter}>
                   <SelectTrigger
-                    className="w-fit bg-white border-none shadow-none focus-visible:ring-0 focus-visible:border-none"
+                    className="w-fit border-none bg-white shadow-none focus-visible:ring-0 focus-visible:border-none"
                     id="filters"
                   >
-                    {/* <SelectValue placeholder="Select a source" /> */}
+                    <SelectValue
+                      placeholder="Select a source"
+                      className="pr-2"
+                    />
                   </SelectTrigger>
                   <SelectContent id="filters" className="bg-white">
                     <SelectGroup>
