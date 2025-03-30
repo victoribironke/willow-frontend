@@ -112,7 +112,7 @@ const AIChatPage = () => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <div className="fixed bottom-8 right-8 border p-2 shadow rounded-full bg-white cursor-pointer">
+        <div className="fixed bottom-8 right-8 border p-2 shadow rounded-full bg-white cursor-pointer hover:scale-105 transition-all">
           <MessageCircleMore size={40} fill="#00a606" className="text-white" />
         </div>
       </PopoverTrigger>
