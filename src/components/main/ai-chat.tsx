@@ -12,10 +12,10 @@ import { getAIConversation, sendMessageToAI } from "@/lib/requests/customer";
 import { cn, convertTextFromUppercase, formatNumber } from "@/lib/utils";
 import { useAtomValue } from "jotai";
 import {
+  ArrowUp,
   Leaf,
   LoaderCircle,
   MessageCircleMore,
-  Send,
   Sparkle,
 } from "lucide-react";
 import Link from "next/link";
@@ -26,6 +26,7 @@ const AIChatPage = () => {
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const userInfo = useAtomValue(user_details);
   const [convo, setConvo] = useState<AIChat | null>(null);
   const scrollElement = useRef<HTMLSpanElement>(null);
@@ -66,7 +67,10 @@ const AIChatPage = () => {
 
     setSending(false);
 
-    if (error) return toast.error(error);
+    if (error) {
+      setError("An error occured. Please try again later.");
+      return;
+    }
 
     setMessage("");
 
@@ -98,7 +102,10 @@ const AIChatPage = () => {
       if (error) return toast.error(error);
 
       setConvo(data as AIChat);
-      scrollElement.current?.scrollIntoView({ behavior: "smooth" });
+
+      setTimeout(() => {
+        scrollElement.current?.scrollIntoView({ behavior: "smooth" });
+      }, 500);
     })();
   }, []);
 
@@ -186,6 +193,14 @@ const AIChatPage = () => {
               </div>
             )}
 
+            {error && (
+              <div className="w-full max-w-sm flex flex-col gap-2 self-start">
+                <p className="p-3 w-full self-start flex gap-2 items-center rounded-e-xl rounded-t-xl text-red">
+                  {error}
+                </p>
+              </div>
+            )}
+
             <span ref={scrollElement} />
           </div>
         )}
@@ -201,12 +216,11 @@ const AIChatPage = () => {
           />
 
           <Button
-            variant="outline"
-            className="text-main border-main"
+            className="text-white bg-main hover:bg-main/90"
             onClick={sendMessage}
             disabled={sending}
           >
-            <Send />
+            <ArrowUp />
           </Button>
         </div>
       </PopoverContent>
