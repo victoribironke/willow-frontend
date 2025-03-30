@@ -101,7 +101,10 @@ const Chat = ({ id }: { id: string }) => {
         </div>
 
         <div className="border-t w-full flex items-center gap-4 p-4">
-          <Input className="focus-visible:border-main  focus-visible:ring-0" />
+          <Input
+            className="focus-visible:border-main focus-visible:ring-0"
+            placeholder="Type something"
+          />
 
           <Button variant="outline" className="text-main border-main">
             <Send />

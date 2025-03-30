@@ -167,12 +167,17 @@ export interface Admin {
   helpTicketResponses: HelpTicketResponse[];
 }
 
+export interface AIChatHistory {
+  role: "model" | "user";
+  parts: { text: string | { text: string; products: Product[] } }[];
+}
+
 export interface AIChat {
   id: string;
-  customer: Customer;
+  customer: Customer | any;
   customerId: string;
-  status: AIChatStatus;
-  history: any[]; // Json array
+  status: AIChatStatus | string;
+  history: AIChatHistory[]; // Json array
   isFlagged: boolean;
   updatedAt: Date;
   createdAt: Date;

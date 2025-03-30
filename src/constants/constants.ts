@@ -110,6 +110,10 @@ export const ENDPOINTS = {
   delete_review: (uid: string, pid: string, rid: string) =>
     BACKEND_URL + `/customers/${uid}/products/${pid}/reviews/${rid}`,
   get_orders: (uid: string) => BACKEND_URL + `/customers/${uid}/orders`,
+  get_ai_conversation: (uid: string) =>
+    BACKEND_URL + `/customers/${uid}/ai-conversation`,
+  send_message_to_ai: (uid: string) =>
+    BACKEND_URL + `/customers/${uid}/ai-conversation`,
   get_order: (uid: string, oid: string) =>
     BACKEND_URL + `/customers/${uid}/orders/${oid}`,
 

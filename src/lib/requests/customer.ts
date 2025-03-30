@@ -1,5 +1,7 @@
 import { ENDPOINTS } from "@/constants/constants";
 import {
+  AIChat,
+  AIChatHistory,
   CartItem,
   Customer,
   LikedProduct,
@@ -360,6 +362,50 @@ export const sendCheckoutRequest = async (userId: string, d: any) => {
       data: res.data as { accessCode: string; order: Order },
       error: null,
     };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const getAIConversation = async (userId: string) => {
+  try {
+    const req = await fetch(ENDPOINTS.get_ai_conversation(userId), {
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data as AIChat, error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};
+
+export const sendMessageToAI = async (userId: string, d: any) => {
+  try {
+    const req = await fetch(ENDPOINTS.send_message_to_ai(userId), {
+      method: "POST",
+      body: JSON.stringify(d),
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: res.data.response, error: null };
   } catch (e) {
     console.log(e);
     return { data: null, error: "A server error occured." };

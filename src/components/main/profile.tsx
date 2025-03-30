@@ -86,11 +86,7 @@ const Profile = () => {
 
       setLoading(false);
 
-      if (error) {
-        toast.error(error);
-
-        return;
-      }
+      if (error) return toast.error(error);
 
       setCustomer(data as Customer);
     })();
