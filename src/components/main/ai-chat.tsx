@@ -30,6 +30,7 @@ const AIChatPage = () => {
   const userInfo = useAtomValue(user_details);
   const [convo, setConvo] = useState<AIChat | null>(null);
   const scrollElement = useRef<HTMLSpanElement>(null);
+  const [open, setOpen] = useState(false);
 
   const sendMessage = async () => {
     if (!message) return;
@@ -110,7 +111,15 @@ const AIChatPage = () => {
   }, []);
 
   return (
-    <Popover>
+    <Popover
+      open={open}
+      onOpenChange={(e) => {
+        setOpen(e);
+        setTimeout(() => {
+          scrollElement.current?.scrollIntoView({ behavior: "smooth" });
+        }, 500);
+      }}
+    >
       <PopoverTrigger asChild>
         <div className="fixed bottom-8 right-8 border p-2 shadow rounded-full bg-white cursor-pointer hover:scale-105 transition-all">
           <MessageCircleMore size={40} fill="#00a606" className="text-white" />
