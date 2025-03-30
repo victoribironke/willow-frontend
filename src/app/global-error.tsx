@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { LOCAL_STORAGE_KEY } from "@/constants/constants";
 
@@ -9,10 +10,10 @@ interface GlobalErrorProps {
 }
 
 const GlobalError = ({ error, reset }: GlobalErrorProps) => {
-  //   useEffect(() => {
-  //     // Log the error to an error reporting service
-  //     console.error("Global error:", error);
-  //   }, [error]);
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error("Global error:", error);
+  }, [error]);
 
   const reload = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
