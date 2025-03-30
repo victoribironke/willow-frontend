@@ -72,7 +72,7 @@ const Chat = ({ id }: { id: string }) => {
             <div
               key={i}
               className={cn(
-                "w-full max-w-sm",
+                "w-fit max-w-sm",
                 m.receiverId !== userInfo?.id ? "self-start" : "self-end"
               )}
             >

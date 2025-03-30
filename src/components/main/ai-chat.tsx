@@ -186,7 +186,7 @@ const AIChatPage = () => {
             ))}
 
             {sending && (
-              <div className="w-full max-w-xs flex flex-col gap-2 self-start">
+              <div className="w-fit max-w-xs flex flex-col gap-2 self-start">
                 <p className="p-3 w-full self-start bg-muted flex gap-2 items-center rounded-e-xl rounded-t-xl text-main animate-pulse">
                   <Sparkle size={15} /> Working on it...
                 </p>
@@ -194,7 +194,7 @@ const AIChatPage = () => {
             )}
 
             {error && (
-              <div className="w-full max-w-sm flex flex-col gap-2 self-start">
+              <div className="w-fit max-w-sm flex flex-col gap-2 self-start">
                 <p className="p-3 w-full self-start flex gap-2 items-center rounded-e-xl rounded-t-xl text-red">
                   {error}
                 </p>
