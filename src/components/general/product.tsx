@@ -36,7 +36,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState<Product | null>(null);
   const userInfo = useAtomValue(user_details);
   const [cartItems, setCartItems] = useState<string[]>([]);
