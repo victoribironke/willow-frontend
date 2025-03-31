@@ -81,7 +81,7 @@ const Cart = () => {
     const { error } = await removeItemFromCart(userInfo?.id || "", productId);
 
     if (!error) {
-      const item = cartItems.find((c) => c.id === productId);
+      const item = cartItems.find((c) => c.productId === productId);
 
       setCartItems((k) => k.filter((i) => i.productId !== item?.productId));
     }
