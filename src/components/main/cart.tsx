@@ -83,6 +83,8 @@ const Cart = () => {
     if (!error) {
       const item = cartItems.find((c) => c.productId === productId);
 
+      toast.success("Product removed from cart.");
+
       setCartItems((k) => k.filter((i) => i.productId !== item?.productId));
     }
   };
