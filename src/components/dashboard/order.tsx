@@ -2,7 +2,7 @@
 
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
-import { LoaderCircle, Mail, ShoppingBag, User } from "lucide-react";
+import { LoaderCircle, ShoppingBag, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useAtomValue } from "jotai";
@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import PageLoader from "../general/page-loader";
 import toast from "react-hot-toast";
 import { getSellerOrder, updateOrderStatus } from "@/lib/requests/seller";
-import { CustomerOrderItemStatus, OrderItem } from "@/interfaces/general";
+import { OrderItem } from "@/interfaces/general";
 import { useRouter } from "next/navigation";
 import { PAGES } from "@/constants/constants";
 import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
