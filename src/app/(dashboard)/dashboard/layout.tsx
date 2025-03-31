@@ -119,8 +119,7 @@ const RootLayout = ({
             if (!pathname.includes("chat")) {
               const data = JSON.parse(event.data).data as ChatReceived;
 
-              sonner("New message!", {
-                description: `You have a new message from one of your customers.`,
+              sonner("You have a new message from one of your customers.", {
                 action: {
                   label: "Go to chat",
                   onClick: () =>

@@ -170,21 +170,21 @@ const Cart = () => {
       deliveryFee: 5000,
     };
 
-    const { data, error } = await sendCheckoutRequest(userInfo?.id || "", d);
+    const { error } = await sendCheckoutRequest(userInfo?.id || "", d);
 
     setIsLoading(false);
 
     if (error) return toast.error(error);
 
-    const popup = new PaystackPop();
-    const res = popup.resumeTransaction({
-      accessCode: data?.accessCode as string,
+    const popup = new PaystackPop() as any;
+    popup.resumeTransaction("0lsyfvyk2wxpx32", {
+      onSuccess: () => {
+        toast.success("Payment successful!");
+      },
+      onCancel: () => {
+        toast.error("Transaction canceled.");
+      },
     });
-
-    const status = res.getStatus();
-
-    if (status.status === "success") toast.success("Transaction completed.");
-    else toast.error("Payment was not completed.");
   };
 
   useEffect(() => {
