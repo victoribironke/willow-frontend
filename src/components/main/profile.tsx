@@ -27,6 +27,7 @@ const Profile = () => {
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
+  const [state, setState] = useState("");
 
   const info = [
     { title: "First name", val: firstName, setter: setFirstName },
@@ -36,6 +37,7 @@ const Profile = () => {
   const address = [
     { title: "Street", val: street, setter: setStreet },
     { title: "City", val: city, setter: setCity },
+    { title: "State", val: state, setter: setState },
     { title: "Zip", val: zip, setter: setZip },
   ];
 
@@ -52,7 +54,7 @@ const Profile = () => {
 
       d = { firstname: firstName, lastname: lastName };
     } else {
-      const values = [street, city, zip].filter((v) => v === "");
+      const values = [street, city, zip, state].filter((v) => v === "");
 
       if (values.length !== 0) {
         return toast.error("Please fill in all the fields.");
@@ -63,6 +65,7 @@ const Profile = () => {
           street,
           city,
           zip,
+          state,
         },
       };
     }
@@ -98,6 +101,7 @@ const Profile = () => {
     setStreet(customer?.address?.street || "No info found.");
     setCity(customer?.address?.city || "No info found.");
     setZip(customer?.address?.zip || "No info found.");
+    setState(customer?.address?.state || "No info found.");
   }, [customer]);
 
   if (loading) return <PageLoader />;
@@ -175,7 +179,7 @@ const Profile = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4">
           {address.map((n, i) => (
             <div className="grid gap-1" key={i}>
               <p className="text-muted-foreground">{n.title}</p>

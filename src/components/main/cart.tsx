@@ -1,7 +1,14 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { Leaf, LoaderCircle, Minus, Plus, Trash2 } from "lucide-react";
+import {
+  Leaf,
+  LoaderCircle,
+  Minus,
+  PencilLine,
+  Plus,
+  Trash2,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { CartItem, WillowAuthData } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
@@ -11,6 +18,7 @@ import {
   getCart,
   removeItemFromCart,
   sendCheckoutRequest,
+  updateCustomerDetails,
 } from "@/lib/requests/customer";
 import PageLoader from "../general/page-loader";
 import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
@@ -22,10 +30,13 @@ import { Input } from "../ui/input";
 const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingEditing, setIsLoadingEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [address, setAddress] = useState({
     city: "",
     street: "",
     zip: "",
+    state: "",
   });
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const userInfo = useAtomValue(user_details);
@@ -53,6 +64,11 @@ const Cart = () => {
       title: "City",
       val: address.city,
       setter: (e: string) => updateAddress("city", e),
+    },
+    {
+      title: "State",
+      val: address.state,
+      setter: (e: string) => updateAddress("state", e),
     },
     {
       title: "Zip",
@@ -101,6 +117,38 @@ const Cart = () => {
 
       setCartItems(newCart);
     }
+  };
+
+  const updateInfo = async () => {
+    const { city, state, street, zip } = address;
+
+    const values = [street, city, zip, state].filter((v) => v === "");
+
+    if (values.length !== 0) {
+      return toast.error("Please fill in all the fields.");
+    }
+
+    setIsLoadingEditing(true);
+
+    const d = {
+      address: {
+        street,
+        city,
+        zip,
+        state,
+      },
+    };
+
+    const { data, error } = await updateCustomerDetails(userInfo?.id || "", d);
+
+    setIsLoadingEditing(false);
+
+    if (error) {
+      return toast.error(error);
+    }
+
+    toast.success(data);
+    setIsEditing(false);
   };
 
   const checkout = async () => {
@@ -152,12 +200,13 @@ const Cart = () => {
       );
 
       if (willowData.customer?.address) {
-        const { city, street, zip } = willowData.customer.address;
+        const { city, street, zip, state } = willowData.customer.address;
 
         setAddress({
           city,
           street,
           zip,
+          state: state || "",
         });
       }
 
@@ -246,29 +295,70 @@ const Cart = () => {
               ₦ {formatNumber(total)}
             </div>
           </div>
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full gap-4">
-            {addressObj.map((n, i) => (
-              <div className="grid gap-1" key={i}>
-                <p className="text-muted-foreground">{n.title}</p>
+      <div className="w-full max-w-4xl relative mx-auto bg-white border shadow rounded-lg flex flex-col gap-6 p-4">
+        <div className="flex justify-between items-center w-full">
+          <p className="lg:text-lg">Shipping address</p>
 
+          {!isEditing && (
+            <Button
+              variant="outline"
+              className="rounded-full"
+              onClick={() => setIsEditing(true)}
+            >
+              Edit <PencilLine />
+            </Button>
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 w-full gap-4">
+          {addressObj.map((n, i) => (
+            <div className="grid gap-1" key={i}>
+              <p className="text-muted-foreground">{n.title}</p>
+
+              {!isEditing ? (
+                <p>{n.val}</p>
+              ) : (
                 <Input
                   value={n.val}
                   onChange={(e) => n.setter(e.target.value)}
                 />
-              </div>
-            ))}
-          </div>
-
-          <Button
-            className="bg-main hover:bg-main/90 w-full"
-            disabled={isLoading}
-            onClick={checkout}
-          >
-            Checkout {isLoading && <LoaderCircle className="animate-spin" />}
-          </Button>
+              )}
+            </div>
+          ))}
         </div>
+
+        {isEditing && (
+          <div className="flex gap-4 items-center w-full">
+            <Button
+              variant="outline"
+              className="border-red text-red hover:text-red"
+              onClick={() => setIsEditing(false)}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              className="bg-main hover:bg-main/90"
+              disabled={isLoadingEditing}
+              onClick={updateInfo}
+            >
+              Save changes{" "}
+              {isLoadingEditing && <LoaderCircle className="animate-spin" />}
+            </Button>
+          </div>
+        )}
       </div>
+
+      <Button
+        className="bg-main hover:bg-main/90 w-full max-w-4xl mx-auto"
+        disabled={isLoading}
+        onClick={checkout}
+      >
+        Checkout {isLoading && <LoaderCircle className="animate-spin" />}
+      </Button>
     </>
   );
 };
