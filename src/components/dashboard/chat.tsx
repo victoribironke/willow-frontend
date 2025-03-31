@@ -38,6 +38,8 @@ const Chat = ({ id }: { id: string }) => {
         })
       );
     } else {
+      toast.error("Your message is unable to send. Please refresh the page.");
+
       console.log("WebSocket is not ready!");
     }
 

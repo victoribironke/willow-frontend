@@ -56,7 +56,7 @@ const Chats = () => {
             <div
               key={i}
               className={cn(
-                "bg-white rounded-xl cursor-pointer border hover:shadow p-3 gap-4 flex items-center justify-center",
+                "bg-white rounded-xl cursor-pointer border hover:shadow p-3 gap-4 mb-4 flex items-center justify-center",
                 c.id === id ? "border-main" : ""
               )}
               onClick={() => setId(c.id)}

@@ -7,12 +7,13 @@ import { useAtomValue } from "jotai";
 import { getConversation } from "@/lib/requests/customer";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { ws } from "@/constants/constants";
+import { PAGES, ws } from "@/constants/constants";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Send } from "lucide-react";
 import { cn, formatDateTime } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const Chat = ({ id }: { id: string }) => {
   const [loading, setLoading] = useState(true);
@@ -43,6 +44,8 @@ const Chat = ({ id }: { id: string }) => {
         })
       );
     } else {
+      toast.error("Your message is unable to send. Please refresh the page.");
+
       console.log("WebSocket is not ready!");
     }
 
@@ -145,26 +148,32 @@ const Chat = ({ id }: { id: string }) => {
         <PageLoader />
       ) : (
         <>
-          <div className="w-full p-4 border-b flex items-center gap-4">
-            <div className="overflow-hidden aspect-square rounded-full w-8">
-              <img
-                src={
-                  convo?.seller.avatar?.url ||
-                  `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${decodeURIComponent(
-                    name || ""
-                  )}`
-                }
-                alt="Image"
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <Link
+            href={PAGES.main.shop.seller(
+              (id === "new" ? sellerId : convo?.sellerId) || ""
+            )}
+          >
+            <div className="w-full p-4 border-b flex items-center gap-4">
+              <div className="overflow-hidden aspect-square rounded-full w-8">
+                <img
+                  src={
+                    convo?.seller.avatar?.url ||
+                    `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${decodeURIComponent(
+                      name || ""
+                    )}`
+                  }
+                  alt="Image"
+                  className="w-full h-full object-cover"
+                />
+              </div>
 
-            <p className="font-medium">
-              {id === "new"
-                ? decodeURIComponent(name || "")
-                : convo?.seller.businessName}
-            </p>
-          </div>
+              <p className="font-medium">
+                {id === "new"
+                  ? decodeURIComponent(name || "")
+                  : convo?.seller.businessName}
+              </p>
+            </div>
+          </Link>
 
           <div className="h-[calc(100vh-23rem)] px-4 pt-4 overflow-scroll flex flex-col gap-4">
             {convo?.messages.map((m, i) => (
