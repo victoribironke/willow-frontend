@@ -25,7 +25,6 @@ const VerticalImageCarousel = () => {
     seventeen,
     sixteen,
     ten,
-    thirteen,
     twelve,
   } = IMAGES.more_about_willow;
 
@@ -43,7 +42,7 @@ const VerticalImageCarousel = () => {
     { src: ten.src, w: ten.w, h: ten.h },
     { src: eleven.src, w: eleven.w, h: eleven.h },
     { src: twelve.src, w: twelve.w, h: twelve.h },
-    { src: thirteen.src, w: thirteen.w, h: thirteen.h },
+    // { src: thirteen.src, w: thirteen.w, h: thirteen.h },
     { src: fourteen.src, w: fourteen.w, h: fourteen.h },
     { src: fifteen.src, w: fifteen.w, h: fifteen.h },
     { src: sixteen.src, w: sixteen.w, h: sixteen.h },
