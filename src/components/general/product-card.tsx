@@ -44,7 +44,7 @@ const ProductCard = ({
       if (!error) {
         setLikedProducts((k) => k.filter((j) => j !== productId));
 
-        toast.success("Product added to wishlist.");
+        toast.success("Product removed from wishlist.");
       }
 
       return;
@@ -58,7 +58,7 @@ const ProductCard = ({
     if (!error) {
       setLikedProducts((k) => [...k, productId]);
 
-      toast.success("Product removed from wishlist.");
+      toast.success("Product added to wishlist.");
     }
   };
 
