@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Product, WillowAuthData } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
-import { getProducts } from "@/lib/requests/general";
+import { getLastViewedProducts, getProducts } from "@/lib/requests/general";
 import toast from "react-hot-toast";
 import {
   getCart,
@@ -23,11 +23,27 @@ const Shop = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const [lastViewed, setLastViewed] = useState<Product[]>([]);
   const [cartItems, setCartItems] = useState<string[]>([]);
   const [likedProducts, setLikedProducts] = useState<string[]>([]);
   const userInfo = useAtomValue(user_details);
 
-  const new_products = products.filter((p) => p.approvalStatus === "APPROVED");
+  const new_products = products
+    .filter((p) => p.approvalStatus === "APPROVED")
+    .sort((a, b) => {
+      const aOrderItems = a.orderItems.filter(
+        (o) => o.order.transaction?.status === "SUCCESS"
+      );
+      const bOrderItems = b.orderItems.filter(
+        (o) => o.order.transaction?.status === "SUCCESS"
+      );
+
+      return aOrderItems.length > bOrderItems.length ? 1 : -1;
+    });
+
+  const new_last_viewed = lastViewed
+    .filter((p) => p.approvalStatus === "APPROVED")
+    .slice(0, 5);
 
   const updateInfo = async () => {
     setIsLoading(true);
@@ -69,17 +85,20 @@ const Shop = () => {
       }
 
       try {
-        const [productsRes, cartRes, likedRes] = await Promise.all([
-          getProducts(),
-          getCart(userInfo?.id || ""),
-          getLikedProducts(userInfo?.id || ""),
-        ]);
+        const [productsRes, lastViewedRes, cartRes, likedRes] =
+          await Promise.all([
+            getProducts(),
+            getLastViewedProducts(userInfo?.id || ""),
+            getCart(userInfo?.id || ""),
+            getLikedProducts(userInfo?.id || ""),
+          ]);
 
         setLoading(false);
 
         if (productsRes.error) return toast.error(productsRes.error);
 
         setProducts(productsRes.data as Product[]);
+        setLastViewed(lastViewedRes.data as Product[]);
         setCartItems(cartRes.data?.map((j) => j.productId) as string[]);
         setLikedProducts(likedRes.data?.map((j) => j.productId) as string[]);
       } catch (error) {
@@ -125,6 +144,27 @@ const Shop = () => {
           ))}
         </div>
       </section>
+
+      {new_last_viewed.length > 0 && (
+        <section className="w-full flex items-start justify-start flex-col gap-4">
+          <h5 className="text-lg md:text-xl font-medium">
+            Last viewed products
+          </h5>
+
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            {new_last_viewed.map((p, i) => (
+              <ProductCard
+                cartItems={cartItems}
+                likedProducts={likedProducts}
+                product={p}
+                setCartItems={setCartItems}
+                setLikedProducts={setLikedProducts}
+                key={i}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {!subscribed && (
         <section className="w-full flex items-center justify-center flex-col gap-4 my-10">

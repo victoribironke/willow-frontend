@@ -109,6 +109,8 @@ export const ENDPOINTS = {
     BACKEND_URL + `/products/search?text=${text}`,
 
   // CUSTOMERS
+  get_last_viewed_products: (uid: string) =>
+    BACKEND_URL + `/customers/${uid}/last-viewed`,
   get_cart: (uid: string) => BACKEND_URL + `/customers/${uid}/cart`,
   checkout: (uid: string) => BACKEND_URL + `/customers/${uid}/cart/checkout`,
   get_liked_products: (uid: string) =>
