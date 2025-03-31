@@ -129,7 +129,7 @@ const Shop = () => {
       </div>
 
       <section className="w-full flex items-start justify-start flex-col gap-4">
-        <h5 className="text-lg md:text-xl font-medium">Top Best Selling</h5>
+        <h5 className="text-lg md:text-xl font-medium">Featured</h5>
 
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
           {new_products.map((p, i) => (
