@@ -66,6 +66,31 @@ const RootLayout = ({
 
   const [filter, setFilter] = useState(f || "Listed");
 
+  if (ws.readyState === 1) {
+    ws.onmessage = (event) => {
+      try {
+        if (event.type === "error") {
+          // show that the message was not sent
+
+          console.error("Received error message:", event.data);
+        } else if (event.type === "message") {
+          if (!pathname.includes("chat")) {
+            const data = JSON.parse(event.data).data as ChatReceived;
+
+            sonner("You have a new message from one of your customers.", {
+              action: {
+                label: "Go to chat",
+                onClick: () => push(PAGES.dashboard.chat(data.conversationId)),
+              },
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to parse message:", error);
+      }
+    };
+  }
+
   useEffect(() => {
     // localStorage.removeItem("willow_auth_data");
 
@@ -107,32 +132,6 @@ const RootLayout = ({
 
       toast.error("Internal socket error.");
     };
-
-    if (ws.readyState === 1) {
-      ws.onmessage = (event) => {
-        try {
-          if (event.type === "error") {
-            // show that the message was not sent
-
-            console.error("Received error message:", event.data);
-          } else if (event.type === "message") {
-            if (!pathname.includes("chat")) {
-              const data = JSON.parse(event.data).data as ChatReceived;
-
-              sonner("You have a new message from one of your customers.", {
-                action: {
-                  label: "Go to chat",
-                  onClick: () =>
-                    push(PAGES.dashboard.chat(data.conversationId)),
-                },
-              });
-            }
-          }
-        } catch (error) {
-          console.error("Failed to parse message:", error);
-        }
-      };
-    }
 
     setLoading(false);
   }, [push]);
