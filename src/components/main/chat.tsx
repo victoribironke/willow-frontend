@@ -158,9 +158,11 @@ const Chat = ({ id }: { id: string }) => {
                 <img
                   src={
                     convo?.seller.avatar?.url ||
-                    `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${decodeURIComponent(
-                      name || ""
-                    )}`
+                    `https://api.dicebear.com/9.x/fun-emoji/svg?seed=${
+                      id === "new"
+                        ? decodeURIComponent(name || "")
+                        : convo?.seller.businessName
+                    }`
                   }
                   alt="Image"
                   className="w-full h-full object-cover"
