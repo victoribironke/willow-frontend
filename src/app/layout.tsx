@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
+import { Toaster as Sonner } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,6 +18,7 @@ const RootLayout = ({
     <html lang="en">
       <body className="antialiased flex items-center justify-center bg-[#f5f5f5]">
         <Toaster />
+        <Sonner />
         <Suspense>{children}</Suspense>
       </body>
     </html>

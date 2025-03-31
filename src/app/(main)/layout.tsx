@@ -17,7 +17,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { user_details } from "../atoms/atoms";
 import toast from "react-hot-toast";
+import { toast as sonner } from "sonner";
 import AIChat from "@/components/main/ai-chat";
+import { ChatReceived } from "@/interfaces/general";
 
 const RootLayout = ({
   children,
@@ -71,6 +73,33 @@ const RootLayout = ({
 
       toast.error("Internal socket error.");
     };
+
+    if (ws.readyState === 1) {
+      ws.onmessage = (event) => {
+        try {
+          if (event.type === "error") {
+            // show that the message was not sent
+
+            console.error("Received error message:", event.data);
+          } else if (event.type === "message") {
+            if (!pathname.includes("chat")) {
+              const data = JSON.parse(event.data).data as ChatReceived;
+
+              sonner("New message!", {
+                description: `You have a new message from one of our sellers.`,
+                action: {
+                  label: "Go to chat",
+                  onClick: () =>
+                    push(PAGES.main.shop.chat(data.conversationId, "", "")),
+                },
+              });
+            }
+          }
+        } catch (error) {
+          console.error("Failed to parse message:", error);
+        }
+      };
+    }
 
     setLoading(false);
   }, [push]);

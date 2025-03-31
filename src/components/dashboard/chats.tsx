@@ -10,12 +10,18 @@ import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
 import { cn, formatDateTime } from "@/lib/utils";
 import Chat from "./chat";
+import { useSearchParams } from "next/navigation";
 
 const Chats = () => {
   const [loading, setLoading] = useState(true);
-  const [id, setId] = useState("");
   const [convos, setConvos] = useState<Conversation[]>([]);
   const userInfo = useAtomValue(user_details);
+
+  const searchParams = useSearchParams();
+
+  const convoId = searchParams.get("id");
+
+  const [id, setId] = useState(convoId ? convoId : "");
 
   useEffect(() => {
     (async () => {

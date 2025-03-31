@@ -54,6 +54,7 @@ export const PAGES = {
     profile: "/dashboard/profile",
     order: (id: string) => `/dashboard/orders/${id}`,
     product: (id: string) => `/dashboard/products/${id}`,
+    chat: (id: string) => `/dashboard/chats?id=${id}`,
     search: (text?: string, status?: string) =>
       `/dashboard/search?text=${text}&status=${status}`,
   },

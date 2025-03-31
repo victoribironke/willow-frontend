@@ -37,6 +37,8 @@ import { useSetAtom } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
+import { ChatReceived } from "@/interfaces/general";
+import { toast as sonner } from "sonner";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -105,6 +107,33 @@ const RootLayout = ({
 
       toast.error("Internal socket error.");
     };
+
+    if (ws.readyState === 1) {
+      ws.onmessage = (event) => {
+        try {
+          if (event.type === "error") {
+            // show that the message was not sent
+
+            console.error("Received error message:", event.data);
+          } else if (event.type === "message") {
+            if (!pathname.includes("chat")) {
+              const data = JSON.parse(event.data).data as ChatReceived;
+
+              sonner("New message!", {
+                description: `You have a new message from one of your customers.`,
+                action: {
+                  label: "Go to chat",
+                  onClick: () =>
+                    push(PAGES.dashboard.chat(data.conversationId)),
+                },
+              });
+            }
+          }
+        } catch (error) {
+          console.error("Failed to parse message:", error);
+        }
+      };
+    }
 
     setLoading(false);
   }, [push]);
