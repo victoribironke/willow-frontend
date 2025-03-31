@@ -263,3 +263,30 @@ export const getConversation = async (
     return { data: null, error: "A server error occured." };
   }
 };
+
+export const updateOrderStatus = async (
+  userId: string,
+  orderId: string,
+  d: any
+) => {
+  try {
+    const req = await fetch(ENDPOINTS.update_order_status(userId, orderId), {
+      method: "PATCH",
+      body: JSON.stringify(d),
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      credentials: "include",
+    });
+    const res = await req.json();
+
+    if (res.status !== "success")
+      return { data: null, error: res.message + "." };
+
+    return { data: "Order status updated successfully.", error: null };
+  } catch (e) {
+    console.log(e);
+    return { data: null, error: "A server error occured." };
+  }
+};

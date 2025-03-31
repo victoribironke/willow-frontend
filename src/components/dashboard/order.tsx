@@ -2,7 +2,7 @@
 
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
-import { Mail, ShoppingBag, User } from "lucide-react";
+import { LoaderCircle, Mail, ShoppingBag, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useAtomValue } from "jotai";
@@ -10,26 +10,56 @@ import { user_details } from "@/app/atoms/atoms";
 import { useEffect, useState } from "react";
 import PageLoader from "../general/page-loader";
 import toast from "react-hot-toast";
-import { getSellerOrder } from "@/lib/requests/seller";
-import { OrderItem } from "@/interfaces/general";
+import { getSellerOrder, updateOrderStatus } from "@/lib/requests/seller";
+import { CustomerOrderItemStatus, OrderItem } from "@/interfaces/general";
 import { useRouter } from "next/navigation";
 import { PAGES } from "@/constants/constants";
-import { formatNumber } from "@/lib/utils";
+import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Order = ({ orderId }: { orderId: string }) => {
-  const shipping = [
-    { title: "Country:", value: "Nigeria" },
-    { title: "State:", value: "Ogun" },
-    { title: "City:", value: "Ibadan" },
-    { title: "Line 1:", value: "Babcock University, Ilishan-Remo" },
-    { title: "Line 2:", value: "" },
-    { title: "Zipcode:", value: "" },
-  ];
-
   const userInfo = useAtomValue(user_details);
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [status, setStatus] = useState("");
   const [order, setOrder] = useState<OrderItem | null>(null);
   const { push } = useRouter();
+
+  const shipping = [
+    { title: "Street:", value: order?.order.address.street || "" },
+    { title: "City:", value: order?.order.address.city || "" },
+    { title: "State:", value: order?.order.address.state || "" },
+    { title: "Country:", value: "Nigeria" },
+    { title: "Zip code:", value: order?.order.address.zip || "" },
+  ];
+
+  const updateStatus = async () => {
+    setIsLoading(true);
+
+    const d = {
+      status,
+      cancelMessage: "This is the cancel message",
+    };
+
+    const { data, error } = await updateOrderStatus(
+      userInfo?.id || "",
+      orderId,
+      d
+    );
+
+    setIsLoading(false);
+
+    if (error) return toast.error(error);
+
+    toast.success(data);
+  };
 
   useEffect(() => {
     (async () => {
@@ -46,6 +76,7 @@ const Order = ({ orderId }: { orderId: string }) => {
       setLoading(false);
 
       setOrder(data as OrderItem);
+      setStatus(data?.customerStatus || "");
     })();
   }, []);
 
@@ -55,7 +86,7 @@ const Order = ({ orderId }: { orderId: string }) => {
     <>
       <h1 className="text-xl lg:text-2xl font-medium">Order</h1>
 
-      <p className="text-[#696969]">Payment after delivery</p>
+      <p className="text-[#696969]">View a single order</p>
 
       <Separator />
 
@@ -100,22 +131,23 @@ const Order = ({ orderId }: { orderId: string }) => {
           variant="ghost"
           className="w-fit px-0 hover:bg-transparent lg:text-base lg:gap-3"
         >
-          <User className="lg:scale-110" /> {order?.order.customer.firstname}
+          <User className="lg:scale-110" /> {order?.order.customer.firstname}{" "}
+          {order?.order.customer.lastname}
         </Button>
 
-        <Button
+        {/* <Button
           variant="ghost"
           className="w-fit px-0 hover:bg-transparent lg:text-base lg:gap-3"
         >
           <Mail className="lg:scale-110" /> {order?.order.customer.user.email}
-        </Button>
+        </Button> */}
 
         <Button
           variant="ghost"
           className="w-fit px-0 hover:bg-transparent lg:text-base lg:gap-3"
         >
-          <ShoppingBag className="lg:scale-110" />{" "}
-          {order?.order.orderItems.length} orders
+          <ShoppingBag className="lg:scale-110" /> {order?.quantity} order
+          {(order?.quantity || 0) > 1 && "s"}
         </Button>
       </div>
 
@@ -127,7 +159,7 @@ const Order = ({ orderId }: { orderId: string }) => {
         <TableBody>
           {shipping.map((s, i) => (
             <TableRow key={i} className="border-none">
-              <TableCell className="font-medium lg:text-base">
+              <TableCell className="font-medium lg:text-base whitespace-nowrap">
                 {s.title}
               </TableCell>
 
@@ -138,6 +170,35 @@ const Order = ({ orderId }: { orderId: string }) => {
           ))}
         </TableBody>
       </Table>
+
+      <h4 className="text-lg lg:text-xl font-medium">Update order status</h4>
+
+      <Separator />
+
+      <div className="flex items-center justify-center gap-4 max-w-md">
+        <Select value={status} onValueChange={setStatus}>
+          <SelectTrigger className="w-full bg-white" id="sourcing">
+            <SelectValue placeholder="Select a status" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectGroup>
+              {["ORDERED", "SHIPPED", "DELIVERED"].map((s, i) => (
+                <SelectItem value={s} key={i}>
+                  {convertTextFromUppercase(s)}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
+        <Button
+          className="w-full mx-auto bg-main hover:bg-main/90"
+          onClick={updateStatus}
+          disabled={isLoading}
+        >
+          Save {isLoading && <LoaderCircle className="animate-spin" />}
+        </Button>
+      </div>
     </>
   );
 };

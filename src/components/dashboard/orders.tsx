@@ -1,6 +1,6 @@
 "use client";
 
-import { cn, formatDateTime } from "@/lib/utils";
+import { cn, formatDateTime, formatNumber } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import { useEffect, useState } from "react";
@@ -132,7 +132,7 @@ const Orders = () => {
                 <TableCell className="whitespace-nowrap">
                   {o.quantity}
                 </TableCell>
-                <TableCell>{o.price}</TableCell>
+                <TableCell>{formatNumber(o.price)}</TableCell>
                 <TableCell>
                   <Button variant="ghost">
                     <Ellipsis />

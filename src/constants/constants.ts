@@ -152,6 +152,8 @@ export const ENDPOINTS = {
     BACKEND_URL + `/sellers/${uid}/conversations`,
   get_seller_conversation: (uid: string, cid: string) =>
     BACKEND_URL + `/sellers/${uid}/conversations/${cid}`,
+  update_order_status: (uid: string, oid: string) =>
+    BACKEND_URL + `/sellers/${uid}/orders/${oid}/update-status`,
 };
 
 export const IMAGE_TIPS = [
