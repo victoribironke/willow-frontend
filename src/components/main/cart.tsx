@@ -3,7 +3,7 @@
 import { Button } from "../ui/button";
 import { Leaf, LoaderCircle, Minus, Plus, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { CartItem } from "@/interfaces/general";
+import { CartItem, WillowAuthData } from "@/interfaces/general";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import toast from "react-hot-toast";
@@ -15,18 +15,51 @@ import {
 import PageLoader from "../general/page-loader";
 import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
 import Link from "next/link";
-import { PAGES } from "@/constants/constants";
+import { LOCAL_STORAGE_KEY, PAGES } from "@/constants/constants";
 import PaystackPop from "@paystack/inline-js";
+import { Input } from "../ui/input";
 
 const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [address, setAddress] = useState({
+    city: "",
+    street: "",
+    zip: "",
+  });
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const userInfo = useAtomValue(user_details);
 
   const total = cartItems.reduce((a, b) => {
     return a + b.quantity * b.product.price;
   }, 0);
+
+  const updateAddress = (which: string, value: string) => {
+    setAddress((k) => {
+      return {
+        ...k,
+        [which]: value,
+      };
+    });
+  };
+
+  const addressObj = [
+    {
+      title: "Street",
+      val: address.street,
+      setter: (e: string) => updateAddress("street", e),
+    },
+    {
+      title: "City",
+      val: address.city,
+      setter: (e: string) => updateAddress("city", e),
+    },
+    {
+      title: "Zip",
+      val: address.zip,
+      setter: (e: string) => updateAddress("zip", e),
+    },
+  ];
 
   const remove = async (productId: string) => {
     const { error } = await removeItemFromCart(userInfo?.id || "", productId);
@@ -73,18 +106,21 @@ const Cart = () => {
   const checkout = async () => {
     if (cartItems.length === 0) return;
 
+    const { city, street, zip } = address;
+
+    if ([city, street, zip].filter((a) => a === "").length !== 0) {
+      return toast.error("Please fill in your address details.");
+    }
+
     setIsLoading(true);
 
     const d = {
       email: userInfo?.email,
       amount: total,
-      address: userInfo?.customer?.address,
+      address,
       serviceFee: 100,
-      cartItems,
-      deliveryFee: 0,
+      deliveryFee: 5000,
     };
-
-    // console.log(d);
 
     const { data, error } = await sendCheckoutRequest(userInfo?.id || "", d);
 
@@ -109,8 +145,20 @@ const Cart = () => {
 
       setLoading(false);
 
-      if (error) {
-        return toast.error(error);
+      if (error) return toast.error(error);
+
+      const willowData: WillowAuthData = JSON.parse(
+        localStorage.getItem(LOCAL_STORAGE_KEY)!
+      );
+
+      if (willowData.customer?.address) {
+        const { city, street, zip } = willowData.customer.address;
+
+        setAddress({
+          city,
+          street,
+          zip,
+        });
       }
 
       setCartItems(data as CartItem[]);
@@ -197,6 +245,19 @@ const Cart = () => {
             <div className="text-main border px-2 py-1 flex items-center justify-center text-sm gap-1 rounded-md font-medium w-fit whitespace-nowrap">
               ₦ {formatNumber(total)}
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full gap-4">
+            {addressObj.map((n, i) => (
+              <div className="grid gap-1" key={i}>
+                <p className="text-muted-foreground">{n.title}</p>
+
+                <Input
+                  value={n.val}
+                  onChange={(e) => n.setter(e.target.value)}
+                />
+              </div>
+            ))}
           </div>
 
           <Button
