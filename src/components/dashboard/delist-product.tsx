@@ -8,27 +8,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { PAGES } from "@/constants/constants";
-import { Product } from "@/interfaces/general";
 import { deleteProduct } from "@/lib/requests/seller";
 import { LoaderCircle, Trash2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { Dispatch, useState, SetStateAction } from "react";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
-const DelistProduct = ({
-  uid,
-  pid,
-  set,
-  isDashboard,
-}: {
-  uid: string;
-  pid: string;
-  set?: Dispatch<SetStateAction<Product[]>>;
-  isDashboard?: boolean;
-}) => {
+const DelistProduct = ({ uid, pid }: { uid: string; pid: string }) => {
   const [loading, setLoading] = useState(false);
-  const { push } = useRouter();
+  const { reload } = useRouter();
 
   const delist = async () => {
     setLoading(true);
@@ -41,9 +29,7 @@ const DelistProduct = ({
 
     toast.success(data);
 
-    if (set) set((k) => k.filter((a) => a.id !== pid));
-
-    if (isDashboard) push(PAGES.dashboard.products);
+    reload();
   };
 
   return (

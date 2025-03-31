@@ -205,11 +205,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
           </p>
 
           {pathname.includes("/dashboard/") ? (
-            <DelistProduct
-              pid={product?.id || ""}
-              uid={userInfo?.id || ""}
-              isDashboard={true}
-            />
+            <DelistProduct pid={product?.id || ""} uid={userInfo?.id || ""} />
           ) : cartItems.includes(product?.id || "") ? (
             <>
               <Link href={PAGES.main.shop.cart}>

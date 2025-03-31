@@ -135,11 +135,7 @@ const Products = () => {
                 </TableCell>
                 <TableCell>{formatNumber(p.price)}</TableCell>
                 <TableCell>
-                  <DelistProduct
-                    uid={userInfo?.id || ""}
-                    pid={p.id}
-                    set={setProducts}
-                  />
+                  <DelistProduct uid={userInfo?.id || ""} pid={p.id} />
                 </TableCell>
               </TableRow>
             ))}
