@@ -170,14 +170,14 @@ const Cart = () => {
       deliveryFee: 5000,
     };
 
-    const { error } = await sendCheckoutRequest(userInfo?.id || "", d);
+    const { data, error } = await sendCheckoutRequest(userInfo?.id || "", d);
 
     setIsLoading(false);
 
     if (error) return toast.error(error);
 
     const popup = new PaystackPop() as any;
-    popup.resumeTransaction("0lsyfvyk2wxpx32", {
+    popup.resumeTransaction(data?.accessCode, {
       onSuccess: () => {
         toast.success("Payment successful!");
       },
