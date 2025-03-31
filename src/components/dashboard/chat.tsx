@@ -37,13 +37,15 @@ const Chat = ({ id }: { id: string }) => {
           },
         })
       );
+
+      setSending(false);
     } else {
       toast.error("Your message is unable to send. Please refresh the page.");
 
       console.log("WebSocket is not ready!");
-    }
 
-    setSending(false);
+      setSending(false);
+    }
   };
 
   if (ws.readyState === 1) {
