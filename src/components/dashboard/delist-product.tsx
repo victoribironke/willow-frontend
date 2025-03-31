@@ -10,13 +10,11 @@ import {
 } from "@/components/ui/dialog";
 import { deleteProduct } from "@/lib/requests/seller";
 import { LoaderCircle, Trash2 } from "lucide-react";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 const DelistProduct = ({ uid, pid }: { uid: string; pid: string }) => {
   const [loading, setLoading] = useState(false);
-  const { reload } = useRouter();
 
   const delist = async () => {
     setLoading(true);
@@ -29,7 +27,7 @@ const DelistProduct = ({ uid, pid }: { uid: string; pid: string }) => {
 
     toast.success(data);
 
-    reload();
+    window.location.reload();
   };
 
   return (
