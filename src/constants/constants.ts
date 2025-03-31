@@ -82,6 +82,14 @@ export const IMAGES = {
     seven: { src: "/more-about-willow/seven.jpeg", w: 736, h: 1104 },
     eight: { src: "/more-about-willow/eight.jpeg", w: 600, h: 400 },
     nine: { src: "/more-about-willow/nine.jpeg", w: 736, h: 736 },
+    ten: { src: "/more-about-willow/ten.jpeg", w: 736, h: 865 },
+    eleven: { src: "/more-about-willow/eleven.jpeg", w: 576, h: 1024 },
+    twelve: { src: "/more-about-willow/twelve.jpeg", w: 736, h: 1104 },
+    thirteen: { src: "/more-about-willow/thirteen.jpeg", w: 736, h: 1104 },
+    fourteen: { src: "/more-about-willow/fourteen.jpeg", w: 735, h: 565 },
+    fifteen: { src: "/more-about-willow/fifteen.jpeg", w: 564, h: 846 },
+    sixteen: { src: "/more-about-willow/sixteen.jpeg", w: 736, h: 981 },
+    seventeen: { src: "/more-about-willow/seventeen.jpeg", w: 400, h: 600 },
   },
 };
 

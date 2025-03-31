@@ -10,12 +10,28 @@ const VerticalImageCarousel = () => {
 
   const speed = 25000;
 
-  const { eight, five, four, nine, one, seven, six, three, two } =
-    IMAGES.more_about_willow;
+  const {
+    eight,
+    five,
+    four,
+    nine,
+    seven,
+    six,
+    three,
+    two,
+    eleven,
+    fifteen,
+    fourteen,
+    seventeen,
+    sixteen,
+    ten,
+    thirteen,
+    twelve,
+  } = IMAGES.more_about_willow;
 
   // Sample placeholder images - replace with your actual images later
   const placeholderImages = [
-    { src: one.src, w: one.w, h: one.h },
+    // { src: one.src, w: one.w, h: one.h },
     { src: two.src, w: two.w, h: two.h },
     { src: three.src, w: three.w, h: three.h },
     { src: four.src, w: four.w, h: four.h },
@@ -24,6 +40,14 @@ const VerticalImageCarousel = () => {
     { src: seven.src, w: seven.w, h: seven.h },
     { src: eight.src, w: eight.w, h: eight.h },
     { src: nine.src, w: nine.w, h: nine.h },
+    { src: ten.src, w: ten.w, h: ten.h },
+    { src: eleven.src, w: eleven.w, h: eleven.h },
+    { src: twelve.src, w: twelve.w, h: twelve.h },
+    { src: thirteen.src, w: thirteen.w, h: thirteen.h },
+    { src: fourteen.src, w: fourteen.w, h: fourteen.h },
+    { src: fifteen.src, w: fifteen.w, h: fifteen.h },
+    { src: sixteen.src, w: sixteen.w, h: sixteen.h },
+    { src: seventeen.src, w: seventeen.w, h: seventeen.h },
   ];
 
   useEffect(() => {
@@ -104,7 +128,7 @@ const VerticalImageCarousel = () => {
         {/* Column 1 - Moving up */}
         <div className="relative h-full overflow-hidden">
           {renderImageColumn(
-            placeholderImages.slice(0, 3),
+            placeholderImages.slice(0, 5),
             column1Ref as RefObject<HTMLDivElement>
           )}
         </div>
@@ -112,7 +136,7 @@ const VerticalImageCarousel = () => {
         {/* Column 2 - Moving down */}
         <div className="relative h-full overflow-hidden">
           {renderImageColumn(
-            placeholderImages.slice(3, 6),
+            placeholderImages.slice(5, 10),
             column2Ref as RefObject<HTMLDivElement>
           )}
         </div>
@@ -120,7 +144,7 @@ const VerticalImageCarousel = () => {
         {/* Column 3 - Moving up */}
         <div className="relative h-full overflow-hidden">
           {renderImageColumn(
-            placeholderImages.slice(6, 9),
+            placeholderImages.slice(10, 15),
             column3Ref as RefObject<HTMLDivElement>
           )}
         </div>
