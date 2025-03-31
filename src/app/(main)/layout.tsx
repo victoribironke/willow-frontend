@@ -107,70 +107,74 @@ const RootLayout = ({
 
   return (
     <main className="w-full min-h-screen flex items-center flex-col relative pt-20">
-      <header className="w-full bg-white border-b p-4 flex items-center justify-center fixed z-50 top-0">
-        <div className="w-full max-w-screen-xl bg-re flex gap-4 items-center justify-between">
-          {/* header content */}
-          <Logo />
+      {pathname !== PAGES.main.more_about_willow && (
+        <header className="w-full bg-white border-b p-4 flex items-center justify-center fixed z-50 top-0">
+          <div className="w-full max-w-screen-xl bg-re flex gap-4 items-center justify-between">
+            {/* header content */}
+            <Logo />
 
-          <div className="flex items-center justify-center gap-6">
-            {HEADER_LINKS(pathname).map((h, i) => (
-              <Link
-                href={h.link}
-                className={cn(
-                  "hover:text-main font-medium",
-                  h.isActive ? "text-black" : "text-muted-foreground"
-                )}
-                key={i}
-              >
-                {h.title}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex items-center justify-center gap-4">
-            <div className="w-full relative flex items-center justify-center">
-              <Input
-                className="shadow-none"
-                placeholder="Type to search..."
-                onKeyUp={(e) => {
-                  if (e.currentTarget.value && e.key === "Enter") {
-                    push(PAGES.main.shop.search(e.currentTarget.value));
-                  }
-                }}
-              />
-
-              <Search
-                className="absolute right-3 cursor-pointer text-muted-foreground"
-                size={16}
-                onClick={(e) => {
-                  const input = e.currentTarget
-                    .previousElementSibling as HTMLInputElement;
-
-                  if (input.value) {
-                    push(PAGES.main.shop.search(input.value));
-                  }
-                }}
-              />
+            <div className="flex items-center justify-center gap-6">
+              {HEADER_LINKS(pathname).map((h, i) => (
+                <Link
+                  href={h.link}
+                  className={cn(
+                    "hover:text-main font-medium",
+                    h.isActive ? "text-black" : "text-muted-foreground"
+                  )}
+                  key={i}
+                >
+                  {h.title}
+                </Link>
+              ))}
             </div>
 
-            <Link href={PAGES.main.shop.cart}>
-              <ShoppingCart
-                size={20}
-                className={pathname === PAGES.main.shop.cart ? "text-main" : ""}
-              />
-            </Link>
+            <div className="flex items-center justify-center gap-4">
+              <div className="w-full relative flex items-center justify-center">
+                <Input
+                  className="shadow-none"
+                  placeholder="Type to search..."
+                  onKeyUp={(e) => {
+                    if (e.currentTarget.value && e.key === "Enter") {
+                      push(PAGES.main.shop.search(e.currentTarget.value));
+                    }
+                  }}
+                />
 
-            <Link href={PAGES.main.shop.profile}>
-              <User
-                size={20}
-                className={
-                  pathname === PAGES.main.shop.profile ? "text-main" : ""
-                }
-              />
-            </Link>
+                <Search
+                  className="absolute right-3 cursor-pointer text-muted-foreground"
+                  size={16}
+                  onClick={(e) => {
+                    const input = e.currentTarget
+                      .previousElementSibling as HTMLInputElement;
+
+                    if (input.value) {
+                      push(PAGES.main.shop.search(input.value));
+                    }
+                  }}
+                />
+              </div>
+
+              <Link href={PAGES.main.shop.cart}>
+                <ShoppingCart
+                  size={20}
+                  className={
+                    pathname === PAGES.main.shop.cart ? "text-main" : ""
+                  }
+                />
+              </Link>
+
+              <Link href={PAGES.main.shop.profile}>
+                <User
+                  size={20}
+                  className={
+                    pathname === PAGES.main.shop.profile ? "text-main" : ""
+                  }
+                />
+              </Link>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       <div className="w-full bg-gray-100 min-h-[calc(100vh-4rem)] p-4 pb-10 flex items-center relative flex-col">
         <div className="w-full flex flex-col gap-8 max-w-[1280px] h-auto relative">
