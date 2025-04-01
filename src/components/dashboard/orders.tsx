@@ -13,9 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import Link from "next/link";
 import { PAGES } from "@/constants/constants";
-import { Ellipsis } from "lucide-react";
 import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import { getSellerOrders } from "@/lib/requests/seller";

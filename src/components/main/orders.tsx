@@ -9,7 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Separator } from "../ui/separator";
-import Link from "next/link";
 import { PAGES } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import { user_details } from "@/app/atoms/atoms";
