@@ -18,10 +18,7 @@ export const LOCAL_STORAGE_KEY = "willow";
 export const BACKEND_URL = "https://willow-backend-1.onrender.com/api/v1";
 
 export const ws = new WebSocket(
-  `${BACKEND_URL.replace("/api/v1", "").replace(
-    "https",
-    "wss"
-  )}/api/v1/chat/connect`
+  `${BACKEND_URL.replace("https", "wss")}/chat/connect`
 );
 
 export const PAGES = {
