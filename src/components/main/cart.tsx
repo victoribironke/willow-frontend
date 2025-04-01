@@ -29,6 +29,7 @@ import { Input } from "../ui/input";
 
 const Cart = () => {
   const [loading, setLoading] = useState(true);
+  const [removing, setRemoving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingEditing, setIsLoadingEditing] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -78,6 +79,8 @@ const Cart = () => {
   ];
 
   const remove = async (productId: string) => {
+    setRemoving(true);
+
     const { error } = await removeItemFromCart(userInfo?.id || "", productId);
 
     if (!error) {
@@ -87,6 +90,8 @@ const Cart = () => {
 
       setCartItems((k) => k.filter((i) => i.productId !== item?.productId));
     }
+
+    setRemoving(false);
   };
 
   const increaseQuantity = (id: string) => {
@@ -282,6 +287,7 @@ const Cart = () => {
                 <Button
                   variant="outline"
                   onClick={() => remove(c.productId)}
+                  disabled={removing}
                   className="border-red text-red hover:bg-transparent hover:text-red"
                 >
                   <Trash2 />
