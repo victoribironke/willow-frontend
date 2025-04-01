@@ -19,11 +19,13 @@ import PageLoader from "../general/page-loader";
 import toast from "react-hot-toast";
 import { getOrders } from "@/lib/requests/customer";
 import { formatDateTime, formatNumber } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const Orders = () => {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState<Order[]>([]);
   const userInfo = useAtomValue(user_details);
+  const { push } = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -58,15 +60,12 @@ const Orders = () => {
           </TableHeader>
           <TableBody>
             {orders.map((o, i) => (
-              <TableRow key={i}>
-                <TableCell className="pl-4">
-                  <Link
-                    href={PAGES.main.shop.order(o.id)}
-                    className="font-medium hover:underline"
-                  >
-                    {o.id}
-                  </Link>
-                </TableCell>
+              <TableRow
+                key={i}
+                onClick={() => push(PAGES.main.shop.order(o.id))}
+                className="cursor-pointer"
+              >
+                <TableCell className="pl-4 font-medium">{o.id}</TableCell>
 
                 <TableCell className="font-medium whitespace-nowrap">
                   {formatDateTime(o.createdAt)}
@@ -77,7 +76,9 @@ const Orders = () => {
                 <TableCell className="whitespace-nowrap">
                   {o.orderItems.reduce((a, b) => a + b.quantity, 0)}
                 </TableCell>
-                <TableCell>{formatNumber(o.totalAmount)}</TableCell>
+                <TableCell className="font-medium">
+                  {formatNumber(o.totalAmount)}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

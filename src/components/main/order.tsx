@@ -122,7 +122,7 @@ const OrderPage = ({ orderId }: { orderId: string }) => {
               href={PAGES.main.shop.seller(o.sellerId)}
               className="text-muted-foreground underline"
             >
-              {o.product.seller.businessName}
+              {o.seller.businessName}
             </Link>
           </div>
         </div>
@@ -136,8 +136,8 @@ const OrderPage = ({ orderId }: { orderId: string }) => {
         <p className="lg:text-lg">Set address</p>
 
         <p>
-          {order?.address.street}, {order?.address.city}, {order?.address.zip},
-          Nigeria
+          {order?.address.street}, {order?.address.city}, {order?.address.state}
+          , Nigeria, {order?.address.zip}
         </p>
       </div>
     </>
