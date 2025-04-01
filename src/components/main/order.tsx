@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { getOrder } from "@/lib/requests/customer";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
-import { convertTextFromUppercase, formatNumber } from "@/lib/utils";
+import { cn, convertTextFromUppercase, formatNumber } from "@/lib/utils";
 
 const OrderPage = ({ orderId }: { orderId: string }) => {
   const userInfo = useAtomValue(user_details);
@@ -55,23 +55,27 @@ const OrderPage = ({ orderId }: { orderId: string }) => {
     <>
       <h1 className="text-xl lg:text-2xl font-medium">Order</h1>
 
-      <p>Ordrer {order?.id}</p>
+      <div className="flex flex-col gap-4">
+        <p>
+          Ordrer <span className="font-medium">{order?.id}</span>
+        </p>
 
-      <Table className="max-w-[15rem]">
-        <TableBody>
-          {summary.map((s, i) => (
-            <TableRow key={i} className="border-none">
-              <TableCell className="font-medium lg:text-base px-0">
-                {s.title}
-              </TableCell>
+        <Table className="max-w-[15rem]">
+          <TableBody>
+            {summary.map((s, i) => (
+              <TableRow key={i} className="border-none">
+                <TableCell className="font-medium lg:text-base px-0">
+                  {s.title}
+                </TableCell>
 
-              <TableCell className="font-medium whitespace-nowrap lg:text-base text-[#696969]">
-                {s.value}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                <TableCell className="font-medium whitespace-nowrap lg:text-base text-[#696969]">
+                  {s.value}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
       <Separator />
 
@@ -96,8 +100,17 @@ const OrderPage = ({ orderId }: { orderId: string }) => {
                 <Leaf /> {convertTextFromUppercase(o.product.sustainabilityTag)}
               </Button>
 
-              <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs lg:text-sm gap-1 rounded-md font-medium w-fit">
-                {o.customerStatus}
+              <div
+                className={cn(
+                  "border px-2 py-1 flex items-center justify-center text-xs lg:text-sm gap-1 rounded-md font-medium w-fit",
+                  o.order.transaction?.status === "FAILED"
+                    ? "text-red bg-red/10"
+                    : "text-main bg-main/10"
+                )}
+              >
+                {o.order.transaction?.status === "FAILED"
+                  ? "FAILED"
+                  : o.customerStatus}
               </div>
             </div>
 
