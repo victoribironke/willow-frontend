@@ -23,6 +23,8 @@ const OrderPage = ({ orderId }: { orderId: string }) => {
   const [order, setOrder] = useState<Order | null>(null);
   const { push } = useRouter();
 
+  const transactionStatus = order?.transaction?.status;
+
   const summary = [
     { title: "Number of items:", value: order?.orderItems.length },
     {
@@ -55,9 +57,9 @@ const OrderPage = ({ orderId }: { orderId: string }) => {
     <>
       <h1 className="text-xl lg:text-2xl font-medium">Order</h1>
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
         <p>
-          Ordrer <span className="font-medium">{order?.id}</span>
+          Order <span className="font-semibold">{order?.id}</span>
         </p>
 
         <Table className="max-w-[15rem]">
@@ -103,14 +105,12 @@ const OrderPage = ({ orderId }: { orderId: string }) => {
               <div
                 className={cn(
                   "border px-2 py-1 flex items-center justify-center text-xs lg:text-sm gap-1 rounded-md font-medium w-fit",
-                  o.order.transaction?.status === "FAILED"
+                  transactionStatus === "FAILED"
                     ? "text-red bg-red/10"
                     : "text-main bg-main/10"
                 )}
               >
-                {o.order.transaction?.status === "FAILED"
-                  ? "FAILED"
-                  : o.customerStatus}
+                {transactionStatus === "FAILED" ? "FAILED" : o.customerStatus}
               </div>
             </div>
 
