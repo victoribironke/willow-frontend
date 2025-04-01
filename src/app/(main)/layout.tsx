@@ -48,6 +48,7 @@ const RootLayout = ({
                 onClick: () =>
                   push(PAGES.main.shop.chat(data.conversationId, "", "")),
               },
+              duration: 60000,
             });
           }
         }

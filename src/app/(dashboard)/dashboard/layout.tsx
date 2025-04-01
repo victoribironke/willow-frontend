@@ -82,6 +82,7 @@ const RootLayout = ({
                 label: "Go to chat",
                 onClick: () => push(PAGES.dashboard.chat(data.conversationId)),
               },
+              duration: 60000,
             });
           }
         }
