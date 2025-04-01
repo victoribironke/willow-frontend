@@ -26,15 +26,18 @@ import { useAtomValue } from "jotai";
 import { user_details } from "@/app/atoms/atoms";
 import toast from "react-hot-toast";
 import { OrderItem, Product } from "@/interfaces/general";
-import { formatNumber } from "@/lib/utils";
+import { formatDateTime, formatNumber } from "@/lib/utils";
 import Link from "next/link";
 import { PAGES } from "@/constants/constants";
+import { useRouter } from "next/navigation";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState<OrderItem[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const userInfo = useAtomValue(user_details);
+  const { push } = useRouter();
+
   const overview = [
     { title: "Product orders", icon: ShoppingCart, value: orders.length },
     { title: "Chats", icon: MessagesSquare, value: 0 },
@@ -137,30 +140,36 @@ const Home = () => {
                 <TableRow>
                   <TableHead>Order ID</TableHead>
                   <TableHead>Product</TableHead>
-                  <TableHead>Time</TableHead>
+                  <TableHead>Date & Time</TableHead>
                   <TableHead>Quantity</TableHead>
                   <TableHead>Total price</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {orders.slice(0, 10).map((o, i) => (
-                  <TableRow key={i}>
-                    <TableCell>{o.id}</TableCell>
-                    <TableCell className="font-medium whitespace-nowrap">
-                      <Link
-                        href={PAGES.dashboard.order(o.id)}
-                        className="hover:underline"
-                      >
+                {orders
+                  .slice(0, 20)
+                  .sort((a, b) =>
+                    a.order.createdAt < b.order.createdAt ? 1 : -1
+                  )
+                  .map((o, i) => (
+                    <TableRow
+                      key={i}
+                      onClick={() => push(PAGES.dashboard.order(o.id))}
+                      className="cursor-pointer"
+                    >
+                      <TableCell>{o.id}</TableCell>
+                      <TableCell className="font-medium whitespace-nowrap">
                         {o.product.name}
-                      </Link>
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap">{o.id}</TableCell>
-                    <TableCell className="whitespace-nowrap">
-                      {o.quantity}
-                    </TableCell>
-                    <TableCell>₦ {formatNumber(o.price)}</TableCell>
-                  </TableRow>
-                ))}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {formatDateTime(o.order.createdAt)}
+                      </TableCell>
+                      <TableCell className="whitespace-nowrap">
+                        {o.quantity}
+                      </TableCell>
+                      <TableCell>₦ {formatNumber(o.price)}</TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </div>
