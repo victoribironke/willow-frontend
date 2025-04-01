@@ -119,14 +119,16 @@ const Home = () => {
               Recent orders
             </h3>
 
-            <Button variant="outline">
+            {/* <Button variant="outline">
               <Calendar size={15} />
               <p className="text-sm">Mar 27, 2025</p>
-            </Button>
+            </Button> */}
 
-            <Button variant="outline" className="text-main hover:text-main">
-              See all
-            </Button>
+            <Link href={PAGES.dashboard.orders}>
+              <Button variant="outline" className="text-main hover:text-main">
+                See all
+              </Button>
+            </Link>
           </div>
 
           <div className="border rounded-lg">
@@ -141,7 +143,7 @@ const Home = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {orders.map((o, i) => (
+                {orders.slice(0, 10).map((o, i) => (
                   <TableRow key={i}>
                     <TableCell>{o.id}</TableCell>
                     <TableCell className="font-medium whitespace-nowrap">
