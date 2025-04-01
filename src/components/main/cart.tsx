@@ -285,10 +285,9 @@ const Cart = () => {
                 </Button>
 
                 <Button
-                  variant="outline"
                   onClick={() => remove(c.productId)}
                   disabled={removing}
-                  className="border-red text-red hover:bg-transparent hover:text-red"
+                  className="bg-red hover:bg-red"
                 >
                   <Trash2 />
                 </Button>
