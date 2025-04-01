@@ -168,6 +168,7 @@ const Cart = () => {
       email: userInfo?.email,
       amount: total,
       address,
+      cartItems,
       serviceFee: 100,
       deliveryFee: 5000,
     };
