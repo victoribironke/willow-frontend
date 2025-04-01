@@ -22,12 +22,14 @@ import { getSellerOrders } from "@/lib/requests/seller";
 import toast from "react-hot-toast";
 import PageLoader from "../general/page-loader";
 import { OrderItem } from "@/interfaces/general";
+import { useRouter } from "next/navigation";
 
 const Orders = () => {
   const [tab, setTab] = useState("All");
   const [loading, setLoading] = useState(true);
   const [orders, setOrders] = useState<OrderItem[]>([]);
   const userInfo = useAtomValue(user_details);
+  const { push } = useRouter();
 
   const new_orders = orders.filter((o) => {
     if (tab === "New") return o.customerStatus === "ORDERED";
@@ -84,12 +86,16 @@ const Orders = () => {
               <TableHead>Status</TableHead>
               <TableHead>Quantity</TableHead>
               <TableHead>Total Price (₦)</TableHead>
-              <TableHead></TableHead>
+              {/* <TableHead></TableHead> */}
             </TableRow>
           </TableHeader>
           <TableBody>
             {new_orders.map((o, i) => (
-              <TableRow key={i}>
+              <TableRow
+                key={i}
+                onClick={() => push(PAGES.dashboard.order(o.id))}
+                className="cursor-pointer"
+              >
                 <TableCell className="pl-4">
                   <div className="flex items-center gap-2">
                     <Avatar className="h-8 w-8 rounded-lg">
@@ -101,12 +107,7 @@ const Orders = () => {
                     </Avatar>
 
                     <div>
-                      <Link
-                        href={PAGES.dashboard.order(o.id)}
-                        className="font-medium hover:underline"
-                      >
-                        {o.product.name}
-                      </Link>
+                      <p className="font-medium">{o.product.name}</p>
 
                       <p className="text-sm text-muted-foreground">
                         {o.product.category}
@@ -126,18 +127,18 @@ const Orders = () => {
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
                   <div className="text-main bg-main/10 border px-2 py-1 flex items-center justify-center text-xs gap-1 rounded-md font-medium w-fit">
-                    {o.customerStatus}
+                    {o.customerStatus === "ORDERED" ? "NEW" : o.customerStatus}
                   </div>
                 </TableCell>
                 <TableCell className="whitespace-nowrap">
                   {o.quantity}
                 </TableCell>
                 <TableCell>{formatNumber(o.price)}</TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Button variant="ghost">
                     <Ellipsis />
                   </Button>
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             ))}
           </TableBody>
