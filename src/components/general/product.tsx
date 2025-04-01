@@ -237,7 +237,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
                   <div
                     onClick={() => {
                       if (!product?.onDemand) {
-                        if (quantity <= (product?.inStock || 0))
+                        if (quantity < (product?.inStock || 0))
                           setQuantity((k) => k + 1);
                       } else setQuantity((k) => k + 1);
                     }}
