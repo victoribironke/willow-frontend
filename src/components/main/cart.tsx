@@ -156,9 +156,9 @@ const Cart = () => {
   const checkout = async () => {
     if (cartItems.length === 0) return;
 
-    const { city, street, zip } = address;
+    const { city, street, zip, state } = address;
 
-    if ([city, street, zip].filter((a) => a === "").length !== 0) {
+    if ([city, street, zip, state].filter((a) => a === "").length !== 0) {
       return toast.error("Please fill in your address details.");
     }
 
