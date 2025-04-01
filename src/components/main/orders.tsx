@@ -43,7 +43,9 @@ const Orders = () => {
 
   return (
     <>
-      <h1 className="text-xl lg:text-2xl font-medium">Ordered/Ongoing</h1>
+      <h1 className="text-xl lg:text-2xl font-medium">
+        Ordered/Ongoing/Failed
+      </h1>
 
       <Separator />
 
