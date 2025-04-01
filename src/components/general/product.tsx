@@ -64,6 +64,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
       return;
     }
 
+    setCartItems((k) => [...k, productId]);
     toast.success("Added to cart.");
   };
 
