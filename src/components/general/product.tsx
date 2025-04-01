@@ -36,7 +36,7 @@ const ProductPage = ({ productId }: { productId: string }) => {
   const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [disabled, setDisabled] = useState(false);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [product, setProduct] = useState<Product | null>(null);
   const userInfo = useAtomValue(user_details);
   const [cartItems, setCartItems] = useState<string[]>([]);
@@ -234,7 +234,14 @@ const ProductPage = ({ productId }: { productId: string }) => {
 
                   <p className="font-medium">{quantity}</p>
 
-                  <div onClick={() => setQuantity((k) => k + 1)}>
+                  <div
+                    onClick={() => {
+                      if (!product?.onDemand) {
+                        if (quantity <= (product?.inStock || 0))
+                          setQuantity((k) => k + 1);
+                      } else setQuantity((k) => k + 1);
+                    }}
+                  >
                     <Plus size={18} />
                   </div>
                 </Button>
