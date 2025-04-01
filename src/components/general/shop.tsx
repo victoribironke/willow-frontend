@@ -22,6 +22,7 @@ const Shop = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
+  const [subscribedLS, setSubscribedLS] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [lastViewed, setLastViewed] = useState<Product[]>([]);
   const [cartItems, setCartItems] = useState<string[]>([]);
@@ -81,7 +82,7 @@ const Shop = () => {
       if (authData) {
         const d: WillowAuthData = JSON.parse(authData);
 
-        setSubscribed(d.customer?.subscribed || false);
+        setSubscribedLS(d.customer?.subscribed || false);
       }
 
       try {
@@ -166,7 +167,7 @@ const Shop = () => {
         </section>
       )}
 
-      {!subscribed && (
+      {!subscribedLS && (
         <section className="w-full flex items-center justify-center flex-col gap-4 my-10">
           <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl w-full max-w-2xl text-center">
             Subscribe to our newsletter to get updates to our latest collections
@@ -177,10 +178,11 @@ const Shop = () => {
 
           <Button
             className="bg-main hover:bg-main/90 w-full max-w-xs"
-            disabled={isLoading}
+            disabled={isLoading || subscribed}
             onClick={updateInfo}
           >
-            Subscribe {isLoading && <LoaderCircle className="animate-spin" />}
+            {subscribed ? "Subscribed" : "Subscribe"}{" "}
+            {isLoading && <LoaderCircle className="animate-spin" />}
           </Button>
         </section>
       )}
